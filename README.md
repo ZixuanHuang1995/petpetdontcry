@@ -9,6 +9,7 @@
 2. 為浪浪們提供一個與飼主間的認養媒合平台
 3. 提供飼主們可以查詢寵物飼養資訊的平台  
 ### Quick start of Flask
+Flask Documentation https://flask.palletsprojects.com/en/2.2.x/  
 Quickstart-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/quickstart/
 ### Gitflow Workflow
 <img src="https://miro.medium.com/max/1400/1*9yJY7fyscWFUVRqnx0BM6A.png" height="400">
