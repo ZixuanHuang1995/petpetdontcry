@@ -10,6 +10,7 @@
 3. 提供飼主們可以查詢寵物飼養資訊的平台  
 ### Quick start of Flask
 Flask Documentation https://flask.palletsprojects.com/en/2.2.x/  
-Quickstart-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/quickstart/
+Quickstart-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/quickstart/  
+Tutorial-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/tutorial/  
 ### Gitflow Workflow
 <img src="https://miro.medium.com/max/1400/1*9yJY7fyscWFUVRqnx0BM6A.png" height="400">
