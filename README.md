@@ -1,6 +1,6 @@
 # petpetdontcry
 萌寵資訊平台-軟體工程期末專案  
-第三組: 111423006王聖智, 111423008嚴育程, 111423036蔡亞真, 111423041劉冠妤, 111423073黃子軒, 110423075林子愃
+第三組: 111423006王聖智, 111423008嚴育程, 111423036蔡亞真, 111423041劉冠妤, 111423073黃子軒, 110423075林子愃  
 <img src="https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif" height="320">
 <img src="https://media.giphy.com/media/y5OffROvBod0s/giphy.gif" height="320">
 ### 專案說明
