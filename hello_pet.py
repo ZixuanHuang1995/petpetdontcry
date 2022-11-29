@@ -12,6 +12,6 @@ for i in range(10):
 print("done")
 print("Hello " + group)
 print("Our project name is: " + project_name)
-for i in range(30):
+for i in range(33):
     print("-", end = '', flush = True)
     time.sleep(0.1)
