@@ -14,23 +14,9 @@ Quickstart-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/quicks
 Tutorial-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/tutorial/  
 ### Gitflow Workflow
 <img src="https://miro.medium.com/max/1400/1*9yJY7fyscWFUVRqnx0BM6A.png" height="400">
+
 ### 專案架構
 Model 負責資料庫操作和儲存
 View（Flask內稱Templates）負責使用者介面設計
 Controller（Flask內稱view）負責對Requst/Response處理資料溝通，並將資料串接道View（Templates）
-### 專案檔案
-├── app
-│   ├── __init__.py
-│   ├── config
-│   │   ├── 
-│   │   └── petpetdontcry.db
-│   ├── model
-│   │   └── 
-│   ├── templates
-│   │   ├── 
-│   │   └── 
-│   └── view
-│       ├── 
-│       └── 
-├── hello_pet.py
-└── README.md
+
