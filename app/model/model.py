@@ -1,34 +1,41 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from ..config.config import config
+import sys
+# try:
+#     from .. import app as app
+# except ImportError:
+#     from __main__ import app
 
 app = Flask(__name__)
-# 設定SQLite資料庫檔案路徑
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///petpetdontcry.sqlite3'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config.from_object(config['default'])
+# # 設定SQLite資料庫檔案路徑
+# app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///petpetdontcry.sqlite3'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 # 會員
 class user(db.Model):
     __tablename__ = 'user'
     UID = db.Column('UID', db.Integer, primary_key = True)
-    name = db.Column('name', db.String(20),nullable=True)
+    name = db.Column('name', db.String(20))
     identity = db.Column('identity',db.String(10), nullable=False)
     email = db.Column('email',db.String(50), nullable=False)
-    phone = db.Column('phone',db.String(10),nullable=True)
+    phone = db.Column('phone',db.String(10)) 
     password = db.Column('password',db.String(50), nullable=False)
-    def __init__(self,name,identity,email,phone,password):
-        self.name = name
+    def __init__(self,identity,email,password):
+        # self.name = name
         self.identity = identity
         self.email = email
-        self.phone = phone
+        # self.phone = phone
         self.password = password
 # 查詢表
 class information(db.Model):
     __tablename__ = 'information'
     IID = db.Column('IID', db.Integer, primary_key = True)
     name = db.Column('name', db.String(20), nullable=False)
-    function = db.Column('function', db.Text,nullable=True)
+    function = db.Column('function', db.Text)
     type = db.Column('type',db.Integer, nullable=False)
     def __init__(self,name,function,type):
         self.name = name
@@ -48,8 +55,10 @@ class published(db.Model):
     update_time = db.Column(db.DateTime, onupdate=datetime.now,default=datetime.now)
     depiction = db.Column('depiction', db.Text)
     activate = db.Column('activate', db.Boolean, default=True)
+    varitey = db.Column('varitey', db.String(10))
     type = db.Column('type',db.Integer, nullable=False)
-    def __init__(self,UID,title,species,fur,picture,area,depiction,activate,type):  
+    sex = db.Column('sex',db.Integer)
+    def __init__(self,UID,title,species,fur,picture,area,depiction,activate,type,varitey,sex):  
         self.UID = UID
         self.title = title
         self.species = species
@@ -59,6 +68,8 @@ class published(db.Model):
         self.depiction = depiction
         self.activate = activate
         self.type = type
+        self.varitey = varitey
+        self.sex = sex
 # 寵物
 class pet(db.Model):
     __tablename__ = 'pet'
@@ -87,12 +98,12 @@ class medicalrecords(db.Model):
     MID = db.Column('MID', db.Integer, primary_key = True)
     PetID = db.Column('PetID',db.Integer, nullable=False)
     CID = db.Column('CID',db.Integer, nullable=False)
-    disease = db.Column('disease', db.Text,nullable=True)
+    disease = db.Column('disease', db.Text)
     doctor = db.Column('doctor', db.String(10), nullable=False)
-    medication = db.Column('medication', db.String(30),nullable=True)
+    medication = db.Column('medication', db.String(30))
     time = db.Column('time', db.DateTime, default=datetime.now)
     update_time = db.Column(db.DateTime, onupdate=datetime.now, default=datetime.now)
-    note = db.Column('note', db.Text,nullable=True)
+    note = db.Column('note', db.Text)
     type = db.Column('type',db.Integer, nullable=False)
     def __init__(self,PetID,CID,disease,doctor,medication,note,type):  
         self.PetID = PetID
