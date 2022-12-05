@@ -1,21 +1,5 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-from ..config.config import config
-import sys
-# try:
-#     from .. import app as app
-# except ImportError:
-#     from __main__ import app
+from ..database import db
 
-app = Flask(__name__)
-app.config.from_object(config['default'])
-# # 設定SQLite資料庫檔案路徑
-# app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///petpetdontcry.sqlite3'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
-
-# 會員
 class user(db.Model):
     __tablename__ = 'user'
     UID = db.Column('UID', db.Integer, primary_key = True)
@@ -30,6 +14,13 @@ class user(db.Model):
         self.email = email
         # self.phone = phone
         self.password = password
+
+    def toJSON(self):
+        return{
+            'id': self.UID,
+            'username': self.name
+        }
+
 # 查詢表
 class information(db.Model):
     __tablename__ = 'information'

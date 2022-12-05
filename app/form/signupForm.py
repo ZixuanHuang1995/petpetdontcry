@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from nbformat import ValidationError
 from wtforms import StringField,SubmitField,validators,PasswordField
 from wtforms.fields import EmailField
-from ..model.model import user
+from ..models import user
 class FormRegister(FlaskForm):
     # 依照model來建立相對的from
     identity = StringField('identity',validators=[
@@ -26,9 +26,9 @@ class FormRegister(FlaskForm):
     ])
     submit = SubmitField('建立新帳戶')
 
-    # def validate_email(self,field):
-    #     if user.query.filter_by(email=field.data).first():
-    #         raise ValidationError('Email already register by somebody')
-    # def validate_identify(self,field):
-    #     if user.query.filter_by(identify=field.data).first():
-    #         raise ValidationError('Identify already register by somebody')
+    def validate_email(self,field):
+        if user.query.filter_by(email=field.data).first():
+            raise ValidationError('Email already register by somebody')
+    def validate_identify(self,field):
+        if user.query.filter_by(identify=field.data).first():
+            raise ValidationError('Identify already register by somebody')
