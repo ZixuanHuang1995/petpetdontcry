@@ -18,8 +18,17 @@ Tutorial-Flask Documentation https://flask.palletsprojects.com/en/2.2.x/tutorial
 ### Gitflow Workflow
 <img src="https://miro.medium.com/max/1400/1*9yJY7fyscWFUVRqnx0BM6A.png" height="400">
 
-### 專案架構
-Model 負責資料庫操作和儲存  
-View（Flask內稱Templates）負責使用者介面設計  
-Controller（Flask內稱view）負責對 Requst/Response 處理資料溝通，並將資料串接到 View（Templates） 
-
+### 使用方法
+安裝其他套件
+```
+pip install -r requirements.txt
+```
+跑flask
+```
+flask run --reload
+# --reload 修改 py 檔後，Flask server 會自動 reload
+```
+如果有出錯 `Error: Could not locate a Flask application. Use the 'flask --app' option, 'FLASK_APP' environment variable, or a 'wsgi.py' or 'app.py' file in the current directory.`
+```
+export FLASK_APP=main.py
+```
