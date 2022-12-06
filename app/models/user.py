@@ -13,12 +13,12 @@ class user(UserMixin, db.Model):
     email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
     password_hash = db.Column('password',db.String(128), nullable=False)
-    def __init__(self,identity,email,password_hash):
+    def __init__(self,identity,email,password):
         # self.name = name
         self.identity = identity
         self.email = email
         # self.phone = phone
-        self.password_hash = password_hash
+        self.password = password
 
     def toJSON(self):
         return{
@@ -149,11 +149,11 @@ class clinic(db.Model):
     account = db.Column('account', db.String(30), nullable=False)
     password_hash = db.Column('password', db.String(128), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
-    def __init__(self,CID,name,phone,address,account,password_hash,emergency):  
+    def __init__(self,CID,name,phone,address,account,password,emergency):  
         self.CID = CID
         self.name = name
         self.phone = phone
         self.address = address
         self.account = account
-        self.password_hash = password_hash
+        self.password = password
         self.emergency = emergency
