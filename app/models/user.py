@@ -1,20 +1,24 @@
+import imp
+import bcrypt
 from ..database import db
 from datetime import datetime
-
-class user(db.Model):
+from flask_login import UserMixin
+from ..config_other import login_manager
+from werkzeug.security import generate_password_hash, check_password_hash
+class user(UserMixin, db.Model):
     __tablename__ = 'user'
     UID = db.Column('UID', db.Integer, primary_key = True)
     name = db.Column('name', db.String(20))
     identity = db.Column('identity',db.String(10), nullable=False)
     email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
-    password = db.Column('password',db.String(50), nullable=False)
-    def __init__(self,identity,email,password):
+    password_hash = db.Column('password',db.String(128), nullable=False)
+    def __init__(self,identity,email,password_hash):
         # self.name = name
         self.identity = identity
         self.email = email
         # self.phone = phone
-        self.password = password
+        self.password_hash = password_hash
 
     def toJSON(self):
         return{
@@ -22,6 +26,27 @@ class user(db.Model):
             'username': self.name
         }
 
+    @login_manager.user_loader
+    def load_user(UID):
+        # 回傳的就是使用者資訊
+        try:
+            return user.query.get(UID)
+        except:
+            return None
+            
+    def get_id(self):
+           return (self.UID)
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self,password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self,password):
+        return check_password_hash(self.password_hash, password)    
 # 查詢表
 class information(db.Model):
     __tablename__ = 'information'
@@ -122,13 +147,13 @@ class clinic(db.Model):
     phone = db.Column('phone', db.String(10), nullable=False)
     address = db.Column('address', db.String(30), nullable=False)
     account = db.Column('account', db.String(30), nullable=False)
-    password = db.Column('password', db.String(50), nullable=False)
+    password_hash = db.Column('password', db.String(128), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
-    def __init__(self,CID,name,phone,address,account,password,emergency):  
+    def __init__(self,CID,name,phone,address,account,password_hash,emergency):  
         self.CID = CID
         self.name = name
         self.phone = phone
         self.address = address
         self.account = account
-        self.password = password
+        self.password_hash = password_hash
         self.emergency = emergency

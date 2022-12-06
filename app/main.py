@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-from flask_login import LoginManager, current_user
 # from flask_uploads import DOCUMENTS, IMAGES, TEXT, UploadSet, configure_uploads
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -9,7 +8,7 @@ from flask_bootstrap import Bootstrap
 from datetime import timedelta
 from .views import views
 from .database import create_db
-
+from .config_other import init
 def add_views(app):
     for view in views:
         app.register_blueprint(view)
@@ -47,5 +46,6 @@ def create_app(config={}):
     # configure_uploads(app, photos)
     add_views(app)
     create_db(app)
+    init(app)
     app.app_context().push()
     return app
