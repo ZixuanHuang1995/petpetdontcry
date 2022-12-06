@@ -1,7 +1,7 @@
 import email
 from flask_wtf import FlaskForm
 from nbformat import ValidationError
-from wtforms import StringField,SubmitField,validators,PasswordField
+from wtforms import StringField,SubmitField,validators,PasswordField,BooleanField
 from wtforms.fields import EmailField
 from ..models import user
 class FormRegister(FlaskForm):
@@ -32,3 +32,24 @@ class FormRegister(FlaskForm):
     def validate_identify(self,field):
         if user.query.filter_by(identify=field.data).first():
             raise ValidationError('Identify already register by somebody')
+
+class FormLogin(FlaskForm):
+    """
+    使用者登入使用
+    以email為主要登入帳號，密碼需做解碼驗證
+    記住我的部份透過flask-login來實現
+    """
+
+    email = EmailField('Email', validators=[
+        validators.DataRequired(),
+        validators.Length(5, 30),
+        validators.Email()
+    ])
+
+    password = PasswordField('PassWord', validators=[
+        validators.DataRequired()
+    ])
+
+    remember_me = BooleanField('Keep Logged in')
+
+    submit = SubmitField('Log in')

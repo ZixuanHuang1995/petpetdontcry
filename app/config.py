@@ -6,3 +6,4 @@ def create_sqlite_uri(db_name):
 SQLALCHEMY_DATABASE_URI = create_sqlite_uri('petpetdontcry.sqlite3')
 SECRET_KEY = os.urandom(32)
 ENV = "DEVELOPMENT"
+SESSION_PROTECTION = 'strong'
