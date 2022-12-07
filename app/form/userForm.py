@@ -1,3 +1,4 @@
+from cmath import phase
 import email
 from flask_wtf import FlaskForm
 from nbformat import ValidationError
@@ -53,3 +54,15 @@ class FormLogin(FlaskForm):
     remember_me = BooleanField('Keep Logged in')
 
     submit = SubmitField('Log in')
+
+class FormUserInfo(FlaskForm):
+    UID = StringField('id', render_kw={'readonly': True})
+    email = StringField('Email', render_kw={'readonly': True})
+    identity = StringField('Identity', render_kw={'readonly': True})
+    name = StringField('Name',validators=[
+        validators.DataRequired()
+    ])
+    phone = StringField('phone',validators=[
+        validators.Length(8, 10),
+    ])
+    submit = SubmitField('更新')

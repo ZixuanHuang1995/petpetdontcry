@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Blog_Post_List{% endblock %}
+
+{% block page_content %}
+<div class="post-list">
+    {% for pet in pets %}
+    <div class="post-content">
+        <div class="post-title">{{ pet.PetID }}</div>
+        <div class="post-body">{{ pet.name }}</div>
+        <div class="post-footer">Post By <a href="#"> {{ pet.user.name }}</a></div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

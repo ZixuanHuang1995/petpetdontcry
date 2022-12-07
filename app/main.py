@@ -1,6 +1,5 @@
 import os
-from flask import Flask
-# from flask_uploads import DOCUMENTS, IMAGES, TEXT, UploadSet, configure_uploads
+from flask import Flask,request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
@@ -41,9 +40,6 @@ def create_app(config={}):
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEVER_NAME'] = '0.0.0.0'
     app.config['PREFERRED_URL_SCHEME'] = 'https'
-    # app.config['UPLOADED_PHOTOS_DEST'] = "App/uploads"
-    # photos = UploadSet('photos', TEXT + DOCUMENTS + IMAGES)
-    # configure_uploads(app, photos)
     add_views(app)
     create_db(app)
     init(app)
