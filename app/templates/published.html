@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Blog_Post_List{% endblock %}
+
+{% block page_content %}
+<div class="post-list">
+    {% for publishing in published %}
+    <div class="post-content">
+        <div class="post-title">{{ publishing.title }}</div>
+        <div class="post-body">{{ publishing.PublishedID }}</div>
+        <div class="post-footer">Post By <a href="#"> {{ publishing.user.username }}</a> on {{ publishing.time.strftime('%Y-%m-%d') }} in</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -8,7 +8,6 @@ from datetime import timedelta
 from .views import views
 from .database import create_db
 from .config_other import init
-from werkzeug.utils import secure_filename
 def add_views(app):
     for view in views:
         app.register_blueprint(view)

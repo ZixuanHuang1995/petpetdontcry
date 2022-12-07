@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
+from flask import Blueprint, render_template,abort, jsonify, request, send_from_directory, flash, redirect, url_for
 import flask
 from ..config_other import photos
 from APP.models.user import published
@@ -42,8 +42,22 @@ def create_user_action():
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
 
+@user_views.route('/test')  
+@login_required 
+def test_index():  
+    flash('flash-1')  
+    # flash('flash-2')  
+    # flash('flash-3')  
+    return render_template('base.html')  
+"""
+說明：上面皆是先測試，之後可能用得到
+"""  
 @user_views.route('/register',methods=['GET','POST'])
 def register():
+    """
+    說明：註冊使用者
+    :return:
+    """
     print(db)
     from ..models import user
     form = FormRegister()
@@ -58,17 +72,12 @@ def register():
         return 'Success!'
     return render_template('register.html',form = form)
 
-@user_views.route('/test')  
-@login_required 
-def test_index():  
-    flash('flash-1')  
-    # flash('flash-2')  
-    # flash('flash-3')  
-    return render_template('base.html')  
-  
-  
 @user_views.route('/login', methods=['GET', 'POST'])
-def login():  
+def login(): 
+    """
+    說明：登入
+    :return:
+    """
     from ..models import user
     form = FormLogin()
     if form.validate_on_submit():
@@ -100,6 +109,10 @@ def next_is_valid(url):
 @user_views.route('/logout')  
 @login_required
 def logout():  
+    """
+    說明：登出
+    :return:
+    """
     logout_user()
     flash('Logout See You')
     return redirect(url_for('user_views.login'))
@@ -107,6 +120,10 @@ def logout():
 @user_views.route('/edituserinfo', methods=['GET', 'POST'])
 @login_required
 def edituserinfo():
+    """
+    說明：更新使用者資訊
+    :return:
+    """
     form = FormUserInfo()
     if form.validate_on_submit():
         current_user.name = form.name.data
@@ -115,23 +132,36 @@ def edituserinfo():
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('user_views.userinfo', name=current_user.name))
+        return redirect(url_for('user_views.userinfo', UID=current_user.UID))
     #  預設表單欄位資料為current_user的目前值
     form.UID.data = current_user.UID
     form.identity.data = current_user.identity
     form.email.data = current_user.email
     form.name.data = current_user.name
     form.phone.data = current_user.phone
-    return render_template('userInfo.html', form=form)
-#  先加入一個route來做引導，確認是否正常
-@user_views.route('/userinfo/<name>')
+    return render_template('edituserInfo.html', form=form)
+
+@user_views.route('/userinfo/<UID>')
 @login_required
-def userinfo(name):
-    return 'Hello %s' % current_user.name
+def userinfo(UID):
+    """
+    說明：使用者資訊呈現
+    :param UID:使用者UID
+    :return:
+    """
+    from ..models.user import user
+    user = user.query.filter_by(UID=UID).first()
+    if user is None:
+        abort(404)
+    return render_template('userInfo.html', user=user)
 
 @user_views.route('/published', methods=['GET', 'POST'])
 @login_required
 def add_publshed_missing():
+    """
+    說明：刊登遺失寵物資訊
+    :return:
+    """
     from ..models import published
     form = FormPublished()
     if form.validate_on_submit():
@@ -157,3 +187,16 @@ def add_publshed_missing():
         return f'Picurl:{file_name}s'
     return render_template('addpublished.html', form=form)
 
+@user_views.route('/publishedAll/<UID>')
+@login_required
+def publishinfo(UID):
+    """
+    說明：刊登資訊呈現
+    :param UID:使用者UID
+    :return:
+    """
+    from ..models.user import published
+    published = published.query.filter_by(UID=UID).all()
+    if published is None:
+        abort(404)
+    return render_template('published.html', published=published)

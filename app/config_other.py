@@ -1,6 +1,5 @@
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-from werkzeug.utils import secure_filename
 from flask_uploads import IMAGES, UploadSet, configure_uploads
 login_manager = LoginManager()
 bcrypt = Bcrypt()

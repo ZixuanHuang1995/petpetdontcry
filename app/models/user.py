@@ -13,7 +13,7 @@ class user(UserMixin, db.Model):
     email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
     password_hash = db.Column('password',db.String(128), nullable=False)
-    publisheds = db.relationship('published', backref='user', lazy='dynamic')
+    published = db.relationship('published', backref='user', lazy='dynamic')
     def __init__(self,identity,email,password):
         # self.name = name
         self.identity = identity
