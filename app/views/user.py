@@ -157,7 +157,7 @@ def userinfo(UID):
 
 @user_views.route('/published', methods=['GET', 'POST'])
 @login_required
-def add_publshed_missing():
+def add_publshed():
     """
     說明：刊登遺失寵物資訊
     :return:
@@ -165,9 +165,7 @@ def add_publshed_missing():
     from ..models import published
     form = FormPublished()
     if form.validate_on_submit():
-        print(form.picture.data)
         file_name = photos.save(form.picture.data)
-        print(file_name)
         Publishing = published(
             title=form.title.data,
             species=form.species.data,
@@ -177,21 +175,20 @@ def add_publshed_missing():
             depiction=form.depiction.data,
             sex=form.sex.data,
             variety=form.variety.data,
-            type=1,
+            type=int(form.type.data),
             UID=current_user.UID,
             activate=True
         )
         db.session.add(Publishing)
         db.session.commit()
         flash('Create New Blog Success')
-        return f'Picurl:{file_name}s'
     return render_template('addpublished.html', form=form)
 
-@user_views.route('/publishedAll/<UID>')
+@user_views.route('/mypublished/<UID>')
 @login_required
 def publishinfo(UID):
     """
-    說明：刊登資訊呈現
+    說明：我的刊登資訊呈現
     :param UID:使用者UID
     :return:
     """
@@ -200,3 +197,60 @@ def publishinfo(UID):
     if published is None:
         abort(404)
     return render_template('published.html', published=published)
+
+
+@user_views.route('/mypet/<UID>')
+@login_required
+def petinfo(UID):
+    """
+    說明：我的寵物資訊呈現
+    :param UID:使用者UID
+    :return:
+    """
+    from ..models.user import pet
+    pets = pet.query.filter_by(UID=UID).all()
+    if pets is None:
+        abort(404)
+    return render_template('pet.html', pets=pets)
+
+@user_views.route('/published/<int:PublishedID>/', methods=['GET', 'POST'])
+@login_required
+def update_publshed(PublishedID):
+    """
+    更新publshed
+    :param PublishedID:
+    :return:
+    """
+    from ..models import published
+    Publishing = published.query.filter_by(PublishedID=PublishedID).first_or_404()
+    form = FormPublished()
+    if form.validate_on_submit():
+        file_name = photos.save(form.picture.data)
+        Publishing.PublishedID = PublishedID
+        Publishing.title=form.title.data
+        Publishing.species=form.species.data
+        Publishing.fur=form.fur.data
+        Publishing.picture=file_name
+        Publishing.area=form.area.data
+        Publishing.depiction=form.depiction.data
+        Publishing.sex=form.sex.data
+        Publishing.variety=form.variety.data
+        Publishing.type=int(form.type.data)
+        Publishing.UID=current_user.UID
+        Publishing.activate=True
+        db.session.add(Publishing)
+        db.session.commit()
+        flash('Edit Your Post Success')
+        return redirect(url_for('user_views.publishinfo', UID=Publishing.UID))
+    form.title.data = Publishing.title
+    form.species.data = Publishing.species
+    form.fur.data = Publishing.fur
+    form.picture.data = Publishing.picture
+    form.area.data = Publishing.area
+    form.depiction.data = Publishing.depiction
+    form.sex.data = Publishing.sex
+    form.variety.data = Publishing.variety
+    # 單選預設是str，但資料庫是int，所以要改型態才會顯示
+    form.type.data = str(Publishing.type)
+    # 利用參數action來做條件，判斷目前是新增還是編輯
+    return render_template('addpublished.html', form=form, Publishing=Publishing, action='edit')

@@ -14,6 +14,7 @@ class user(UserMixin, db.Model):
     phone = db.Column('phone',db.String(10)) 
     password_hash = db.Column('password',db.String(128), nullable=False)
     published = db.relationship('published', backref='user', lazy='dynamic')
+    pet = db.relationship('pet', backref='user', lazy='dynamic')
     def __init__(self,identity,email,password):
         # self.name = name
         self.identity = identity
@@ -92,7 +93,7 @@ class published(db.Model):
 class pet(db.Model):
     __tablename__ = 'pet'
     PetID = db.Column('PetID', db.Integer, primary_key = True)
-    UID = db.Column('UID',db.Integer, nullable=False)
+    UID = db.Column('UID',db.Integer,db.ForeignKey('user.UID'), nullable=False)
     name = db.Column('name', db.String(20), nullable=False)
     sex = db.Column('sex',db.Integer, nullable=False)
     species = db.Column('species', db.String(10), nullable=False)
@@ -100,6 +101,7 @@ class pet(db.Model):
     picture = db.Column('picture', db.String(20), nullable=False)
     variety = db.Column('variety', db.String(10), nullable=False)
     vaccine = db.Column('vaccine',db.Boolean,nullable=False)
+    medicalrecords = db.relationship('medicalrecords', backref='pet', lazy='dynamic')
     def __init__(self,PetID,UID,name,sex,vaccine,species,fur,picture,variety):
         self.PetID = PetID
         self.UID = UID
@@ -114,8 +116,8 @@ class pet(db.Model):
 class medicalrecords(db.Model):
     __tablename__ = 'medicalrecords'
     MID = db.Column('MID', db.Integer, primary_key = True)
-    PetID = db.Column('PetID',db.Integer, nullable=False)
-    CID = db.Column('CID',db.Integer, nullable=False)
+    PetID = db.Column('PetID',db.Integer,db.ForeignKey('pet.PetID'), nullable=False)
+    CID = db.Column('CID',db.Integer,db.ForeignKey('clinic.CID'), nullable=False)
     disease = db.Column('disease', db.Text)
     doctor = db.Column('doctor', db.String(10), nullable=False)
     medication = db.Column('medication', db.String(30))
@@ -150,6 +152,7 @@ class clinic(db.Model):
     account = db.Column('account', db.String(30), nullable=False)
     password_hash = db.Column('password', db.String(128), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
+    medicalrecords = db.relationship('medicalrecords', backref='clinics', lazy='dynamic')
     def __init__(self,CID,name,phone,address,account,password,emergency):  
         self.CID = CID
         self.name = name

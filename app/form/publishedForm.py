@@ -1,9 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,validators,FileField,SelectField,TextAreaField
+from wtforms import StringField,SubmitField,validators,FileField,SelectField,TextAreaField,RadioField
+from wtforms.validators import InputRequired
 from ..models import user
 from ..config_other import photos
 from flask_wtf.file import FileAllowed, FileRequired
 class FormPublished(FlaskForm):
+    type = RadioField('type', 
+    choices=[('1','協尋'),('2','拾獲'),('3','領養')],
+    validators=[InputRequired()])
     title = StringField('title', validators=[
         validators.DataRequired(),
         validators.Length(0, 20)
