@@ -7,3 +7,5 @@ SQLALCHEMY_DATABASE_URI = create_sqlite_uri('petpetdontcry.sqlite3')
 SECRET_KEY = os.urandom(32)
 ENV = "DEVELOPMENT"
 SESSION_PROTECTION = 'strong'
+UPLOADED_PHOTOS_DEST = os.path.join(basedir,'static/pic')
+# UPLOADED_PHOTOS_URL = '\\static\\pic\\'

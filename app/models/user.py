@@ -13,6 +13,7 @@ class user(UserMixin, db.Model):
     email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
     password_hash = db.Column('password',db.String(128), nullable=False)
+    publisheds = db.relationship('published', backref='user', lazy='dynamic')
     def __init__(self,identity,email,password):
         # self.name = name
         self.identity = identity
@@ -62,7 +63,7 @@ class information(db.Model):
 class published(db.Model):
     __tablename__ = 'published'
     PublishedID = db.Column('PublishedID', db.Integer, primary_key = True)
-    UID = db.Column('UID',db.Integer, nullable=False)
+    UID = db.Column('UID',db.Integer,db.ForeignKey('user.UID'),nullable=False)
     title = db.Column('title', db.String(20), nullable=False)
     species = db.Column('species', db.String(10), nullable=False)
     fur = db.Column('fur', db.String(10), nullable=False)
@@ -72,10 +73,10 @@ class published(db.Model):
     update_time = db.Column(db.DateTime, onupdate=datetime.now,default=datetime.now)
     depiction = db.Column('depiction', db.Text)
     activate = db.Column('activate', db.Boolean, default=True)
-    varitey = db.Column('varitey', db.String(10))
+    variety = db.Column('variety', db.String(10))
     type = db.Column('type',db.Integer, nullable=False)
     sex = db.Column('sex',db.Integer)
-    def __init__(self,UID,title,species,fur,picture,area,depiction,activate,type,varitey,sex):  
+    def __init__(self,UID,title,species,fur,picture,area,depiction,activate,type,variety,sex):  
         self.UID = UID
         self.title = title
         self.species = species
@@ -85,7 +86,7 @@ class published(db.Model):
         self.depiction = depiction
         self.activate = activate
         self.type = type
-        self.varitey = varitey
+        self.variety = variety
         self.sex = sex
 # 寵物
 class pet(db.Model):
