@@ -5,38 +5,38 @@ from ..models import user
 from ..config_other import photos
 from flask_wtf.file import FileAllowed, FileRequired
 class FormPublished(FlaskForm):
-    type = RadioField('type', 
+    type = RadioField('刊登類型', 
     choices=[('1','協尋'),('2','拾獲'),('3','領養')],
     validators=[InputRequired()])
-    title = StringField('title', validators=[
+    title = StringField('刊登標題', validators=[
         validators.DataRequired(),
         validators.Length(0, 20)
     ])
-    species = StringField('species', validators=[
+    species = StringField('寵物類型', validators=[
         validators.DataRequired(),
         validators.Length(0, 10)
     ])
-    fur = StringField('fur', validators=[
+    fur = StringField('毛色', validators=[
         validators.DataRequired(),
         validators.Length(0, 10)
     ])
-    area = StringField('area', validators=[
+    area = StringField('發現地區', validators=[
         validators.DataRequired(),
         validators.Length(0, 10)
     ])
-    variety = StringField('variety', validators=[
+    variety = StringField('寵物品種', validators=[
         validators.Length(0, 10)
     ])
     #  使用下拉選單來選擇性別
-    sex = SelectField('sex', validators=[
+    sex = SelectField('寵物性別', validators=[
         validators.DataRequired()
-     ], choices=[('1', '女'), ('0', '男')])
+     ], choices=[('1', '女'), ('0', '男'),('2','未知')])
     
-    depiction = TextAreaField('depiction', validators=[
+    depiction = TextAreaField('敘述', validators=[
         validators.Length(0, 300)
     ])
-    picture = FileField('picture', validators=[
+    picture = FileField('上傳照片', validators=[
         FileAllowed(photos, 'IMAGE ONLY'),
         FileRequired('IMAGE REQUIRED PLEASE')
     ])
-    submit = SubmitField('Create Blog')
+    submit = SubmitField('送出')

@@ -3,7 +3,7 @@ import bcrypt
 from ..database import db
 from datetime import datetime
 from flask_login import UserMixin
-from ..config_other import login_manager
+from ..config_other import login_manager,login_manager_clinic
 from werkzeug.security import generate_password_hash, check_password_hash
 class user(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -15,6 +15,7 @@ class user(UserMixin, db.Model):
     password_hash = db.Column('password',db.String(128), nullable=False)
     published = db.relationship('published', backref='user', lazy='dynamic')
     pet = db.relationship('pet', backref='user', lazy='dynamic')
+    clinic_doctor = db.relationship('clinic_doctor', backref='user', lazy='dynamic')
     def __init__(self,identity,email,password):
         # self.name = name
         self.identity = identity
@@ -136,14 +137,14 @@ class medicalrecords(db.Model):
 # 診所醫生資料
 class clinic_doctor(db.Model):
     __tablename__ = 'clinic_doctor'
-    CID = db.Column('CID', db.Integer, primary_key = True)
-    UID = db.Column('UID',db.Integer, primary_key = True)
+    CID = db.Column('CID', db.Integer,db.ForeignKey('clinic.CID'),primary_key = True)
+    UID = db.Column('UID',db.Integer,db.ForeignKey('user.UID'), primary_key = True)
     def __init__(self,CID,UID):  
         self.CID = CID
         self.UID = UID
         
 # 診所
-class clinic(db.Model):
+class clinic(UserMixin,db.Model):
     __tablename__ = 'clinic'
     CID = db.Column('CID', db.Integer, primary_key = True)
     name = db.Column('name', db.String(20), nullable=False)
@@ -152,7 +153,8 @@ class clinic(db.Model):
     account = db.Column('account', db.String(30), nullable=False)
     password_hash = db.Column('password', db.String(128), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
-    medicalrecords = db.relationship('medicalrecords', backref='clinics', lazy='dynamic')
+    medicalrecords = db.relationship('medicalrecords', backref='clinic', lazy='dynamic')
+    clinic_doctor = db.relationship('clinic_doctor', backref='clinic', lazy='dynamic')
     def __init__(self,CID,name,phone,address,account,password,emergency):  
         self.CID = CID
         self.name = name
@@ -161,3 +163,17 @@ class clinic(db.Model):
         self.account = account
         self.password = password
         self.emergency = emergency
+
+    def get_id(self):
+           return (self.CID)
+    
+    def check_password(self,password):
+        return check_password_hash(self.password_hash, password)    
+        
+    @login_manager_clinic.user_loader
+    def load_user(CID):
+        # 回傳的就是使用者資訊
+        try:
+            return clinic.query.get(CID)
+        except:
+            return None
