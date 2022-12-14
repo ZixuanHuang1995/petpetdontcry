@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Blog_Post_List{% endblock %}
+
+{% block page_content %}
+<div class="post-list">
+    {% for medicalrecord in medicalrecords %}
+    <div class="post-content">
+        <div class="post-title">{{ medicalrecord.PetID }}</div>
+        <div class="post-body">{{ medicalrecord.disease }}</div>
+        <div class="post-footer">Post By <a href="#"> {{ medicalrecord.doctor }}</a></div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+import imp
 from flask import Blueprint, render_template,abort, jsonify, request, send_from_directory, flash, redirect, url_for
 import flask
 from ..config_other import photos
@@ -52,8 +53,8 @@ def test_index():
 """
 說明：上面皆是先測試，之後可能用得到
 """  
-@user_views.route('/register',methods=['GET','POST'])
-def register():
+@user_views.route('/user/register',methods=['GET','POST'])
+def user_register():
     """
     說明：註冊使用者
     :return:
@@ -72,7 +73,7 @@ def register():
         return 'Success!'
     return render_template('register.html',form = form)
 
-@user_views.route('/login', methods=['GET', 'POST'])
+@user_views.route('/user/login', methods=['GET', 'POST'])
 def login(): 
     """
     說明：登入
@@ -106,7 +107,7 @@ def next_is_valid(url):
     """
     return True 
   
-@user_views.route('/logout')  
+@user_views.route('/user/logout')  
 @login_required
 def logout():  
     """
@@ -117,9 +118,9 @@ def logout():
     flash('Logout See You')
     return redirect(url_for('user_views.login'))
 
-@user_views.route('/edituserinfo', methods=['GET', 'POST'])
+@user_views.route('/user/edituserinfo', methods=['GET', 'POST'])
 @login_required
-def edituserinfo():
+def edit_user_info():
     """
     說明：更新使用者資訊
     :return:
@@ -132,7 +133,7 @@ def edituserinfo():
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('user_views.userinfo', UID=current_user.UID))
+        return redirect(url_for('user_views.user_info', UID=current_user.UID))
     #  預設表單欄位資料為current_user的目前值
     form.UID.data = current_user.UID
     form.identity.data = current_user.identity
@@ -141,9 +142,9 @@ def edituserinfo():
     form.phone.data = current_user.phone
     return render_template('edituserInfo.html', form=form)
 
-@user_views.route('/userinfo/<UID>')
+@user_views.route('/user/userinfo/<UID>')
 @login_required
-def userinfo(UID):
+def user_info(UID):
     """
     說明：使用者資訊呈現
     :param UID:使用者UID
@@ -155,7 +156,7 @@ def userinfo(UID):
         abort(404)
     return render_template('userInfo.html', user=user)
 
-@user_views.route('/published', methods=['GET', 'POST'])
+@user_views.route('/user/addpublished', methods=['GET', 'POST'])
 @login_required
 def add_publshed():
     """
@@ -184,9 +185,9 @@ def add_publshed():
         flash('Create New Blog Success')
     return render_template('addpublished.html', form=form)
 
-@user_views.route('/mypublished/<UID>')
+@user_views.route('/user/mypublished/<UID>')
 @login_required
-def publishinfo(UID):
+def published_info(UID):
     """
     說明：我的刊登資訊呈現
     :param UID:使用者UID
@@ -199,9 +200,9 @@ def publishinfo(UID):
     return render_template('published.html', published=published)
 
 
-@user_views.route('/mypet/<UID>')
+@user_views.route('/user/mypet/<UID>')
 @login_required
-def petinfo(UID):
+def pet_info(UID):
     """
     說明：我的寵物資訊呈現
     :param UID:使用者UID
@@ -213,9 +214,9 @@ def petinfo(UID):
         abort(404)
     return render_template('pet.html', pets=pets)
 
-@user_views.route('/published/<int:PublishedID>/', methods=['GET', 'POST'])
+@user_views.route('/user/editpublished/<int:PublishedID>/', methods=['GET', 'POST'])
 @login_required
-def update_publshed(PublishedID):
+def edit_publshed(PublishedID):
     """
     更新publshed
     :param PublishedID:
@@ -241,7 +242,7 @@ def update_publshed(PublishedID):
         db.session.add(Publishing)
         db.session.commit()
         flash('Edit Your Post Success')
-        return redirect(url_for('user_views.publishinfo', UID=Publishing.UID))
+        return redirect(url_for('user_views.published_info', UID=Publishing.UID))
     form.title.data = Publishing.title
     form.species.data = Publishing.species
     form.fur.data = Publishing.fur
@@ -252,5 +253,32 @@ def update_publshed(PublishedID):
     form.variety.data = Publishing.variety
     # 單選預設是str，但資料庫是int，所以要改型態才會顯示
     form.type.data = str(Publishing.type)
+    print(form.picture.data)
     # 利用參數action來做條件，判斷目前是新增還是編輯
     return render_template('addpublished.html', form=form, Publishing=Publishing, action='edit')
+
+@user_views.route('/user/published')
+@login_required
+def published_data():
+    """
+    說明：所有刊登資訊呈現
+    :return:
+    """
+    from ..models.user import published
+    published = published.query.all()
+    if published is None:
+        abort(404)
+    return render_template('published.html', published=published)
+
+@user_views.route('/user/petmedicalrecord/<int:PetID>')
+@login_required
+def mypet_medicalrecord(PetID):
+    """
+    說明：我寵物病歷
+    :return:
+    """
+    from ..models.user import medicalrecords
+    medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
+    if medicalrecords is None:
+        abort(404)
+    return render_template('medicalrecords.html',medicalrecords=medicalrecords)

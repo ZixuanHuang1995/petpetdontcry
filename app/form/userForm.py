@@ -7,7 +7,7 @@ from wtforms.fields import EmailField
 from ..models import user
 class FormRegister(FlaskForm):
     # 依照model來建立相對的from
-    identity = StringField('identity',validators=[
+    identity = StringField('身分證字號',validators=[
         validators.DataRequired(),
         validators.Length(10,10)
     ])
@@ -16,16 +16,16 @@ class FormRegister(FlaskForm):
         validators.Length(1,50),
         validators.Email()
     ])
-    password = PasswordField('password',validators=[
+    password = PasswordField('密碼',validators=[
         validators.DataRequired(),
         validators.Length(5,20),
         validators.EqualTo('password2',message='PASSWORD NEED MATCH')
     ])
     # 驗證兩次輸入的密碼是否相同，避免使用者輸入錯誤
-    password2 = PasswordField('Confirm PassWord',validators=[
+    password2 = PasswordField('確認密碼',validators=[
         validators.DataRequired()
     ])
-    submit = SubmitField('建立新帳戶')
+    submit = SubmitField('註冊')
 
     def validate_email(self,field):
         if user.query.filter_by(email=field.data).first():
@@ -47,22 +47,22 @@ class FormLogin(FlaskForm):
         validators.Email()
     ])
 
-    password = PasswordField('PassWord', validators=[
+    password = PasswordField('密碼', validators=[
         validators.DataRequired()
     ])
 
-    remember_me = BooleanField('Keep Logged in')
+    remember_me = BooleanField('記住我')
 
-    submit = SubmitField('Log in')
+    submit = SubmitField('登入')
 
 class FormUserInfo(FlaskForm):
-    UID = StringField('id', render_kw={'readonly': True})
+    UID = StringField('會員編號', render_kw={'readonly': True})
     email = StringField('Email', render_kw={'readonly': True})
-    identity = StringField('Identity', render_kw={'readonly': True})
-    name = StringField('Name',validators=[
+    identity = StringField('身分證字號', render_kw={'readonly': True})
+    name = StringField('姓名',validators=[
         validators.DataRequired()
     ])
-    phone = StringField('phone',validators=[
+    phone = StringField('電話',validators=[
         validators.Length(8, 10),
     ])
-    submit = SubmitField('更新')
+    submit = SubmitField('送出')
