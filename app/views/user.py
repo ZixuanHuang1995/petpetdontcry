@@ -118,7 +118,7 @@ def logout():
     flash('Logout See You')
     return redirect(url_for('user_views.login'))
 
-@user_views.route('/user/edituserinfo', methods=['GET', 'POST'])
+@user_views.route('/user/edit_userinfo', methods=['GET', 'POST'])
 @login_required
 def edit_user_info():
     """
@@ -214,7 +214,7 @@ def pet_info(UID):
         abort(404)
     return render_template('pet.html', pets=pets)
 
-@user_views.route('/user/editpublished/<int:PublishedID>/', methods=['GET', 'POST'])
+@user_views.route('/user/edit_published/<int:PublishedID>/', methods=['GET', 'POST'])
 @login_required
 def edit_publshed(PublishedID):
     """
@@ -255,7 +255,7 @@ def edit_publshed(PublishedID):
     form.type.data = str(Publishing.type)
     print(form.picture.data)
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('addpublished.html', form=form, Publishing=Publishing, action='edit')
+    return render_template('add_published.html', form=form, Publishing=Publishing, action='edit')
 
 @user_views.route('/user/published')
 @login_required
@@ -270,7 +270,7 @@ def published_data():
         abort(404)
     return render_template('published.html', published=published)
 
-@user_views.route('/user/petmedicalrecord/<int:PetID>')
+@user_views.route('/user/pet_medicalrecord/<int:PetID>')
 @login_required
 def mypet_medicalrecord(PetID):
     """
