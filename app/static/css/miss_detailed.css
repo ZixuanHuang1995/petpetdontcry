@@ -1,0 +1,115 @@
+.bg-light{
+    background-color: rgb(36, 213, 119);
+}
+.bg-table{
+    background-color:bisque;
+}
+.bg-text{
+    background-color: #e2b293;
+}
+.bg-name{
+    background-color: #fef3ab;
+}
+
+.rounded-table{
+    border-radius: 30px; /*圓框*/
+}
+.rounded-name{
+    border-radius: 30px; /*圓框*/
+}
+
+.h-100{
+    height: auto;
+}
+.w-80{
+    width: 50%;
+}
+
+.p-4{
+    padding: 1.5rem; /*間隔*/
+}
+
+.Title_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Title{
+    font-size: 1.5rem;
+    color: blue;
+}
+
+.text_center{
+    display: contents;
+    align-content: center
+}
+
+.dis {
+    display:flex;
+    justify-content: center;
+}
+
+.table{
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    display: blocks;
+    text-align: center;
+    width: 80%;
+    vertical-align: middle;
+}
+
+.thead{
+    text-align: center;
+}
+
+/*表格內使用*/
+
+#tdver{ /*垂直置中*/
+    vertical-align: middle;
+}
+
+.tab-title1{
+    background-color: #F7BBB0;
+    color: white;
+    border-radius: 30px;
+    font-weight: bold;
+    height: fit-content;
+    width: 10%;
+}
+
+.tab-title2{
+    background-color: #8c2d0b;
+    color: white;
+    border-radius: 30px;
+    font-weight: bold;
+    height: fit-content;
+    width: 10%;
+}
+
+/*新加的*/
+
+.button-update{
+    background-color: #F7BBB0;
+    color: white;
+    text-align: center;
+}
+
+/*切版面位置*/
+
+.right{
+    width: 30%;
+    height:auto;
+    text-align:center;
+    line-height:auto;
+    float:right;
+}
+
+.left{
+    width: 70%;
+    height:auto;
+    text-align:center;
+}
+
+/*圖片輪播*/
+

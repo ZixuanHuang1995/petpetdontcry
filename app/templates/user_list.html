@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
+</head>
+
+<body>
+    
+    <div class="Title_img p-4">
+        <div class="Title_img" style="background-color: yellow;">
+            <img src="{{ url_for('static', filename='img/publication-list.png') }}" width="30" height="30">
+            <p class="Title text_center">刊登列表</p>
+        </div>
+        <div class="Title_img" style="background-color: rgb(254, 254, 253);">
+            <img src="{{ url_for('static', filename='img/feather-heart-1.png') }}" width="30" height="30">
+            <p class="Title text_center">收藏列表</p>
+        </div>
+    </div>
+    
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table mb-4">
+                <thead>
+                    <tr class="thread">
+                        <th scope="col">ID</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">類型</th>
+                        <th scope="col">動物</th>
+                        <th scope="col">標題</th>
+                        <th scope="col">地區</th>
+                        <th scope="col">狀態</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">152</td>
+                        <td style="vertical-align: middle;">111.10.15</td>
+                        <td style="vertical-align: middle;">協尋</td>
+                        <td style="vertical-align: middle;">狗</td>
+                        <td style="vertical-align: middle;">協尋我的小乖</td>
+                        <td style="vertical-align: middle;">桃園市中壢區</td>
+                        <td style="vertical-align: middle;">
+                            <table>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="showDialog()"><img src="{{ url_for('static', filename='img/material-delete-1.png') }}" width="10" height="10"></a>
+                                        
+                                        <div class="dialog" id="dialog">
+                                            
+                                            <div style="display: flex; align-items: center; justify-content: center;">
+                                                <img src="{{ url_for('static', filename='img/delete-alert.png') }}" width="30" height="30" style="margin: 1rem;">
+                                            </div>
+
+                                            <div style="display: flex; align-items: center; justify-content: center;">確定要刪除嗎?</div>
+
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="button" class="button-update" style="margin: 1rem;" value="確定" onclick="hideDialog()">
+                                                <input type="button" class="button-update" style="margin: 1rem;" value="取消" onclick="hideDialog()">
+                                            </div>
+                                        
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/awesome-check-green.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/metro-cross-black.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">152</td>
+                        <td style="vertical-align: middle;">111.10.15</td>
+                        <td style="vertical-align: middle;">協尋</td>
+                        <td style="vertical-align: middle;">狗</td>
+                        <td style="vertical-align: middle;">協尋我的小乖</td>
+                        <td style="vertical-align: middle;">桃園市中壢區</td>
+                        <td style="vertical-align: middle;">
+                            <table>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/material-delete-1.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/awesome-check-green.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/metro-cross-black.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">152</td>
+                        <td style="vertical-align: middle;">111.10.15</td>
+                        <td style="vertical-align: middle;">協尋</td>
+                        <td style="vertical-align: middle;">狗</td>
+                        <td style="vertical-align: middle;">協尋我的小乖</td>
+                        <td style="vertical-align: middle;">桃園市中壢區</td>
+                        <td style="vertical-align: middle;">
+                            <table>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/material-delete-1.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/awesome-check-green.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td>
+                                        <a href=""><img src="{{ url_for('static', filename='img/metro-cross-black.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var dialog,x;
+        window.onload=function(){
+            dialog=document.getElementById("dialog");
+            x=document.getElementById("x");
+        }
+        function showDialog(){
+            dialog.style.display="block";
+        }
+        function hideDialog(){
+            dialog.style.display="none";
+        }
+    </Script>
+
+</body>
+
+{% endblock content %}

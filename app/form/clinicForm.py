@@ -102,3 +102,10 @@ class FormMedicalRecords(FlaskForm):
         self.doctorList = doctorList
         self.medicationList = medicationList
     """
+
+class FormFindPet(FlaskForm):
+    PetID = StringField('寵物晶片編號', validators=[
+        validators.DataRequired(),
+        validators.Length(0, 20)
+    ])
+    submit = SubmitField('查詢')

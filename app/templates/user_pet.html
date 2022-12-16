@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_pet.css') }}">
+</head>
+
+<body>
+
+    <div>
+
+    </div>
+
+    <div class="Title_img" style="padding: 1.5rem;">
+        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        <div class="Title">   寵物列表   </div>
+        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <div class="" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: auto; padding: 1.5rem;">
+            
+            <div class="" style="padding: 1rem;">
+                <img width="80" height="80">
+            </div>
+    
+            <div>
+                <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">
+                    小橘子
+                </div>
+    
+                <div class="bg-table rounded-table h-100 p-4 dis">
+                    <table class="table">
+                        <thead class="thead">
+                            <tr style="color:red; border-top-style: hidden;">
+                                
+                                <th scope="col">晶片號碼</th>
+                                <th scope="col">性別</th>
+                                <th scope="col">類型</th>
+                                <th scope="col">品種</th>
+                                <th scope="col">疫苗紀錄</th>
+                                <th scope="col">就醫紀錄</th>
+                            </tr>
+                        </thead>
+                        <tbody class="thead">
+                            <tr>
+                                <td>1152244444410</td>
+                                <td>母</td>
+                                <td>貓</td>
+                                <td>美國短毛</td>
+                                <td>
+                                    <img src="{{ url_for('static', filename='img/syringe.png') }}" onclick="showDialog()" width="30" height="30">
+                                    
+                                    <div class="dialog" id="dialog">
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <img src="{{ url_for('static', filename='img/syringe.png') }}" width="30" height="30">
+                                            <div style="display: flex; align-items: center; margin: 1rem;">就醫紀錄</div>
+                                        </div>
+
+                                        <div>
+                                            <table class="table">
+                                                <thead class="thead">
+                                                    <tr>
+                                                        <th>接種日期</th>
+                                                        <th>疫苗名稱</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">111/11/20</td>
+                                                        <td style="vertical-align: middle;">五合一疫苗</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <input type="button" class="button-update mb-total" value="關閉" onclick="hideDialog()">
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <img src="{{ url_for('static', filename='img/medical-records.png') }}" onclick="showDialog1()" width="30" height="30">
+
+                                    <div class="dialog" id="dialog1">
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <img src="{{ url_for('static', filename='img/medical-records.png') }}" width="30" height="30">
+                                            <div style="display: flex; align-items: center; margin: 1rem;">就醫紀錄</div>
+                                        </div>
+
+                                        <div>
+                                            <table class="table">
+                                                <thead class="thead">
+                                                    <tr>
+                                                        <th>診所名稱</th>
+                                                        <th>就醫日期</th>
+                                                        <th>就醫類型</th>
+                                                        <th>醫師姓名</th>
+                                                        <th>詳細</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">NCU診所</td>
+                                                        <td style="vertical-align: middle;">111/11/20</td>
+                                                        <td style="vertical-align: middle;">打疫苗</td>
+                                                        <td style="vertical-align: middle;">王聖智</td>
+                                                        <td><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div style="display: flex; align-items: center; flex-direction: column;">
+                                            <input type="button" class="button-update mb-total" value="關閉" onclick="hideDialog1()">
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var dialog,x;
+        window.onload=function(){
+            dialog=document.getElementById("dialog");
+            x=document.getElementById("x");
+        }
+        function showDialog(){
+            dialog.style.display="block";
+        }
+        function hideDialog(){
+            dialog.style.display="none";
+        }
+
+        function showDialog1(){
+            dialog1.style.display="block";
+        }
+        function hideDialog1(){
+            dialog1.style.display="none";
+        }
+    </Script>
+
+</body>
+
+{% endblock content %}

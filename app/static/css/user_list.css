@@ -1,0 +1,116 @@
+.bg-light{
+    background-color: rgb(36, 213, 119);
+}
+.bg-table{
+    background-color:bisque;
+}
+.bg-text{
+    background-color: #e2b293;
+}
+
+.url{
+    background-color: aquamarine;
+    color: white;
+}
+
+.rounded{
+    border-radius: 30px;
+}
+.rounded-table{
+    border-radius: 30px; /*圓框*/
+}
+
+.h-100{
+    height: auto;
+}
+.w-80{
+    width: 50%;
+}
+
+.p-4{
+    padding: 1.5rem; /*間隔*/
+}
+
+.a{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column; /*向下排序*/
+    align-items: center; /*置中*/
+}
+
+.Title_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Title_more{ /*旁邊的按鈕(新增醫師)*/
+    display: flex;
+    justify-content: right;
+}
+
+.Title{
+    font-size: 1.5rem;
+    color: blue;
+}
+
+.text_center{
+    display: contents;
+    align-content: center
+}
+
+.mb-4{
+    margin-bottom: 1rem; /*間隔*/
+}
+
+.dis {
+    display:flex;
+    justify-content: center;
+}
+
+.table{
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    display: blocks;
+    text-align: center;
+}
+
+.thead{
+    text-align: center;
+}
+
+.td-middle{
+    vertical-align: middle;
+}
+
+.button_view{
+    background-color: #faa69f;
+    color: white;
+}
+.button_delete{
+    background-color: #f65a4d;
+    color: white;
+}
+
+/*彈出對話框*/
+
+.dialog{
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width: fit-content;
+    border:1px solid #888888;
+    background-color: #eeeeee;
+    box-shadow:0px 0px 10px;
+    padding: 10px;
+    transform:translate(-50%,-50%);
+    display:none;
+  }
+  .dialog>.close{
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    cursor:pointer;/*cursor游標pointer指針:改變鼠標*/
+  }
+  
