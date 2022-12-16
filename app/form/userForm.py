@@ -34,27 +34,6 @@ class FormRegister(FlaskForm):
         if user.query.filter_by(identify=field.data).first():
             raise ValidationError('Identify already register by somebody')
 
-class FormLogin(FlaskForm):
-    """
-    使用者登入使用
-    以email為主要登入帳號，密碼需做解碼驗證
-    記住我的部份透過flask-login來實現
-    """
-
-    email = EmailField('Email', validators=[
-        validators.DataRequired(),
-        validators.Length(5, 30),
-        validators.Email()
-    ])
-
-    password = PasswordField('密碼', validators=[
-        validators.DataRequired()
-    ])
-
-    remember_me = BooleanField('記住我')
-
-    submit = SubmitField('登入')
-
 class FormUserInfo(FlaskForm):
     UID = StringField('會員編號', render_kw={'readonly': True})
     email = StringField('Email', render_kw={'readonly': True})

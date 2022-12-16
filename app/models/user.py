@@ -3,7 +3,7 @@ import bcrypt
 from ..database import db
 from datetime import datetime
 from flask_login import UserMixin
-from ..config_other import login_manager,login_manager_clinic
+from ..config_other import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 class user(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -170,7 +170,7 @@ class clinic(UserMixin,db.Model):
     def check_password(self,password):
         return check_password_hash(self.password_hash, password)    
         
-    @login_manager_clinic.user_loader
+    @login_manager.user_loader
     def load_user(CID):
         # 回傳的就是使用者資訊
         try:
