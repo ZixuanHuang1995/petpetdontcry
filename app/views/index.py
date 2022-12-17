@@ -25,7 +25,7 @@ def login():
                     next = request.args.get('next')
                     if not next_is_valid(next):
                         return 'ERRRRRRRR'
-                    return redirect(next or render_template('clinic_home.html'))
+                    return redirect(next or url_for('clinic_views.home'))
                 else:
                     flash('Wrong Email or Password')
             else:
@@ -39,7 +39,7 @@ def login():
                     if not next_is_valid(next):
                         return 'ERRRRRRRR'
                     # return 'Welcome:'+current_user.name
-                    return redirect(next or render_template('home.html'))
+                    return redirect(next or url_for('user_views.home'))
                 else:
                     flash('Wrong Email or Password')
             else:

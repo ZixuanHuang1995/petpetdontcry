@@ -9,6 +9,10 @@ from ..config_other import photos
 # app = Flask(__name__,static_url_path='/static')
 clinic_views = Blueprint('clinic_views', __name__, template_folder='../templates')
 
+@clinic_views.route('/clinic/home')
+def home():
+    return render_template('clinic_home.html')
+
 @clinic_views.route('/test_clinic')
 @login_required
 def test_index():
@@ -46,7 +50,7 @@ def add_pet():
         flash('新增寵物成功')
     return render_template('chip_add.html.html', form=form)
 
-@clinic_views.route('/clinic/edit_pet/<int:PetID>', methods=['GET', 'POST'])
+@clinic_views.route('/clinic/edit_pet/<int:PetID>/', methods=['GET', 'POST'])
 @login_required
 def edit_pet(PetID):
     """
