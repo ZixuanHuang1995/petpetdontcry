@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}診所註冊{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">帳號</label>
+    <input name="username" id="username" required>
+    <label for="password">密碼</label>
+    <input type="password" name="password" id="password" required>
+    <label for="clinic_name">診所名稱</label>
+    <input type="text" name="clinic_name" id="clinic_name" required>
+    <label for="phone">電話</label>
+    <input type="tel" name="phone" id="phone" required>
+    <label for="address">地址</label>
+    <input type="text" name="address" id="address" required>
+    <label for="city">城市</label>
+    <input type="text" name="city" id="city" required>
+    <label for="issue_no">發照字號</label>
+    <input type="text" name="issue_no" id="issue_no" required>
+    <label for="issue_date">發照日期</label>
+    <input type="date" name="issue_date" id="issue_date" required>
+    <input type="submit" value="Register">
+  </form>
+{% endblock %}
