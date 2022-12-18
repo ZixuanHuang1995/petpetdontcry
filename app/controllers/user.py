@@ -30,3 +30,6 @@ def update_user_name(id, name):
         db.session.add(user)
         return db.session.commit()
     return None
+
+def get_user_data(ID):
+    return user.query.filter_by(account=ID).first()
