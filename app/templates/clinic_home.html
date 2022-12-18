@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_home.css') }}">
+</head>
+
+<body style="background-color: #5A62A7;">
+
+    <div class="Title_img mb-total">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title">   NCU診所   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="dis">
+
+        <div class="a mb-4">
+            <input type="button" value="看診" onclick="location.href='{{ url_for('clinic_views.find_pet') }}'" class="button-update">
+        </div>
+
+        <div class="a mb-4">
+            <input type="button" value="診所管理" onclick="location.href='{{ url_for('clinic_views.doctor' , CID='CID') }}'" class="button-update">
+        </div>
+        
+    </div>
+</body>
+
+{% endblock content %}

@@ -3,25 +3,27 @@ import bcrypt
 from ..database import db
 from datetime import datetime
 from flask_login import UserMixin
-from ..config_other import login_manager,login_manager_clinic
+from ..config_other import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
-class user(UserMixin, db.Model):
+class user(db.Model):
     __tablename__ = 'user'
     UID = db.Column('UID', db.Integer, primary_key = True)
     name = db.Column('name', db.String(20))
     identity = db.Column('identity',db.String(10), nullable=False)
-    email = db.Column('email',db.String(50), nullable=False)
+    # email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
-    password_hash = db.Column('password',db.String(128), nullable=False)
+    account = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
+    # password_hash = db.Column('password',db.String(128), nullable=False)
+    # role = db.Column('role', db.String(10), nullable=False)
     published = db.relationship('published', backref='user', lazy='dynamic')
     pet = db.relationship('pet', backref='user', lazy='dynamic')
     clinic_doctor = db.relationship('clinic_doctor', backref='user', lazy='dynamic')
-    def __init__(self,identity,email,password):
-        # self.name = name
+    def __init__(self,identity,account,name,phone):
+        self.name = name
         self.identity = identity
-        self.email = email
-        # self.phone = phone
-        self.password = password
+        self.account = account
+        self.phone = phone
+        # self.password = password
 
     def toJSON(self):
         return{
@@ -29,27 +31,27 @@ class user(UserMixin, db.Model):
             'username': self.name
         }
 
-    @login_manager.user_loader
-    def load_user(UID):
-        # 回傳的就是使用者資訊
-        try:
-            return user.query.get(UID)
-        except:
-            return None
+    # @login_manager.user_loader
+    # def load_user(UID):
+    #     # 回傳的就是使用者資訊
+    #     try:
+    #         return user.query.get(UID)
+    #     except:
+    #         return None
             
-    def get_id(self):
-           return (self.UID)
+    # def get_id(self):
+    #        return (self.UID)
 
-    @property
-    def password(self):
-        raise AttributeError('password is not a readable attribute')
+    # @property
+    # def password(self):
+    #     raise AttributeError('password is not a readable attribute')
 
-    @password.setter
-    def password(self,password):
-        self.password_hash = generate_password_hash(password)
+    # @password.setter
+    # def password(self,password):
+    #     self.password_hash = generate_password_hash(password)
 
-    def check_password(self,password):
-        return check_password_hash(self.password_hash, password)    
+    # def check_password(self,password):
+    #     return check_password_hash(self.password_hash, password)    
 # 查詢表
 class information(db.Model):
     __tablename__ = 'information'
@@ -61,6 +63,44 @@ class information(db.Model):
         self.name = name
         self.function = function
         self.type = type
+
+# 帳號密碼
+class account(UserMixin,db.Model):
+    __tablename__ = 'account'
+    ID = db.Column('ID', db.Integer, primary_key = True)
+    email = db.Column('email',db.String(50), nullable=False)
+    password_hash = db.Column('password',db.String(128), nullable=False)
+    role = db.Column('role', db.String(10), nullable=False)
+    first = db.Column('first', db.Boolean, default=False)
+    user = db.relationship('user', backref='user', lazy='dynamic')
+    clinic = db.relationship('clinic', backref='clinic', lazy='dynamic')
+    def __init__(self,email,password,role):
+        self.email = email
+        self.password = password
+        self.role=role
+    
+    def get_id(self):
+        return (self.ID)
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self,password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self,password):
+        return check_password_hash(self.password_hash, password)    
+        
+    @login_manager.user_loader
+    def load_user(ID):
+        # 回傳的就是使用者資訊
+        try:
+            return account.query.get(ID)
+        except:
+            return None
+
 # 刊登資料
 class published(db.Model):
     __tablename__ = 'published'
@@ -113,6 +153,8 @@ class pet(db.Model):
         self.fur = fur
         self.picture = picture
         self.variety = variety
+        
+        return self.UID
 # 寵物病歷
 class medicalrecords(db.Model):
     __tablename__ = 'medicalrecords'
@@ -144,7 +186,7 @@ class clinic_doctor(db.Model):
         self.UID = UID
         
 # 診所
-class clinic(UserMixin,db.Model):
+class clinic(db.Model):
     __tablename__ = 'clinic'
     CID = db.Column('CID', db.Integer, primary_key = True)
     name = db.Column('name', db.String(20), nullable=False)
@@ -153,9 +195,11 @@ class clinic(UserMixin,db.Model):
     account = db.Column('account', db.String(30), nullable=False)
     password_hash = db.Column('password', db.String(128), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
+    role = db.Column('role', db.String(10), nullable=False)
+    account = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
     medicalrecords = db.relationship('medicalrecords', backref='clinic', lazy='dynamic')
     clinic_doctor = db.relationship('clinic_doctor', backref='clinic', lazy='dynamic')
-    def __init__(self,CID,name,phone,address,account,password,emergency):  
+    def __init__(self,CID,name,phone,address,account,password,emergency,role):  
         self.CID = CID
         self.name = name
         self.phone = phone
@@ -163,17 +207,3 @@ class clinic(UserMixin,db.Model):
         self.account = account
         self.password = password
         self.emergency = emergency
-
-    def get_id(self):
-           return (self.CID)
-    
-    def check_password(self,password):
-        return check_password_hash(self.password_hash, password)    
-        
-    @login_manager_clinic.user_loader
-    def load_user(CID):
-        # 回傳的就是使用者資訊
-        try:
-            return clinic.query.get(CID)
-        except:
-            return None

@@ -9,27 +9,6 @@ from flask_wtf.file import FileAllowed, FileRequired
 # from wtforms.widgets.core.
 # from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
-class FormLogin(FlaskForm):
-    """
-    使用者登入使用
-    以email為主要登入帳號，密碼需做解碼驗證
-    記住我的部份透過flask-login來實現
-    """
-
-    account = EmailField('帳號', validators=[
-        validators.DataRequired(),
-        validators.Length(5, 30),
-        validators.Email()
-    ])
-
-    password = PasswordField('密碼', validators=[
-        validators.DataRequired()
-    ])
-
-    remember_me = BooleanField('記住我')
-
-    submit = SubmitField('Login')
-
 class FormPet(FlaskForm):
     """
     新增寵物
@@ -123,3 +102,10 @@ class FormMedicalRecords(FlaskForm):
         self.doctorList = doctorList
         self.medicationList = medicationList
     """
+
+class FormFindPet(FlaskForm):
+    PetID = StringField('寵物晶片編號', validators=[
+        validators.DataRequired(),
+        validators.Length(0, 20)
+    ])
+    submit = SubmitField('查詢')

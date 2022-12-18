@@ -6,15 +6,22 @@ from APP.models.user import published
 from .index import index_views
 from flask_login import login_user,current_user,login_required,logout_user
 from werkzeug.utils import secure_filename
+from ..controllers.auth import clinic_or_user
 from ..controllers import (
     create_user, 
     get_all_users,
     get_all_users_json,
+    get_user_data
 )
-from ..form.userForm import FormRegister,FormLogin,FormUserInfo
+from ..form.userForm import FormRegister,FormUserInfo,FormAddUserInfo
 from ..form.publishedForm import FormPublished
 from ..database import db
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
+
+@user_views.route('/test')
+@login_required
+def home():
+    return render_template('home.html')
 
 @user_views.route('/users', methods=['GET'])
 def get_user_page():
@@ -59,102 +66,83 @@ def user_register():
     說明：註冊使用者
     :return:
     """
-    print(db)
-    from ..models import user
+    from ..models import account
     form = FormRegister()
     if form.validate_on_submit():
-        user = user(
-            identity = form.identity.data,
+        accounts = account(
             email = form.email.data,
-            password = form.password.data
+            password = form.password.data,
+            role = 'user'
         )
-        db.session.add(user)
+        db.session.add(accounts)
         db.session.commit()
-        return 'Success!'
-    return render_template('register.html',form = form)
+        # return 'Success!', current_user.ID
+        return redirect(url_for('index_views.login'))
 
-@user_views.route('/user/login', methods=['GET', 'POST'])
-def login(): 
-    """
-    說明：登入
-    :return:
-    """
-    from ..models import user
-    form = FormLogin()
+    return render_template('test.html',form = form)
+   
+@user_views.route('/user/add_userinfo/<ID>', methods=['GET', 'POST'])
+def add_userinfo(ID):
+    from ..models import user,account
+    accounts = account.query.filter_by(ID=ID).first()
+    form = FormAddUserInfo()
     if form.validate_on_submit():
-        users = user.query.filter_by(email=form.email.data).first()
-        if users:
-            if users.check_password(form.password.data):
-                login_user(users,form.remember_me.data)
-                next = request.args.get('next')
-                if not next_is_valid(next):
-                    return 'ERRRRRRRR'
-                # return 'Welcome:'+current_user.name
-                return redirect(next or url_for('user_views.test_index'))
-            else:
-                flash('Wrong Email or Password')
-        else:
-            flash('Wrong Email or Password')
-    return render_template('login.html',form=form) 
+        print(current_user)
+        user = user(
+            name = form.name.data,
+            phone = form.phone.data,
+            identity = form.identity.data,
+            account = ID
+        )
+        accounts.first = True
+        db.session.add(user,account)
+        db.session.commit()
+        #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
+        flash('You Have Already Edit Your Info')
+        return 'ok'
+    return render_template('test.html',form = form)
 
- #  加入function
-def next_is_valid(url):
-    """
-    為了避免被重新定向的url攻擊，必需先確認該名使用者是否有相關的權限，
-    舉例來說，如果使用者調用了一個刪除所有資料的uri，那就GG了，是吧 。
-    :param url: 重新定向的網址
-    :return: boolean
-    """
-    return True 
-  
-@user_views.route('/user/logout')  
-@login_required
-def logout():  
-    """
-    說明：登出
-    :return:
-    """
-    logout_user()
-    flash('Logout See You')
-    return redirect(url_for('user_views.login'))
 
-@user_views.route('/user/edit_userinfo', methods=['GET', 'POST'])
+# ******
+
+@user_views.route('/user/edit_userinfo/<ID>', methods=['GET', 'POST'])
 @login_required
-def edit_user_info():
+def edit_user_info(ID):
+    from ..models import user,account
+    users = user.query.filter_by(account=ID).first()
     """
     說明：更新使用者資訊
     :return:
     """
     form = FormUserInfo()
     if form.validate_on_submit():
-        current_user.name = form.name.data
-        current_user.phone = form.phone.data
+        users.name = form.name.data
+        users.phone = form.phone.data
         db.session.add(current_user)
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('user_views.user_info', UID=current_user.UID))
+        return redirect(url_for('user_views.user_info', UID=users.UID))
     #  預設表單欄位資料為current_user的目前值
-    form.UID.data = current_user.UID
-    form.identity.data = current_user.identity
+    form.UID.data = users.UID
+    form.identity.data = users.identity
     form.email.data = current_user.email
-    form.name.data = current_user.name
-    form.phone.data = current_user.phone
-    return render_template('edituserInfo.html', form=form)
+    form.name.data = users.name
+    form.phone.data = users.phone
+    return render_template('user_data.html', form=form)
 
-@user_views.route('/user/userinfo/<UID>')
-@login_required
-def user_info(UID):
-    """
-    說明：使用者資訊呈現
-    :param UID:使用者UID
-    :return:
-    """
-    from ..models.user import user
-    user = user.query.filter_by(UID=UID).first()
-    if user is None:
-        abort(404)
-    return render_template('userInfo.html', user=user)
+# @user_views.route('/user/userinfo/<ID>')
+# @login_required
+# def user_info(ID):
+#     """
+#     說明：使用者資訊呈現
+#     :param UID:使用者UID
+#     :return:
+#     """
+#     user = get_user_data(ID)
+#     if user is None:
+#         abort(404)
+#     return render_template('user_data.html', user=user)
 
 @user_views.route('/user/addpublished', methods=['GET', 'POST'])
 @login_required
@@ -163,6 +151,7 @@ def add_publshed():
     說明：刊登遺失寵物資訊
     :return:
     """
+    clinic_or_user('user')
     from ..models import published
     form = FormPublished()
     if form.validate_on_submit():
@@ -183,7 +172,7 @@ def add_publshed():
         db.session.add(Publishing)
         db.session.commit()
         flash('Create New Blog Success')
-    return render_template('addpublished.html', form=form)
+    return render_template('user_postlist.html', form=form)
 
 @user_views.route('/user/mypublished/<UID>')
 @login_required
@@ -193,11 +182,12 @@ def published_info(UID):
     :param UID:使用者UID
     :return:
     """
+    clinic_or_user('user')
     from ..models.user import published
     published = published.query.filter_by(UID=UID).all()
     if published is None:
         abort(404)
-    return render_template('published.html', published=published)
+    return render_template('user_list.html', published=published)
 
 
 @user_views.route('/user/mypet/<UID>')
@@ -208,13 +198,14 @@ def pet_info(UID):
     :param UID:使用者UID
     :return:
     """
+    clinic_or_user('user')
     from ..models.user import pet
     pets = pet.query.filter_by(UID=UID).all()
     if pets is None:
         abort(404)
-    return render_template('pet.html', pets=pets)
+    return render_template('user_pet.html', pets=pets)
 
-@user_views.route('/user/edit_published/<int:PublishedID>/', methods=['GET', 'POST'])
+@user_views.route('/user/edit_published/<int:PublishedID>', methods=['GET', 'POST'])
 @login_required
 def edit_publshed(PublishedID):
     """
@@ -222,6 +213,7 @@ def edit_publshed(PublishedID):
     :param PublishedID:
     :return:
     """
+    clinic_or_user('user')
     from ..models import published
     Publishing = published.query.filter_by(PublishedID=PublishedID).first_or_404()
     form = FormPublished()
@@ -255,20 +247,34 @@ def edit_publshed(PublishedID):
     form.type.data = str(Publishing.type)
     print(form.picture.data)
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('add_published.html', form=form, Publishing=Publishing, action='edit')
+    return render_template('user_postlist.html', form=form, Publishing=Publishing, action='edit')
 
-@user_views.route('/user/published')
-@login_required
-def published_data():
+@user_views.route('/miss')
+def miss_data():
     """
     說明：所有刊登資訊呈現
     :return:
     """
     from ..models.user import published
-    published = published.query.all()
+    published = published.query.filter(
+        published.type.in_([1, 2])
+    ).all()
     if published is None:
         abort(404)
-    return render_template('published.html', published=published)
+    return render_template('miss.html', published=published)
+
+@user_views.route('/adoption')
+def adoption_data():
+    """
+    說明：所有刊登資訊呈現
+    :return:
+    """
+    from ..models.user import published
+    published = published.query.filter_by(type=3).all()
+    if published is None:
+        abort(404)
+    return render_template('adoption.html', published=published)
+
 
 @user_views.route('/user/pet_medicalrecord/<int:PetID>')
 @login_required
@@ -277,8 +283,9 @@ def mypet_medicalrecord(PetID):
     說明：我寵物病歷
     :return:
     """
+    clinic_or_user('user')
     from ..models.user import medicalrecords
     medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('medicalrecords.html',medicalrecords=medicalrecords)
+    return render_template('user_detailedrecords.html',medicalrecords=medicalrecords)

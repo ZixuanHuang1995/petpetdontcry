@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_doctor.css') }}">
+</head>
+
+<body style="background-color: #5A62A7;">
+    
+    <div class="Title_img">
+        <div class="left Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <p class="Title">   診所醫生   </p>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+        <div class="right">
+            <input class="Title_more Title url" type="button" value="新增醫師" onclick="location.href='{{ url_for('clinic_views.add_doctor') }}'">
+        </div>
+    </div>
+    
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table mb-4">
+                <thead>
+                    <tr class="thread">
+                        <th scope="col">ID</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">醫師編號</th>
+                        <th scope="col">醫師姓名</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="thread">
+                        <td>INV-0123</td>
+                        <td>Jhon Doe</td>
+                        <td>$123</td>
+                        <td>Paid</td>
+                        <td><a class="btn btn-sm btn-primary" href="{{ url_for('clinic_views.delete_doctor' , UID='0000000000' , CID='0000000000') }}">Detail</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/miss.css') }}">
+</head>
+
+<body>
+
+    <div>
+
+    </div>
+
+    <div class="Title_img" style="padding: 1.5rem; justify-content: right;">
+        <div><input type="button" class="button-update mb-total" value="我要刊登" onclick="location.href='{{ url_for('user_views.add_publshed') }}'"></div>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+
+        <div class="left" style="border: 1rem;">
+            <div style="display: flex; justify-content: center; align-content: center;">
+                <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
+                <div>條件篩選</div>
+            </div>
+    
+            <div>地區</div>
+            <div>
+                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                    <option value="" disabled>全部縣市</option>
+                    <option value="dog">狗</option>
+                    <option value="cat">貓</option>
+                </select>
+                
+                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                    <option value="" disabled>全部區域</option>
+                    <option value="dog">狗</option>
+                    <option value="cat">貓</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; justify-content: center; margin: 0.5rem;">
+                <input type="radio" name="type" value="1">協尋
+                <input type="radio" name="type" value="2">拾獲
+            </div>
+    
+            <div>動物</div>
+
+            <div style="display: flex; justify-content: center; margin: 0.5rem;">
+
+                <input type="radio" name="type1" value="1">貓咪
+                <input type="radio" name="type1" value="2">狗狗
+                <input type="radio" name="type1" value="3">鳥
+                <input type="radio" name="type1" value="4">兔子
+                <input type="radio" name="type1" value="5">其它
+            
+            </div>
+    
+            <div>
+                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                    <option value="" disabled>選擇品種</option>
+                    <option value="dog">不懂</option>
+                    <option value="cat">不懂</option>
+                </select>
+                
+                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                    <option value="" disabled>性別</option>
+                    <option value="dog">公</option>
+                    <option value="cat">母</option>
+                </select>
+            </div>
+    
+            <input type="button" class="button-update mb-total" value="搜尋" onclick="location.href=''">
+            <input type="button" class="button-update mb-total" value="清除條件" onclick="location.href=''">
+    
+        </div>
+    
+        <div class="right" style="display: flex; justify-content: center; height: fit-content;">
+            
+            <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: auto; padding: 1.5rem;">
+                
+                <div class="" style="padding: 1rem;">
+                    <img width="80" height="80">
+                </div>
+        
+                <div>
+                    <div style="display: flex;">
+                        <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">高雄市苓雅區</div>
+                        <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">拾獲</div>
+                    </div>
+                    
+                    <div class="bg-table rounded-table h-100 p-4 dis" style="border: solid;">
+                        <div>可愛又親人的小橘貓</div>
+                        <div>前不久巴拉巴ㄌ巴拉拉阿拉拉八八八八八八八八八八八八八八</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid">
+                <div>刊登資料</div>
+                <div>2022.11.8</div>
+                <div>性別</div>
+                <div>母</div>
+                <div><input type="button" class="button-update mb-total" value="詳細資料" onclick="location.href=''"></div>
+                <!--沒有miss的詳細紀錄可以連接-->>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+{% endblock content %}
