@@ -10,13 +10,7 @@ bp = Blueprint('clinic', __name__)
 
 @bp.route('/')
 def index():
-    db = get_db()
-    medical_records = db.execute(
-        'SELECT r.id, disease, medicine, created, clinic_id, username'
-        ' FROM medical_record r JOIN user u ON r.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-    return render_template('index.html', medical_records=medical_records)
+    return render_template('clinic/clinic_base.html')
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
