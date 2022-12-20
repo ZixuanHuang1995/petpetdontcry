@@ -49,9 +49,9 @@ class account(UserMixin,db.Model):
     def get_id(self):
         return (self.ID)
 
-    # @property
-    # def password(self):
-    #     raise AttributeError('password is not a readable attribute')
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
 
     @password.setter
     def password(self,password):

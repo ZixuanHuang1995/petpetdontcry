@@ -124,20 +124,20 @@ def find_pet():
         return render_template('clinic_records.html', pets=pets, medicalrecords=medicalrecords, action="medical")
     return render_template('chip_query.html', form=form, action="medical")
 
-@clinic_views.route('/clinic/find_pet', methods=['GET', 'POST'])
-@login_required
-def find_pet():
-    """
-    說明：查詢寵物
-    :return:
-    """
-    from ..models.user import pet,medicalrecords
-    form = FormFindPet()
-    if form.validate_on_submit():
-        pets = pet.query.filter_by(PetID=form.PetID.data).all()
-        medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
-        return render_template('clinic_medical.html', pets=pets,medicalrecords=medicalrecords)
-    return render_template('chip_query.html', form=form)
+# @clinic_views.route('/clinic/find_pet', methods=['GET', 'POST'])
+# @login_required
+# def find_pet():
+#     """
+#     說明：查詢寵物
+#     :return:
+#     """
+#     from ..models.user import pet,medicalrecords
+#     form = FormFindPet()
+#     if form.validate_on_submit():
+#         pets = pet.query.filter_by(PetID=form.PetID.data).all()
+#         medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
+#         return render_template('clinic_medical.html', pets=pets,medicalrecords=medicalrecords)
+#     return render_template('chip_query.html', form=form)
 
 @clinic_views.route('/clinic/add_doctor', methods=['GET', 'POST'])
 @login_required
