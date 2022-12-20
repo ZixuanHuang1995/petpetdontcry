@@ -33,7 +33,7 @@ def test_index():
 @login_required
 def add_pet():
     """
-    說明：新增寵物
+    說明：新增寵物晶片
     :return:
     """
     clinic_or_user('clinic')
@@ -61,7 +61,7 @@ def add_pet():
 @login_required
 def edit_pet(PetID):
     """
-    說明：更新寵物資訊
+    說明：更新寵物晶片資訊
     :param PetID:
     :return:
     """
@@ -94,7 +94,7 @@ def edit_pet(PetID):
     form.variety.data = pets.variety
     form.vaccine.data = pets.vaccine
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('chip_add.html', form=form, pets=pets, action='edit')
+    return render_template('chip_edit.html', form=form, pets=pets, action='edit')
 
 @clinic_views.route('/user/petinfo/<PetID>')
 @login_required
@@ -267,7 +267,7 @@ def pet_medicalrecord(PID):
     medicalrecords = medicalrecords.query.filter_by(PetID=PID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('medical_records.html', medicalrecords=medicalrecords, action="medical")
+    return render_template('clinic_records.html', medicalrecords=medicalrecords, action="medical")
 
 @clinic_views.route('/clinic/pet_siglemedicalrecord/<MID>', methods=['GET', 'POST'])
 @login_required
@@ -298,4 +298,4 @@ def medicalrecords(CID):
     medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('clinic_records.html', medicalrecords=medicalrecords, action="medical")
+    return render_template('medical_records.html', medicalrecords=medicalrecords, action="manage")

@@ -11,7 +11,7 @@
     <div class="Title_img mb-total">
         <div class="Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <div class="Title">   新增寵物晶片   </div>
+            <div class="Title">   更新寵物晶片   </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
@@ -54,21 +54,8 @@
                             <div class="mb-total">上傳照片</div>
                         </td>
                         <td id="table-dis">
-                            <input type='file' style="vertical-align: middle;"/ onclick="">
+                            <input type='file' style="vertical-align: middle;" onclick="upload_image">
                             {{form.picture}}
-                            <script>
-                                $('input').on('change', function(e){      
-                                    const file = this.files[0];//將上傳檔案轉換為base64字串
-      
-                                    const fr = new FileReader();//建立FileReader物件
-                                    fr.onload = function (e) {
-                                        $('img').attr('src', e.target.result);//读取的结果放入圖片
-                                    };
-      
-                                    // 使用 readAsDataURL 將圖片轉成 Base64
-                                    fr.readAsDataURL(file);
-                                });
-                            </script>
                         </td>
                     </tr>
                     <tr>
@@ -89,7 +76,7 @@
         <div class="dialog" id="dialog">
             <div style="display: flex; align-items: center; flex-direction: column;">晶片新增成功!</div>
             <div style="display: flex; align-items: center; flex-direction: column;">
-                <input type="button" class="button-update mb-total" value="確定" onclick="hideDialog()">
+                <input type="button" class="button-update mb-total" value="確定" onclick="hideDialog()" > <!--hideDialog()-->
             </div>
         </div>
 
