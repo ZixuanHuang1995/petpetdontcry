@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
+</head>
+
+<body>
+    
+    <div class="Title_img p-4">
+        <div class="Title_img" style="background-color: yellow;">
+            <img src="{{ url_for('static', filename='img/publication-list.png') }}" width="30" height="30">
+            <p class="Title text_center">刊登列表</p>
+        </div>
+        <div class="Title_img" style="background-color: rgb(254, 254, 253);">
+            <img src="{{ url_for('static', filename='img/feather-heart-1.png') }}" width="30" height="30">
+            <p class="Title text_center">收藏列表</p>
+        </div>
+    </div>
+    
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table mb-4">
+                <thead>
+                    <tr class="thread">
+                        <th style="text-align: center;" scope="col">ID</th>
+                        <th style="text-align: center;" scope="col">日期</th>
+                        <th style="text-align: center;" scope="col">類型</th>
+                        <th style="text-align: center;" scope="col">動物</th>
+                        <th style="text-align: center;" scope="col">標題</th>
+                        <th style="text-align: center;" scope="col">地區</th>
+                        <th style="text-align: center;" scope="col">狀態</th>
+                    </tr>
+                </thead>
+                {% for published in publisheds %}
+                <tbody>
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">{{published.PublishedID}}</td>
+                        <td style="vertical-align: middle;">{{published.time}}</td>
+                        <td style="vertical-align: middle;">{{published.type}}</td>
+                        <td style="vertical-align: middle;">{{published.variety}}</td>
+                        <td style="vertical-align: middle;">{{published.title}}</td>
+                        <td style="vertical-align: middle;">{{published.area}}</td>
+                        <td style="vertical-align: middle;">
+                            <table style="display: flex; justify-content: center;">
+                                <tr style="border-style: hidden; margin: 1rem;">
+                                    <td style="padding: 0.5rem;">
+                                        <a href="{{ url_for('user_views.edit_publshed' , PublishedID='1111111111') }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td style="padding: 0.5rem;">
+                                        <a onclick="showDialog()"><img src="{{ url_for('static', filename='img/material-delete-1.png') }}" width="10" height="10"></a>
+                                        
+                                        <div class="dialog" id="dialog">
+                                            
+                                            <div style="display: flex; align-items: center; justify-content: center;">
+                                                <img src="{{ url_for('static', filename='img/delete-alert.png') }}" width="30" height="30" style="margin: 1rem;">
+                                            </div>
+
+                                            <div style="display: flex; align-items: center; justify-content: center;">確定要刪除嗎?</div>
+
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="button" class="button-update" style="margin: 1rem;" value="確定" onclick="hideDialog()">
+                                                <input type="button" class="button-update" style="margin: 1rem;" value="取消" onclick="hideDialog()">
+                                            </div>
+                                        
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="border-style:hidden ;">
+                                    <td style="padding: 0.5rem;">
+                                        <a href=""><img src="{{ url_for('static', filename='img/awesome-check-green.png') }}" width="10" height="10"></a>
+                                    </td>
+                                    <td style="padding: 0.5rem;">
+                                        <a href=""><img src="{{ url_for('static', filename='img/metro-cross-black.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var dialog,x;
+        window.onload=function(){
+            dialog=document.getElementById("dialog");
+            x=document.getElementById("x");
+        }
+        function showDialog(){
+            dialog.style.display="block";
+        }
+        function hideDialog(){
+            dialog.style.display="none";
+        }
+    </Script>
+
+</body>
+
+{% endblock content %}

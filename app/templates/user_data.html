@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_data.css') }}">
+</head>
+
+<body>
+    
+    <div class="Title_img mb-total">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title">   基本資料   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <tbody class="thead">
+                    <tr>
+                        <td scope="row" class="font-B">{{form.UID.label}}</td>
+                        <td><input disabled type="text" value="" class="input-text"></td> <!--讀取使用者ID-->
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">Email</td>
+                        <td>{{form.email(class='input-text')}}</td> <!--讀取Email-->
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">{{form.name.label}}</td>
+                        <td>{{form.name(class='input-text')}}</td> <!--讀取/輸入名字-->
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">{{form.identity.label}}</td>
+                        <td>{{form.identity(class='input-text')}}<input disabled type="text" value="" class="input-text"></td> <!--讀取身分證-->
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">{{form.phone.label}}</td>
+                        <td>{{form.phone(class='input-text')}}</td> <!--讀取/輸入電話-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="a mb-4">
+        {{form.submit(value="更新基本資料", class="button-update")}}
+        <input type="button" value="更新基本資料" onclick="location.href='{{ url_for('user_views.edit_user_info' , ID = current_user.ID ) }}'" class="button-update">
+    </div>
+
+    <div class="Title_img mb-total">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title">   修改密碼   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <tbody class="thead">
+                    <tr>
+                        <td scope="row" class="font-B">舊密碼</td>
+                        <td><input type="text" value="輸入舊密碼" class="input-text"></td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">新密碼</td>
+                        <td><input type="text" value="輸入新密碼" class="input-text"></td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">新密碼</td>
+                        <td><input type="text" value="輸入新密碼" class="input-text"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="a mb-4">
+        <input type="button" value="更新密碼" onclick="location.href='{{ url_for('user_views.edit_user_info' , ID = current_user.ID ) }}'" class="button-update">
+    </div>
+
+</body>
+
+{% endblock content %}

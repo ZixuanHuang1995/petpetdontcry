@@ -1,0 +1,98 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Pet Pet Dontcry{% endblock title %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('static', filename='style.css')}}">
+{% endblock %}
+
+{% block navbar %}
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!-- 透過url_for設定HOME連結綁定index -->
+        <a class="navbar-left" href="{{ url_for('user_views.test_index')}}">
+          <img class="img-clinic" src="{{ url_for('static', filename='img/clinic-logo.png') }}" alt="">
+        </a>
+
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-right pull-center navbar-inner" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav ">
+            
+          {% if action=='manage' %} <!--診所管理-->
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('clinic_views.add_doctor') }}">Doctor<br>醫師管理</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('clinic_views.medicalrecords' , CID = '1') }}">Medical records<br>所有病歷</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束診所管理</a>
+            </li>
+           {% elif action=='medical' %} 
+           <!--看診-->
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('clinic_views.pet_medicalrecord', PID = PID) }}">Medical records<br>病歷紀錄</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('clinic_views.add_medicalrecord') }}">Add records<br>新增病歷</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = '123456789') }}">Edit chip<br>修改晶片</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束看診</a>
+            </li>
+            {% elif action1=='medical' %} 
+           <!--看診-->
+           <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('clinic_views.pet_medicalrecord', PID = PID) }}">Medical records<br>病歷紀錄</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('clinic_views.add_medicalrecord') }}">Add records<br>新增病歷</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = '1111111111') }}">Edit chip<br>修改晶片</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束看診</a>
+          </li>
+          
+          {% else %} 
+          <li class="nav-item navbar-right">
+            <a class="nav-link" href="#">登出</a>
+          </li>
+
+          {% endif %}
+
+        </ul>   
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+{% endblock navbar %}
+
+{% block content %}
+<div class="container">
+    <!-- 用來接後端傳來的flash-message -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <!-- 弄一個x的button，點擊之後讓訊息消失，可參考bootstrap說明 -->
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock content %}

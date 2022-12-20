@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/medical_records.css') }}">
+</head>
+
+<body style="background-color: #a7aee9;">
+
+    <div>
+
+    </div>
+
+    <div class="Title_img" style="padding: 1.5rem; justify-content: center;">
+        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        <div style="font-weight: bold; color: #5a62a7;"> 所有病歷 </div>
+        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+
+        <div class="left" style="border: 1rem;">
+            <div style="display: flex; justify-content: center; align-content: center;">
+                <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
+                <div>篩選</div>
+            </div>
+    
+            <div>醫師</div>
+            <div>
+                <select name="doctor" class="rounded-table input-select" style="width: 50%; margin: 0.5rem; text-align: center;">
+                    <option value="" disabled>選擇醫師</option>
+                    <option value="dog">王聖智</option>
+                    <option value="cat">你老媽</option>
+                </select>
+            </div>
+    
+            <div>時間</div>
+            
+            <div>年</div>
+            <div>
+                <select name="year" class="rounded-table input-select" style="width: 80%; margin: 0.5rem; text-align: center;">
+                    <option value="" disabled>選擇年分</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+
+            <div>月</div>
+            <div>
+                <select name="month" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;  text-align: center;">
+                    <option value="" disabled>選擇月分</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+            <div>日</div>
+            <div>
+                <select name="day" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;  text-align: center;">
+                    <option value="" disabled>選擇日期</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+    
+            <input type="button" class="button-update mb-total" value="搜尋" onclick="location.href=''">
+            <input type="button" class="button-update mb-total" value="清除條件" onclick="location.href=''">
+    
+        </div>
+    
+        <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">
+            
+            <div style="margin: 1rem;">
+                <input type="button" value="由舊至新" onclick="location.href=''" class="button-update">
+                <input type="button" value="由新至舊" onclick="location.href=''" class="button-update">
+            </div>
+            {% for medicalrecords in medicalrecords %}
+            <div style="display: flex; justify-content: center; margin: 1rem;">
+                <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis" style="width: fit-content;">
+                    <table class="table mb-4">
+                        <thead>
+                            <tr class="thread">
+                                <th scope="col">ID</th>
+                                <th scope="col">日期</th>
+                                <th scope="col">晶片號碼</th>
+                                <th scope="col">醫師</th>
+                                <th scope="col">看診紀錄</th>
+                                <th scope="col">詳細內容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="thread">
+                                <td>{{medicalrecords.MID}}</td>
+                                <td>{{medicalrecords.time}}</td>
+                                <td>{{medicalrecords.PetID}}</td>
+                                <td>{{medicalrecords.doctor}}</td>
+                                <td>{{medicalrecords.type}}</td>
+                                <td><a href="{{ url_for('clinic_views.pet_singlemedicalrecord' , MID = medicalrecords.MID) }}"><img src="{{ url_for('static', filename='img/magnifier.png') }}" width="30" height="30"></a></td>
+                                <!--沒有詳細資料的route (detailed_records.html)-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div style="display: flex; justify-content: center; align-content: center;">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+{% endblock content %}
