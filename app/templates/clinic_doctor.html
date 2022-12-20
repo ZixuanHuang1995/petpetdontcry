@@ -20,7 +20,7 @@
     </div>
     
     <div class="a">
-
+        {% for doctors in doctors %}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
             <table class="table mb-4">
                 <thead>
@@ -34,15 +34,16 @@
                 </thead>
                 <tbody>
                     <tr class="thread">
-                        <td>INV-0123</td>
+                        <td>INV-0123{{doctors.user.UID}}</td>
                         <td>Jhon Doe</td>
-                        <td>$123</td>
-                        <td>Paid</td>
-                        <td><a class="btn btn-sm btn-primary" href="{{ url_for('clinic_views.delete_doctor' , UID='0000000000' , CID='0000000000') }}">Detail</a></td>
+                        <td>$123{{doctors.user.UID}}</td>
+                        <td>Paid{{doctors.user.name}}</td>
+                        <td><a class="btn btn-sm btn-primary" href="{{ url_for('clinic_views.delete_doctor' , UID=doctors.user.UID , CID=doctors.clinic.CID) }}">Detail</a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        {% endfor %}
     </div>
 </body>
 

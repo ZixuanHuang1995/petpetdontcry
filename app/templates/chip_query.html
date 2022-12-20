@@ -22,11 +22,11 @@
             <div class="" style="margin: 1rem; display: flex; align-items: center; justify-content: center;">
                 <img src="{{ url_for('static', filename='img/magnifier.png') }}" width="30" height="30">
                 <div style="font-weight: bold; font-size: 1rem;">晶片號碼：</div>
-                <div><input type="text" value="10~15碼晶片號碼" class="input-text" style="padding: 0.5rem; font-size: 1rem;"></div>
+                <div>{{form.PetID(class='input-text', style='padding: 0.5rem; font-size: 1rem;')}}</div>
             </div>
-    
+            
             <div class="" style="margin: 1rem; display: flex;">
-                <input type="button" value="晶片查詢" onclick="location.href='{{ url_for('clinic_views.pet_medicalrecord' , MID='MID') }}'" class="button-update">
+                <input type="button" value="晶片查詢" onclick="location.href='{{ url_for('clinic_views.pet_medicalrecord' , PID = '123456789') }}'" class="button-update">
                 <input type="button" value="新增晶片" onclick="location.href='{{ url_for('clinic_views.add_pet') }}'" class="button-update">
             </div>
     

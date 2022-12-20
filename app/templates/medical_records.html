@@ -76,7 +76,7 @@
                 <input type="button" value="由舊至新" onclick="location.href=''" class="button-update">
                 <input type="button" value="由新至舊" onclick="location.href=''" class="button-update">
             </div>
-
+            {% for medicalrecords in medicalrecords %}
             <div style="display: flex; justify-content: center; margin: 1rem;">
                 <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis" style="width: fit-content;">
                     <table class="table mb-4">
@@ -92,18 +92,19 @@
                         </thead>
                         <tbody>
                             <tr class="thread">
-                                <td>1</td>
-                                <td>111.11.10</td>
-                                <td>1152244444410</td>
-                                <td>王聖智</td>
-                                <td>看診</td>
-                                <td><a herf="{{ url_for('clinic_views.add_pet') }}"><img src="{{ url_for('static', filename='img/magnifier.png') }}" width="30" height="30"></a></td>
+                                <td>{{medicalrecords.MID}}</td>
+                                <td>{{medicalrecords.time}}</td>
+                                <td>{{medicalrecords.PetID}}</td>
+                                <td>{{medicalrecords.doctor}}</td>
+                                <td>{{medicalrecords.type}}</td>
+                                <td><a href="{{ url_for('clinic_views.pet_singlemedicalrecord' , MID = medicalrecords.MID) }}"><img src="{{ url_for('static', filename='img/magnifier.png') }}" width="30" height="30"></a></td>
                                 <!--沒有詳細資料的route (detailed_records.html)-->
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            {% endfor %}
 
             <div style="display: flex; justify-content: center; align-content: center;">
                 <nav aria-label="Page navigation example">

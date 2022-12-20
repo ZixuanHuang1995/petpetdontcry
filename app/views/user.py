@@ -122,14 +122,14 @@ def edit_user_info(ID):
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('user_views.user_info', UID=users.UID))
+        return redirect(url_for('user_views.user_info', UID=users.UID,))
     #  預設表單欄位資料為current_user的目前值
     form.UID.data = users.UID
     form.identity.data = users.identity
     form.email.data = current_user.email
     form.name.data = users.name
     form.phone.data = users.phone
-    return render_template('user_data.html', form=form)
+    return render_template('user_data.html',  usersa=users, form=form)
 
 # @user_views.route('/user/userinfo/<ID>')
 # @login_required
@@ -174,36 +174,48 @@ def add_publshed():
         flash('Create New Blog Success')
     return render_template('user_postlist.html', form=form)
 
-@user_views.route('/user/mypublished/<UID>')
+@user_views.route('/user/mypublished/<ID>')
 @login_required
-def published_info(UID):
+def published_info(ID):
     """
     說明：我的刊登資訊呈現
     :param UID:使用者UID
     :return:
     """
-    clinic_or_user('user')
+    users = get_user_data(current_user.ID)
     from ..models.user import published
-    published = published.query.filter_by(UID=UID).all()
-    if published is None:
+    publisheds = published.query.filter_by(UID=users.UID).all()
+    if publisheds is None:
         abort(404)
-    return render_template('user_list.html', published=published)
+    return render_template('user_list.html', publisheds=publisheds)
 
 
-@user_views.route('/user/mypet/<UID>')
+@user_views.route('/user/mypet/<ID>')
 @login_required
-def pet_info(UID):
+def pet_info(ID):
     """
     說明：我的寵物資訊呈現
     :param UID:使用者UID
     :return:
     """
-    clinic_or_user('user')
-    from ..models.user import pet
-    pets = pet.query.filter_by(UID=UID).all()
+    users = get_user_data(current_user.ID)
+    from ..models.user import pet 
+    pets = pet.query.filter_by(UID=users.UID).all()
     if pets is None:
         abort(404)
+    print(pets)
     return render_template('user_pet.html', pets=pets)
+
+@user_views.route('/user/petrecord/<PetID>', methods=['GET', 'POST'])
+def pet_record(PetID):
+    from ..models.user import medicalrecords 
+    medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
+    if medicalrecords is None:
+        abort(404)
+    print("test",medicalrecords)
+    return render_template('user_pet.html', medicalrecords=medicalrecords)
+
+
 
 @user_views.route('/user/edit_published/<int:PublishedID>', methods=['GET', 'POST'])
 @login_required
@@ -276,16 +288,17 @@ def adoption_data():
     return render_template('adoption.html', published=published)
 
 
-@user_views.route('/user/pet_medicalrecord/<int:PetID>')
+@user_views.route('/user/pet_medicalrecord/<int:MID>')
+
 @login_required
-def mypet_medicalrecord(PetID):
+def mypet_medicalrecord(MID):
     """
     說明：我寵物病歷
     :return:
     """
-    clinic_or_user('user')
-    from ..models.user import medicalrecords
-    medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
+
+    from ..models.user import medicalrecords, clinic
+    medicalrecords = medicalrecords.query.filter_by(MID=MID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('user_detailedrecords.html',medicalrecords=medicalrecords)
+    return render_template('user_detailedrecords.html', medicalrecords=medicalrecords)

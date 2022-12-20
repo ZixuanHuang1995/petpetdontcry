@@ -14,39 +14,42 @@
             <p class="Title">   詳細病歷   </p>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
+        {% for medicalrecords in medicalrecords %}
         <div class="right">
-            <a><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="30" height="30"></a>
+            <a href="{{ url_for('clinic_views.edit_medicalrecord' , MID = medicalrecords.MID) }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="30" height="30"></a>
         </div>
+        {% endfor %}
     </div>
 
     <div class="a">
-
+        {% for medicalrecords in medicalrecords %}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
             <table class="table">
                 <tbody class="thead">
                     <tr>
                         <td scope="row" class="font-B">寵物晶片號碼</td>
-                        <td>1152244444410</td>
+                        <td>{{medicalrecords.PetID}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B">診所名稱</td>
-                        <td>NCU診所</td>
+                        <td>{{medicalrecords.clinic.name}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B">就醫類型</td>
-                        <td>看診</td>
+                        <td>{{medicalrecords.type}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B">病症</td>
-                        <td>王聖智</td>
+                        <td>{{medicalrecords.doctor}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B">用藥</td>
-                        <td>Artuvetrin</td>
+                        <td>{{medicalrecords.medication}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        {% endfor %}
     </div>
 </body>
 

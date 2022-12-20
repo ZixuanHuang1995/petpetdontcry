@@ -10,7 +10,14 @@ from ..config_other import photos
 clinic_views = Blueprint('clinic_views', __name__, template_folder='../templates')
 
 @clinic_views.route('/clinic/home')
+@login_required
 def home():
+
+    from ..models import user, clinic_doctor
+
+    # users = user.query.filter_by(ID = current_user.ID).first()
+    # clinic_doctors = clinic_doctor.query.filter_by(UID=users.UID).first() #一個醫生只能在一家診所 不然判斷會出錯
+
     return render_template('clinic_home.html')
 
 @clinic_views.route('/test_clinic')
@@ -48,7 +55,7 @@ def add_pet():
         db.session.add(Pets)
         db.session.commit()
         flash('新增寵物成功')
-    return render_template('chip_add.html', form=form)
+    return render_template('chip_add.html', form=form, action="medical")
 
 @clinic_views.route('/clinic/edit_pet/<int:PetID>/', methods=['GET', 'POST'])
 @login_required
@@ -103,7 +110,7 @@ def pet_info(PetID):
     print(pets)
     if pet is None:
         abort(404)
-    return render_template('pet.html', pets=pets)
+    return render_template('pet.html', pets=pets, action="medical")
 
 @clinic_views.route('/clinic/find_pet', methods=['GET', 'POST'])
 @login_required
@@ -119,7 +126,7 @@ def find_pet():
         pets = pet.query.filter_by(PetID=form.PetID.data).all()
         medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
         return render_template('clinic_medical.html', pets=pets,medicalrecords=medicalrecords)
-    return render_template('chip_query.html', form=form)
+    return render_template('chip_query.html', form=form, action="medical")
 
 @clinic_views.route('/clinic/add_doctor', methods=['GET', 'POST'])
 @login_required
@@ -139,8 +146,8 @@ def add_doctor():
         db.session.add(doctor)
         db.session.commit()
         flash('新增寵物成功')
-        return redirect(url_for('clinic_views.doctor', CID=current_user.CID))
-    return render_template('add_doctor.html', form=form)
+        return redirect(url_for('clinic_views.doctor', CID=current_user.CID, action="manage"))
+    return render_template('add_doctor.html', form=form, action="manage")
 @clinic_views.route('/clinic/doctor/<CID>')
 @login_required
 def doctor(CID):
@@ -154,7 +161,7 @@ def doctor(CID):
     doctors = clinic_doctor.query.filter_by(CID=CID).all()
     if doctors is None:
         abort(404)
-    return render_template('clinic_doctor.html', doctors=doctors)
+    return render_template('clinic_doctor.html', doctors=doctors, action="manage")
 
 # 建立刪除的路徑
 @clinic_views.route('/clinic/delete_doctor/<int:CID>/<int:UID>')
@@ -170,13 +177,13 @@ def delete_doctor(CID,UID):
         flash('內容已被刪除!')
         # 我們需要透過class從資料庫抓取文章，通過發布時間排序
         doctors = doctor_to_delete.query.filter_by(CID=CID).all()
-        return render_template("clinic_doctor.html", doctors=doctors)
+        return render_template("clinic_doctor.html", doctors=doctors, action="manage")
     # 如果無法刪除
     except:
         flash('內容無法刪除，請再試一下！')
         # 我們需要透過class從資料庫抓取文章，通過發布時間排序
         doctors = clinic_doctor.query.filter_by(CID=CID).all()
-        return render_template("clinic_doctor.html", doctors=doctors)
+        return render_template("clinic_doctor.html", doctors=doctors, action="manage")
  
 @clinic_views.route('/clinic/add_medicalrecords', methods=['GET', 'POST'])
 def add_medicalrecord():
@@ -206,9 +213,9 @@ def add_medicalrecord():
         db.session.add(medicalrecord)
         db.session.commit()
         flash('新增病歷成功')
-    return render_template('add_records.html', form=form)
+    return render_template('add_records.html', form=form, action="medical")
 
-@clinic_views.route('/clinic/edit_medicalrecord/<int:PetID>/', methods=['GET', 'POST'])
+@clinic_views.route('/clinic/edit_medicalrecord/<int:MID>/', methods=['GET', 'POST'])
 @login_required
 def edit_medicalrecord(MID):
     """
@@ -233,7 +240,7 @@ def edit_medicalrecord(MID):
         db.session.add(medicalrecord)
         db.session.commit()
         flash('更新病歷成功')
-        return redirect(url_for('clinic_views.pet_info', PetID=medicalrecord.PetID))
+        return redirect(url_for('clinic_views.pet_info', MID=medicalrecord.MID , medicalrecords=medicalrecord, action="medical"))
 
     form.MID.data = str(medicalrecord.MID)
     form.PetID.data = str(medicalrecord.PetID)
@@ -245,23 +252,36 @@ def edit_medicalrecord(MID):
     form.note.data = medicalrecord.note
 
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('add_records.html', form=form, medicalrecord=medicalrecord, action='edit')
+    return render_template('add_records.html', form=form, medicalrecords=medicalrecord, action='edit', action1="medical")
 
 
-@clinic_views.route('/clinic/pet_medicalrecord/<MID>', methods=['GET', 'POST'])
+@clinic_views.route('/clinic/pet_medicalrecord/<PID>', methods=['GET', 'POST'])
 @login_required
-def pet_medicalrecord(MID):
+def pet_medicalrecord(PID):
     """
     說明：寵物單一病歷資料
     :param NID:病歷編號
     :return:
     """
-    clinic_or_user('clinic')
+    from ..models.user import medicalrecords
+    medicalrecords = medicalrecords.query.filter_by(PetID=PID).all()
+    if medicalrecords is None:
+        abort(404)
+    return render_template('medical_records.html', medicalrecords=medicalrecords, action="medical")
+
+@clinic_views.route('/clinic/pet_siglemedicalrecord/<MID>', methods=['GET', 'POST'])
+@login_required
+def pet_singlemedicalrecord(MID):
+    """
+    說明：寵物單一病歷資料
+    :param NID:病歷編號
+    :return:
+    """
     from ..models.user import medicalrecords
     medicalrecords = medicalrecords.query.filter_by(MID=MID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('medical_records.html', medicalrecords=medicalrecords)
+    return render_template('detailed_records.html', medicalrecords=medicalrecords , action="medical")
 
 
 
@@ -278,4 +298,4 @@ def medicalrecords(CID):
     medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('clinic_records.html', medicalrecords=medicalrecords)
+    return render_template('clinic_records.html', medicalrecords=medicalrecords, action="medical")

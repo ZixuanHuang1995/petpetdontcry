@@ -50,8 +50,8 @@
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User<br>會員管理<span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="{{ url_for('user_views.edit_user_info' , ID = current_user.ID ) }}">基本資料</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('user_views.pet_info' , UID='UID') }}">寵物列表</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('user_views.published_info' , UID='UID') }}">刊登列表</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('user_views.pet_info' , ID=current_user.ID) }}">寵物列表</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('user_views.published_info' , ID=current_user.ID) }}">刊登列表</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('index_views.logout') }}">登出</a></li>
               </ul>
             </li>

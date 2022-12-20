@@ -27,8 +27,7 @@
                             <div class="text-warn">必填</div>
                         </td>
                         <td id="table-dis">
-                            <input type="radio" name="type" value="1">協尋
-                            <input type="radio" name="type" value="2">拾獲
+                            {{form.type(class='input-radio',style='list-style-type: none; display: flex; justify-content: center;')}} <!--輸入刊登類型-->
                         </td>
                     </tr>
                     <tr>
@@ -37,11 +36,7 @@
                             <div class="text-warn">必填</div>
                         </td>
                         <td id="table-dis">
-                            <select name="pets_type" class="rounded-table input-select">
-                                <option value="" disabled>請選擇</option>
-                                <option value="dog">狗</option>
-                                <option value="cat">貓</option>
-                            </select>
+                            {{form.variety(class='input-text')}} <!--輸入動物類型-->
                         </td>
                     </tr>
                     <tr>
@@ -49,7 +44,9 @@
                             <div class="mb-total">刊登標題</div>
                             <div class="text-warn">必填</div>
                         </td>
-                        <td id="table-dis"><input type="text" value="請輸入標題" class="input-text"></td>
+                        <td id="table-dis">
+                            {{form.title(class='input-text')}} <!--輸入標題-->
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title">
@@ -78,7 +75,9 @@
                             <div class="mb-total">毛色</div>
                             <div class="text-warn">必填</div>
                         </td>
-                        <td id="table-dis"><input type="text" value="請輸入毛色" class="input-text"></td>
+                        <td id="table-dis">
+                            {{form.fur(class='input-text')}} <!--輸入毛色-->
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title">
@@ -89,19 +88,11 @@
                             <div style="display: flex; flex-wrap:wrap; justify-content: center;">
 
                                 <div style="width:50%;">
-                                    <select name="pets_type" class="rounded-table input-select">
-                                        <option value="" disabled>請選擇縣市</option>
-                                        <option value="dog">狗</option>
-                                        <option value="cat">貓</option>
-                                    </select>
+                                    {{form.area(class='input-text')}} <!--輸入縣市-->
                                 </div>
     
                                 <div style="width:50%;">
-                                    <select name="pets_type" class="rounded-table input-select">
-                                        <option value="" disabled>請選擇地區</option>
-                                        <option value="dog">狗</option>
-                                        <option value="cat">貓</option>
-                                    </select>
+                                    {{form.area(class='input-text')}} <!--輸入地區-->
                                 </div>
 
                             </div>
@@ -112,7 +103,9 @@
                             <div class="mb-total">走失敘述</div>
                             <div class="text-warn">必填</div>
                         </td>
-                        <td id="table-dis"><input type="text" value="請輸入毛色" class="input-text"></td>
+                        <td id="table-dis">
+                            {{form.depiction(class='input-text')}} <!--輸入敘述-->
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -128,7 +121,7 @@
             </div>
             <div style="display: flex; align-items: center; flex-direction: column;">刊登資料成功!</div>
             <div style="display: flex; align-items: center; flex-direction: column;">
-                <input type="button" class="button-update mb-total" value="確定" onclick="hideDialog()">
+                <input type="button" class="button-update mb-total" value="確定" onclick="hideDialog()"> <!--返回他的刊登列表-->
             </div>
         </div>
 

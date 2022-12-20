@@ -23,34 +23,31 @@
                 <tbody class="thead">
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">寵物晶片號碼</div></td>
-                        <td id="table-dis"><input type="text" value="輸入寵物晶片" class="input-text"></td>
+                        <td id="table-dis">{{form.PetID(class='input-text')}}</td> <!--寵物晶片號碼-->
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">飼主編號</div></td>
-                        <td id="table-dis"><input type="text" value="輸入飼主編號" class="input-text"></td>
+                        <td id="table-dis">{{form.UID(class='input-text')}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">寵物名稱</div></td>
-                        <td id="table-dis"><input type="text" value="輸入寵物名稱" class="input-text"></td>
+                        <td id="table-dis">{{form.name(class='input-text')}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">寵物性別</div></td>
                         <td id="table-dis">
                             <div style="width: 100%;">
-                                <select name="pets_type" class="rounded-table input-select">
-                                    <option value="1">公</option>
-                                    <option value="2">母</option>
-                                </select>
+                                {{form.sex(class='rounded-table input-select')}}
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">寵物類型</div></td>
-                        <td id="table-dis"><input type="text" value="輸入寵物類型" class="input-text"></td>
+                        <td id="table-dis">{{form.variety(class='input-text')}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">寵物品種</div></td>
-                        <td id="table-dis"><input type="text" value="輸入寵物品種" class="input-text"></td>
+                        <td id="table-dis">{{form.species(class='input-text')}}</td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B table-title">
@@ -58,7 +55,7 @@
                         </td>
                         <td id="table-dis">
                             <input type='file' style="vertical-align: middle;"/>
-
+                            {{form.picture}}
                             <script>
                                 $('input').on('change', function(e){      
                                     const file = this.files[0];//將上傳檔案轉換為base64字串
@@ -77,13 +74,13 @@
                     <tr>
                         <td scope="row" class="font-B table-title"><div class="mb-total">是否打疫苗</div></td>
                         <td id="table-dis">
-                            <input type="radio" name="type" value="1">是
-                            <input type="radio" name="type" value="2">否
+                            {{form.vaccine(class='input-select')}}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
     </div>
 
     <div class="mb-4 button-dis">

@@ -76,36 +76,37 @@
     
         </div>
     
-        <div class="right" style="display: flex; justify-content: center; height: fit-content;">
+        <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">
+            {% for published in published %}
+            <div style="display: flex; margin: 1rem; justify-content: center">
+                <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: 60%; padding: 1.5rem;">
+                    <div class="" style="padding: 1rem;">
+                        <img width="80" height="80">
+                    </div>
             
-            <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: auto; padding: 1.5rem;">
-                
-                <div class="" style="padding: 1rem;">
-                    <img width="80" height="80">
-                </div>
-        
-                <div>
-                    <div style="display: flex;">
-                        <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">高雄市苓雅區</div>
-                        <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">拾獲</div>
-                    </div>
-                    
-                    <div class="bg-table rounded-table h-100 p-4 dis" style="border: solid;">
-                        <div>可愛又親人的小橘貓</div>
-                        <div>前不久巴拉巴ㄌ巴拉拉阿拉拉八八八八八八八八八八八八八八</div>
+                    <div>
+                        <div style="display: flex;">
+                            <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">{{published.area}}</div> <!--讀取區域-->
+                            <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">{{published.type}}</div> <!--讀取刊登類型-->
+                        </div>
+                        
+                        <div class="bg-table rounded-table h-100 p-4 dis" style="border: solid; width: fit-content;">
+                            <div style="font-weight: bold; margin-right: 0.5rem;">{{published.title}}</div> <!--讀取標題-->
+                            <div>{{published.depiction}}</div> <!--讀取敘述-->
+                        </div>
                     </div>
                 </div>
+    
+                <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid">
+                    <div>刊登資料</div>
+                    <div>2022.11.8{{published.time}}</div> <!--讀取日期-->
+                    <div>性別</div>
+                    <div>母{{published.sex}}</div><!--讀取性別-->
+                    <div><input type="button" class="button-update mb-total" value="詳細資料" onclick="location.href=''"></div>
+                    <!--沒有miss的詳細紀錄可以連接-->
+                </div>
             </div>
-
-            <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid">
-                <div>刊登資料</div>
-                <div>2022.11.8</div>
-                <div>性別</div>
-                <div>母</div>
-                <div><input type="button" class="button-update mb-total" value="詳細資料" onclick="location.href=''"></div>
-                <!--沒有miss的詳細紀錄可以連接-->>
-            </div>
-
+            {% endfor %}
         </div>
 
     </div>

@@ -181,6 +181,8 @@ class clinic_doctor(db.Model):
     __tablename__ = 'clinic_doctor'
     CID = db.Column('CID', db.Integer,db.ForeignKey('clinic.CID'),primary_key = True)
     UID = db.Column('UID',db.Integer,db.ForeignKey('user.UID'), primary_key = True)
+    # clinic = db.relationship('clinic', backref='clinic_doctor', lazy='dynamic')
+    # user = db.relationship('user', backref='clinic_doctor', lazy='dynamic')
     def __init__(self,CID,UID):  
         self.CID = CID
         self.UID = UID
