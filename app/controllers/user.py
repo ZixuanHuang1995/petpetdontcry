@@ -33,3 +33,13 @@ def update_user_name(id, name):
 
 def get_user_data(ID):
     return user.query.filter_by(account=ID).first()
+
+def get_pet_all_medicalrecords(PetID):
+    from ..models.user import medicalrecords
+    pets_medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
+    if not pets_medicalrecords:
+        return []
+    pets_medicalrecords = [medicalrecords.toJSON() for  medicalrecords in pets_medicalrecords]
+    print(pets_medicalrecords)
+    return pets_medicalrecords
+    
