@@ -12,7 +12,7 @@ class user(db.Model):
     identity = db.Column('identity',db.String(10), nullable=False)
     # email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
-    account = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
+    account = db.Column('account',db.Integer,db.ForeignKey('account.ID'),nullable=False)
     # password_hash = db.Column('password',db.String(128), nullable=False)
     # role = db.Column('role', db.String(10), nullable=False)
     published = db.relationship('published', backref='user', lazy='dynamic')
@@ -30,39 +30,6 @@ class user(db.Model):
             'id': self.UID,
             'username': self.name
         }
-
-    # @login_manager.user_loader
-    # def load_user(UID):
-    #     # 回傳的就是使用者資訊
-    #     try:
-    #         return user.query.get(UID)
-    #     except:
-    #         return None
-            
-    # def get_id(self):
-    #        return (self.UID)
-
-    # @property
-    # def password(self):
-    #     raise AttributeError('password is not a readable attribute')
-
-    # @password.setter
-    # def password(self,password):
-    #     self.password_hash = generate_password_hash(password)
-
-    # def check_password(self,password):
-    #     return check_password_hash(self.password_hash, password)    
-# 查詢表
-class information(db.Model):
-    __tablename__ = 'information'
-    IID = db.Column('IID', db.Integer, primary_key = True)
-    name = db.Column('name', db.String(20), nullable=False)
-    function = db.Column('function', db.Text)
-    type = db.Column('type',db.Integer, nullable=False)
-    def __init__(self,name,function,type):
-        self.name = name
-        self.function = function
-        self.type = type
 
 # 帳號密碼
 class account(UserMixin,db.Model):
@@ -176,6 +143,14 @@ class medicalrecords(db.Model):
         self.medication = medication
         self.note = note
         self.type = type
+    def toJSON(self):
+        return{
+            'clinic': self.CID, # 診所名稱
+            'time': self.time, # 就醫日期
+            'type': self.type,
+            'doctor': self.doctor
+        }
+
 # 診所醫生資料
 class clinic_doctor(db.Model):
     __tablename__ = 'clinic_doctor'
@@ -192,18 +167,14 @@ class clinic(db.Model):
     name = db.Column('name', db.String(20), nullable=False)
     phone = db.Column('phone', db.String(10), nullable=False)
     address = db.Column('address', db.String(30), nullable=False)
-    account = db.Column('account', db.String(30), nullable=False)
-    password_hash = db.Column('password', db.String(128), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
-    role = db.Column('role', db.String(10), nullable=False)
-    account = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
+    account = db.Column('account',db.Integer,db.ForeignKey('account.ID'),nullable=False)
     medicalrecords = db.relationship('medicalrecords', backref='clinic', lazy='dynamic')
     clinic_doctor = db.relationship('clinic_doctor', backref='clinic', lazy='dynamic')
-    def __init__(self,CID,name,phone,address,account,password,emergency,role):  
+    def __init__(self,CID,name,phone,address,account,emergency):  
         self.CID = CID
         self.name = name
         self.phone = phone
         self.address = address
         self.account = account
-        self.password = password
         self.emergency = emergency

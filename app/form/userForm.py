@@ -55,3 +55,24 @@ class FormAddUserInfo(FlaskForm):
         validators.Length(8, 10),
     ])
     submit = SubmitField('送出')
+
+class FormChangePWD(FlaskForm):
+    """
+    使用者變更密碼
+    舊密碼、新密碼與新密碼確認
+    """
+    #  舊密碼
+    password_old = PasswordField('舊密碼', validators=[
+        validators.DataRequired()
+    ])
+    #  新密碼
+    password_new = PasswordField('新密碼', validators=[
+        validators.DataRequired(),
+        validators.Length(5, 10),
+        validators.EqualTo('password_new_confirm', message='PASSWORD NEED MATCH')
+    ])
+    #  新密碼確認
+    password_new_confirm = PasswordField('確認新密碼', validators=[
+        validators.DataRequired()
+    ])
+    submit = SubmitField('更新密碼')

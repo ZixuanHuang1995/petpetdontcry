@@ -5,6 +5,9 @@ from ..form.clinicForm import FormPet,FormDoctor, FormMedicalRecords,FormFindPet
 from ..database import db
 from ..controllers.auth import clinic_or_user
 from ..config_other import photos
+from ..controllers import (
+    get_clinic_data
+)
 # from flask import Flask
 # app = Flask(__name__,static_url_path='/static')
 clinic_views = Blueprint('clinic_views', __name__, template_folder='../templates')
@@ -29,7 +32,6 @@ def add_pet():
     說明：新增寵物
     :return:
     """
-    clinic_or_user('clinic')
     from ..models import pet
     form = FormPet()
     if form.validate_on_submit():
@@ -58,7 +60,6 @@ def edit_pet(PetID):
     :param PetID:
     :return:
     """
-    clinic_or_user('clinic')
     from ..models import pet
     pets = pet.query.filter_by(PetID=PetID).first_or_404()
     form = FormPet()
@@ -97,7 +98,6 @@ def pet_info(PetID):
     :param PetID:寵物ID
     :return:
     """
-    clinic_or_user('clinic')
     from ..models.user import pet
     pets = pet.query.filter_by(PetID=PetID).all()
     print(pets)
@@ -112,7 +112,6 @@ def find_pet():
     說明：查詢寵物
     :return:
     """
-    clinic_or_user('clinic')
     from ..models.user import pet,medicalrecords
     form = FormFindPet()
     if form.validate_on_submit():
@@ -128,30 +127,30 @@ def add_doctor():
     說明：新增醫生
     :return:
     """
-    clinic_or_user('clinic')
+    clinic = get_clinic_data(current_user.ID)
     from ..models.user import clinic_doctor
     form = FormDoctor()
     if form.validate_on_submit():
         doctor = clinic_doctor(
-            CID=current_user.CID,
-            UID=int(form.UID.data)
+            CID = clinic.CID,
+            UID = int(form.UID.data)
         )
         db.session.add(doctor)
         db.session.commit()
         flash('新增寵物成功')
-        return redirect(url_for('clinic_views.doctor', CID=current_user.CID))
+        return redirect(url_for('clinic_views.doctor', CID=clinic.CID))
     return render_template('add_doctor.html', form=form)
-@clinic_views.route('/clinic/doctor/<CID>')
+@clinic_views.route('/clinic/doctor')
 @login_required
-def doctor(CID):
+def doctor():
     """
     說明：醫生資訊
     :param CID:診所編號
     :return:
     """
-    clinic_or_user('clinic')
+    clinic = get_clinic_data(current_user.ID)
     from ..models.user import clinic_doctor
-    doctors = clinic_doctor.query.filter_by(CID=CID).all()
+    doctors = clinic_doctor.query.filter_by(CID=clinic.CID).all()
     if doctors is None:
         abort(404)
     return render_template('clinic_doctor.html', doctors=doctors)
@@ -159,7 +158,6 @@ def doctor(CID):
 # 建立刪除的路徑
 @clinic_views.route('/clinic/delete_doctor/<int:CID>/<int:UID>')
 def delete_doctor(CID,UID):
-    clinic_or_user('clinic')
     from ..models.user import clinic_doctor
     doctor_to_delete = clinic_doctor.query.filter_by(CID=CID,UID=UID).first()
     # 對查詢的id進行刪除
@@ -256,13 +254,26 @@ def pet_medicalrecord(MID):
     :param NID:病歷編號
     :return:
     """
-    clinic_or_user('clinic')
     from ..models.user import medicalrecords
     medicalrecords = medicalrecords.query.filter_by(MID=MID).all()
     if medicalrecords is None:
         abort(404)
     return render_template('medical_records.html', medicalrecords=medicalrecords)
 
+
+# @clinic_views.route('/clinic/pet_all_medicalrecords/<PetID>', methods=['GET', 'POST'])
+# @login_required
+# def pet_all_medicalrecord(PetID):
+#     """
+#     說明：寵物近期病歷資料
+#     :param PetID:病歷編號
+#     :return:
+#     """
+#     from ..models.user import medicalrecords
+#     medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
+#     if medicalrecords is None:
+#         abort(404)
+#     return render_template('medical_records.html', medicalrecords=medicalrecords)
 
 
 @clinic_views.route('/clinic/medicalrecords/<CID>', methods=['GET', 'POST'])
@@ -273,7 +284,6 @@ def medicalrecords(CID):
     :param CID:診所編號
     :return:
     """
-    clinic_or_user('clinic')
     from ..models.user import medicalrecords
     medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
     if medicalrecords is None:
