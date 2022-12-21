@@ -32,10 +32,10 @@
             
           {% if action=='manage' %} <!--診所管理-->
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('clinic_views.add_doctor') }}">Doctor<br>醫師管理</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.doctor',ID = current_user.ID) }}">Doctor<br>醫師管理</a>
             </li> 
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('clinic_views.medicalrecords' , CID = '1') }}">Medical records<br>所有病歷</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.medicalrecords' , ID = current_user.ID) }}">Medical records<br>所有病歷</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束診所管理</a>
@@ -43,13 +43,13 @@
            {% elif action=='medical' %} 
            <!--看診-->
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('clinic_views.pet_medicalrecord', PID = PID) }}">Medical records<br>病歷紀錄</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.pet_medicalrecord', PetID = PetID) }}">Medical records<br>病歷紀錄</a>
             </li> 
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('clinic_views.add_medicalrecord') }}">Add records<br>新增病歷</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.add_medicalrecord', PetID = PetID) }}">Add records<br>新增病歷</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = '123456789') }}">Edit chip<br>修改晶片</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = PetID) }}">Edit chip<br>修改晶片</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束看診</a>
@@ -57,13 +57,13 @@
             {% elif action1=='medical' %} 
            <!--看診-->
            <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('clinic_views.pet_medicalrecord', PID = PID) }}">Medical records<br>病歷紀錄</a>
+            <a class="nav-link" href="{{ url_for('clinic_views.pet_medicalrecord', PetID = PetID) }}">Medical records<br>病歷紀錄</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('clinic_views.add_medicalrecord') }}">Add records<br>新增病歷</a>
+            <a class="nav-link" href="{{ url_for('clinic_views.add_medicalrecord', PetID = PetID) }}">Add records<br>新增病歷</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = '1111111111') }}">Edit chip<br>修改晶片</a>
+            <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = PetID) }}">Edit chip<br>修改晶片</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束看診</a>
