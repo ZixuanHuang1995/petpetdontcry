@@ -30,4 +30,4 @@ class FormLogin(FlaskForm):
 
     remember_me = BooleanField('記住我')
 
-    submit = SubmitField('Login')
+    submit = SubmitField('登入')

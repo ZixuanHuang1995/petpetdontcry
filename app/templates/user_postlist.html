@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_postlist.css') }}">
 </head>
 
-<body>
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
 
     <div class="Title_img mb-total">
         <div class="Title_img">
@@ -15,7 +15,17 @@
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
-    <form method="post" action="/user/addpublished">
+
+    {% if type == 'add' %}
+    {{ form.csrf_token }}
+    {{ wtf.quick_form(form, form_type="") }}
+    <div>
+        <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+    </div>
+
+    {% elif type == 'edit' %}
+
+    <form method="post" action="/user/edit_published/{{PublishedID}}">
         {{form.csrf_token}}
 
         <div class="a">
@@ -52,28 +62,6 @@
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
-                                <div class="mb-total">上傳照片</div>
-                            </td>
-                            <td id="table-dis">
-                                <input type='file' style="vertical-align: middle;"/>
-    
-                                <script>
-                                    $('input').on('change', function(e){      
-                                        const file = this.files[0];//將上傳檔案轉換為base64字串
-          
-                                        const fr = new FileReader();//建立FileReader物件
-                                        fr.onload = function (e) {
-                                            $('img').attr('src', e.target.result);//读取的结果放入圖片
-                                        };
-          
-                                        // 使用 readAsDataURL 將圖片轉成 Base64
-                                        fr.readAsDataURL(file);
-                                    });
-                                </script>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row" class="font-B table-title">
                                 <div class="mb-total">毛色</div>
                                 <div class="text-warn">必填</div>
                             </td>
@@ -94,10 +82,19 @@
                                     </div>
         
                                     <div style="width:50%;">
-                                        {{form.area(class='input-text')}} <!--輸入地區-->
+                                        {{form.species(class='input-text')}} <!--輸入地區-->
                                     </div>
     
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">性別</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.sex(class='input-text')}} <!--輸入性別-->
                             </td>
                         </tr>
                         <tr>
@@ -115,37 +112,14 @@
         </div>
     
         <div class="mb-4 button-dis">
-            <input type="button" class="button-update mb-total" value="送出" onclick="showDialog()">
-    
-            <div class="dialog" id="dialog">
-                <div style="display: flex; align-items: center; flex-direction: column;">
-                    <img src="{{ url_for('static', filename='img/awesome-check-green.png') }}" width="30" height="30" style="margin: 1rem;">
-                </div>
-                <div style="display: flex; align-items: center; flex-direction: column;">刊登資料成功!</div>
-                <div style="display: flex; align-items: center; flex-direction: column;">
-                    {{form.submit(value='確定', class='button-update mb-total')}}
-                    <input type="button" class="button-update mb-total" value="確定" onclick="hideDialog()"> <!--返回他的刊登列表-->
-                </div>
-            </div>
-    
-            <script>
-                var dialog,x;
-                window.onload=function(){
-                    dialog=document.getElementById("dialog");
-                    x=document.getElementById("x");
-                }
-                function showDialog(){
-                    dialog.style.display="block";
-                }
-                function hideDialog(){
-                    dialog.style.display="none";
-                }
-            </Script>
-    
+
+            {{form.submit(class='button-update mb-total')}}
             <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+
         </div>
     </form>
 
+    {% endif %}
 </body>
 
 {% endblock content %}

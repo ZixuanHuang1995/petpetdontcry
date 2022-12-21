@@ -6,19 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_doctor.css') }}">
 </head>
 
-<body style="background-color: #5A62A7;">
-    <div class="container">
-        <!-- 用來接後端傳來的flash-message -->
-        {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
-            <!-- 弄一個x的button，點擊之後讓訊息消失，可參考bootstrap說明 -->
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-        </div>
-        {% endfor %}
-        
-        {% block page_content %}{% endblock %}
-    </div>
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
     <div class="Title_img">
         <div class="left Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">

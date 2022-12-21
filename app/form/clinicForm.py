@@ -15,7 +15,7 @@ class FormPet(FlaskForm):
     """
     PetID = StringField('寵物晶片號碼', validators=[
         validators.DataRequired(),
-        validators.Length(0, 15)
+        validators.Length(0, 10)
     ])
     UID = StringField('飼主編號', validators=[
         validators.DataRequired(),
@@ -42,7 +42,7 @@ class FormPet(FlaskForm):
      ], choices=[('1', '女'), ('0', '男')])
     picture = FileField('上傳照片', validators=[
         FileAllowed(photos, 'IMAGE ONLY'),
-        FileRequired('IMAGE REQUIRED PLEASE')
+        # FileRequired('IMAGE REQUIRED PLEASE')
     ])
     vaccine = SelectField('是否打疫苗', validators=[
         validators.DataRequired()

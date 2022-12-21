@@ -4,20 +4,44 @@
     login Page
 {% endblock title %}
 {% block content %}
-<div class="container">
-    <!-- 用來接後端傳來的flash-message -->
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <!-- 弄一個x的button，點擊之後讓訊息消失，可參考bootstrap說明 -->
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-    {% endfor %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; background-width:fit-content;">
+    <form method="post" action="/login">
+        {{form.csrf_token}}
+
+        <div class="container" style="margin-top: 10%;">
+            <h1 class="" style="font-weight:bold; color: #F7BBB0; text-align:center;">歡迎使用萌寵資訊平台</h1>
     
-    {% block page_content %}{% endblock %}
-</div>
-<div class="container">
-    <h1>login Your Account</h1>
-    {{ wtf.quick_form(form)}}
-</div>
+            <div class="dis-f">
+                <div>
+                    {{form.account.label(class="font-s mb-total")}}
+                    {{form.account(class="input-text font-s mb-total")}}
+                </div>
+
+                <div>
+                    {{form.password.label(class="font-s mb-total")}}
+                    {{form.password(class="input-text font-s mb-total")}}
+                </div>
+
+                <div style="display: flex;">
+                    {{form.remember_me(class="font-s mb-total")}}
+                    {{form.remember_me.label(class="font-s mb-total")}}
+                </div>
+            </div>
+    
+            <div class="dis">
+                {{form.submit(class="button-update mb-total font-s p")}}
+                <input type="button" class="button-update mb-total font-s p" value="註冊" 
+                    onclick="location.href='{{ url_for('user_views.user_register') }}'">    
+            </div>
+            
+        </div>
+    
+    </form>
+</body>
+
 {% endblock content %}

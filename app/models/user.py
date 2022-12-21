@@ -18,10 +18,10 @@ class user(db.Model):
     published = db.relationship('published', backref='user', lazy='dynamic')
     pet = db.relationship('pet', backref='user', lazy='dynamic')
     clinic_doctor = db.relationship('clinic_doctor', backref='user', lazy='dynamic')
-    def __init__(self,identity,account,name,phone):
+    def __init__(self,identity,ID,name,phone):
         self.name = name
         self.identity = identity
-        self.account = account
+        self.ID = ID
         self.phone = phone
         # self.password = password
 
@@ -173,10 +173,10 @@ class clinic(db.Model):
     ID = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
     medicalrecords = db.relationship('medicalrecords', backref='clinic', lazy='dynamic')
     clinic_doctor = db.relationship('clinic_doctor', backref='clinic', lazy='dynamic')
-    def __init__(self,CID,name,phone,address,account,emergency):  
+    def __init__(self,CID,name,phone,address,ID,emergency):  
         self.CID = CID
         self.name = name
         self.phone = phone
         self.address = address
-        self.account = account
+        self.ID = ID
         self.emergency = emergency

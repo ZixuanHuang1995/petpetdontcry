@@ -14,7 +14,7 @@ from ..controllers import (
     get_pet_all_medicalrecords
 )
 from ..form.userForm import FormRegister,FormUserInfo,FormAddUserInfo,FormChangePWD
-from ..form.publishedForm import FormPublished
+from ..form.publishedForm import FormPublished, FormeditPublished
 from ..database import db
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
@@ -79,7 +79,7 @@ def user_register():
         return redirect(url_for('index_views.login'))
 
     return render_template('test.html',form = form)
-   
+
 @user_views.route('/user/add_userinfo/<ID>', methods=['GET', 'POST'])
 def add_userinfo(ID):
     from ..models import user,account
@@ -91,14 +91,14 @@ def add_userinfo(ID):
             name = form.name.data,
             phone = form.phone.data,
             identity = form.identity.data,
-            account = ID
+            ID = ID
         )
         accounts.first = True
         db.session.add(user,account)
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('index_views.home'))
+        return redirect(url_for('user_views.home'))
     return render_template('test.html',form = form)
 
 @user_views.route('/user/edit_userinfo/<ID>', methods=['GET', 'POST'])
@@ -169,13 +169,18 @@ def add_publshed():
     users = get_user_data(current_user.ID)
     from ..models import published
     form = FormPublished()
+    print( form.validate_on_submit())
+    print( form.validate())
+    print( form.is_submitted())
     if form.validate_on_submit():
+
         file_name = photos.save(form.picture.data)
         Publishing = published(
             title=form.title.data,
             species=form.species.data,
             fur=form.fur.data,
             picture=file_name,
+            # picture=form.picture.data,
             area=form.area.data,
             depiction=form.depiction.data,
             sex = int(form.sex.data),
@@ -187,8 +192,7 @@ def add_publshed():
         db.session.add(Publishing)
         db.session.commit()
         flash('Create New Blog Success')
-        return render_template('miss.html', form=form)
-    return render_template('user_postlist.html', form=form)
+    return render_template('user_postlist.html', form=form, type="add")
 
 @user_views.route('/user/mypublished')
 @login_required
@@ -273,14 +277,17 @@ def edit_publshed(PublishedID):
     users = get_user_data(current_user.ID)
     from ..models import published
     Publishing = published.query.filter_by(PublishedID=PublishedID).first_or_404()
-    form = FormPublished()
+    form = FormeditPublished()
+
+    print( form.validate_on_submit())
+    print( form.validate())
+    print( form.is_submitted())
+
     if form.validate_on_submit():
-        file_name = photos.save(form.picture.data)
         Publishing.PublishedID = PublishedID
         Publishing.title=form.title.data
         Publishing.species=form.species.data
         Publishing.fur=form.fur.data
-        Publishing.picture=file_name
         Publishing.area=form.area.data
         Publishing.depiction=form.depiction.data
         Publishing.sex=form.sex.data
@@ -292,19 +299,19 @@ def edit_publshed(PublishedID):
         db.session.commit()
         flash('Edit Your Post Success')
         return redirect(url_for('user_views.published_info', UID=Publishing.UID))
+        
     form.title.data = Publishing.title
     form.species.data = Publishing.species
     form.fur.data = Publishing.fur
-    form.picture.data = Publishing.picture
     form.area.data = Publishing.area
     form.depiction.data = Publishing.depiction
     form.sex.data = Publishing.sex
     form.variety.data = Publishing.variety
     # 單選預設是str，但資料庫是int，所以要改型態才會顯示
     form.type.data = str(Publishing.type)
-    print(form.picture.data)
+
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('user_postlist.html', form=form, Publishing=Publishing, action='edit')
+    return render_template('user_postlist.html', form=form, type='edit',PublishedID=PublishedID)
 
 @user_views.route('/miss')
 def miss_data():

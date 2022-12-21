@@ -41,6 +41,7 @@
 .Title_img{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .Title_more{
@@ -90,4 +91,14 @@
     background-color: #F7BBB0;
     color: white;
     text-align: center;
+    border-radius: 15px;
+}
+
+.font-s{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.p{
+    padding: 1.5rem;
 }
