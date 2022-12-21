@@ -149,7 +149,7 @@ def add_doctor():
     clinic = get_clinic_data(current_user.ID)
     from ..models.user import clinic_doctor
     form = FormDoctor()
-    clinic = clinic.query.filter_by(account=current_user.ID).first()
+    clinic = clinic.query.filter_by(ID=current_user.ID).first()
     if form.validate_on_submit():
         doctor = clinic_doctor(
             CID = clinic.CID,
@@ -168,7 +168,7 @@ def doctor(ID):
     :param CID:診所編號
     :return:
     """
-    clinic = get_clinic_data(current_user.ID)
+    clinic = get_clinic_data(ID)
     from ..models.user import clinic_doctor
     doctors = clinic_doctor.query.filter_by(CID=clinic.CID).all()
     if doctors is None:

@@ -32,7 +32,7 @@ def update_user_name(id, name):
     return None
 
 def get_user_data(ID):
-    return user.query.filter_by(account=ID).first()
+    return user.query.filter_by(ID=ID).first()
 
 def get_pet_all_medicalrecords(PetID):
     from ..models.user import medicalrecords

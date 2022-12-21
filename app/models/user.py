@@ -12,7 +12,7 @@ class user(db.Model):
     identity = db.Column('identity',db.String(10), nullable=False)
     # email = db.Column('email',db.String(50), nullable=False)
     phone = db.Column('phone',db.String(10)) 
-    account = db.Column('account',db.Integer,db.ForeignKey('account.ID'),nullable=False)
+    ID = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
     # password_hash = db.Column('password',db.String(128), nullable=False)
     # role = db.Column('role', db.String(10), nullable=False)
     published = db.relationship('published', backref='user', lazy='dynamic')
@@ -170,7 +170,7 @@ class clinic(db.Model):
     phone = db.Column('phone', db.String(10), nullable=False)
     address = db.Column('address', db.String(30), nullable=False)
     emergency = db.Column('emergency', db.Boolean, nullable=False)
-    account = db.Column('account',db.Integer,db.ForeignKey('account.ID'),nullable=False)
+    ID = db.Column('ID',db.Integer,db.ForeignKey('account.ID'),nullable=False)
     medicalrecords = db.relationship('medicalrecords', backref='clinic', lazy='dynamic')
     clinic_doctor = db.relationship('clinic_doctor', backref='clinic', lazy='dynamic')
     def __init__(self,CID,name,phone,address,account,emergency):  

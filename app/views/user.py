@@ -351,18 +351,18 @@ def mypet_medicalrecord(MID):
     #     abort(404)
     # return render_template('user_detailedrecords.html',medicalrecords=medicalrecords,vaccine=vaccine)
 
-# @user_views.route('/miss/<PID>')
-# @login_required
-# def adoption_pet(PID):
-#     """
-#     說明：單一刊登資料
-#     :return:
-#     """
-#     from ..models.user import published
-#     published = published.query.filter(PID=PID).first()
-#     if published is None:
-#         abort(404)
-#     return render_template('xxxxx.html', published=published)
+@user_views.route('/miss/<publishedID>')
+@login_required
+def miss_detailed(publishedID):
+    """
+    說明：單一刊登資料
+    :return:
+    """
+    from ..models.user import published
+    published = published.query.filter_by(PublishedID=publishedID).first()
+    if published is None:
+        abort(404)
+    return render_template('miss_detailed.html', published=published)
 
 # @user_views.route('/adoption/<PID>')
 # @login_required
