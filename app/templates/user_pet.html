@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_pet.css') }}">
 </head>
 
-<body>
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
 
     <div>
 
@@ -111,7 +111,7 @@
                                                         <td style="vertical-align: middle;">NCU診所</td>
                                                         <td style="vertical-align: middle;">NCU診所</td>
                                                         <td style="vertical-align: middle;">NCU診所</td>
-                                                        <td><a href="{{ url_for('user_views.mypet_medicalrecord' , PetID = pet.PetID) }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></a></td>
+                                                        <td><a href="{{ url_for('user_views.mypet_medicalrecord' , MID = medicalrecord.ID) }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></a></td>
                                                         {% endfor %}
                                                     </tr>
                                                 </tbody>

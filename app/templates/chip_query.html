@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chip_query.css') }}">
 </head>
 
-<body style="background-color: #5A62A7;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
     
     <form method="post" action="/clinic/find_pet">
         {{form.csrf_token}}

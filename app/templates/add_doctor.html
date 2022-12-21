@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/add_doctor.css') }}">
 </head>
 
-<body>
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
 
     <form method="post" action="/clinic/add_doctor">
         {{form.csrf_token}}

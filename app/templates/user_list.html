@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
 </head>
 
-<body>
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
     
     <div class="Title_img p-4">
         <div class="Title_img" style="background-color: yellow;">
@@ -47,7 +47,7 @@
                             <table style="display: flex; justify-content: center;">
                                 <tr style="border-style: hidden; margin: 1rem;">
                                     <td style="padding: 0.5rem;">
-                                        <a href="{{ url_for('user_views.edit_publshed' , PublishedID='1111111111') }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                        <a href="{{ url_for('user_views.edit_publshed' , PublishedID=published.PublishedID) }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
                                     </td>
                                     <td style="padding: 0.5rem;">
                                         <a onclick="showDialog()"><img src="{{ url_for('static', filename='img/material-delete-1.png') }}" width="10" height="10"></a>
