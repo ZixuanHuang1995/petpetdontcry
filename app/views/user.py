@@ -6,7 +6,6 @@ from APP.models.user import published
 from .index import index_views
 from flask_login import login_user,current_user,login_required,logout_user
 from werkzeug.utils import secure_filename
-from ..controllers.auth import clinic_or_user
 from ..controllers import (
     create_user, 
     get_all_users,
