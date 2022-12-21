@@ -16,9 +16,9 @@ def login_user(user, remember):
 def logout_user():
     flask_login.logout_user()
 
-def clinic_or_user(role):
-    if role != current_user.role:
-        if role == 'clinic':
-            return render_template('home.html')
-        else:
-            return render_template('clinic_home.html')
+# def clinic_or_user(role):
+#     if role != current_user.role:
+#         if role == 'clinic':
+#             return render_template('home.html')
+#         else:
+#             return render_template('clinic_home.html')
