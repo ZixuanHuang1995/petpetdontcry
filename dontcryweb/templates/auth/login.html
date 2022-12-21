@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label>起選擇登入身份: </label>
+    <label><input type="radio" name="login_type" value=0 checked> 會員</label>
+    <label><input type="radio" name="login_type" value=1> 診所</label><br>
+    
+    <label for="username">帳號</label>
+    <input name="username" id="username" required>
+    <label for="password">密碼</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="Log In">
+  </form>
+{% endblock %}
