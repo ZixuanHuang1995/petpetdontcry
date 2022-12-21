@@ -75,7 +75,7 @@ def edit_pet(PetID):
         db.session.add(pets)
         db.session.commit()
         flash('更新寵物成功')
-        return redirect(url_for('clinic_views.pet_info', PetID=pets.PetID))
+        return redirect(url_for('clinic_views.pet_info', PetID=PetID))
     form.PetID.data = str(pets.PetID)
     form.species.data = pets.species
     form.fur.data = pets.fur
@@ -86,22 +86,22 @@ def edit_pet(PetID):
     form.variety.data = pets.variety
     form.vaccine.data = pets.vaccine
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('chip_add.html', form=form, pets=pets, action='edit')
+    return render_template('chip_add.html', form=form, pets=pets, type='edit',PetID=PetID)
 
-@clinic_views.route('/user/petinfo/<PetID>')
-@login_required
-def pet_info(PetID):
-    """
-    說明：寵物資訊呈現
-    :param PetID:寵物ID
-    :return:
-    """
-    from ..models.user import pet
-    pets = pet.query.filter_by(PetID=PetID).all()
-    print(pets)
-    if pet is None:
-        abort(404)
-    return render_template('pet.html', pets=pets, action="medical")
+# @clinic_views.route('/user/petinfo/<PetID>')
+# @login_required
+# def pet_info(PetID):
+#     """
+#     說明：寵物資訊呈現
+#     :param PetID:寵物ID
+#     :return:
+#     """
+#     from ..models.user import pet
+#     pets = pet.query.filter_by(PetID=PetID).all()
+#     print(pets)
+#     if pet is None:
+#         abort(404)
+#     return render_template('pet.html', pets=pets, action="medical")
 
 @clinic_views.route('/clinic/find_pet', methods=['GET', 'POST'])
 @login_required
@@ -113,25 +113,12 @@ def find_pet():
     from ..models.user import pet,medicalrecords
     form = FormFindPet()
     if form.validate_on_submit():
+        # site_contents(form.PetID.data)
         pets = pet.query.filter_by(PetID=form.PetID.data).all()
         medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
-        return render_template('clinic_records.html', pets=pets, medicalrecords=medicalrecords, action="medical")
-    return render_template('chip_query.html', form=form, action="medical")
-
-# @clinic_views.route('/clinic/find_pet', methods=['GET', 'POST'])
-# @login_required
-# def find_pet():
-#     """
-#     說明：查詢寵物
-#     :return:
-#     """
-#     from ..models.user import pet,medicalrecords
-#     form = FormFindPet()
-#     if form.validate_on_submit():
-#         pets = pet.query.filter_by(PetID=form.PetID.data).all()
-#         medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
-#         return render_template('clinic_medical.html', pets=pets,medicalrecords=medicalrecords)
-#     return render_template('chip_query.html', form=form)
+        return redirect(url_for('clinic_views.pet_medicalrecord',PetID=form.PetID.data))
+        
+    return render_template('chip_query.html', form=form)
 
 @clinic_views.route('/clinic/add_doctor', methods=['GET', 'POST'])
 @login_required
@@ -154,6 +141,7 @@ def add_doctor():
         flash('新增成功')
         return redirect(url_for('clinic_views.doctor',ID=current_user.ID))
     return render_template('add_doctor.html', form=form, action="manage")
+
 @clinic_views.route('/clinic/doctor/<ID>')
 @login_required
 def doctor(ID):
@@ -192,8 +180,8 @@ def delete_doctor(CID,UID):
         doctors = clinic_doctor.query.filter_by(CID=CID).all()
         return render_template("clinic_doctor.html", doctors=doctors, action="manage")
  
-@clinic_views.route('/clinic/add_medicalrecords', methods=['GET', 'POST'])
-def add_medicalrecord():
+@clinic_views.route('/clinic/add_medicalrecords/<int:PetID>', methods=['GET', 'POST'])
+def add_medicalrecord(PetID):
     """
     說明：新增病歷
     :return:
@@ -219,7 +207,7 @@ def add_medicalrecord():
         db.session.add(medicalrecord)
         db.session.commit()
         flash('新增病歷成功')
-    return render_template('add_records.html', form=form, action="medical",type='add')
+    return render_template('add_records.html', form=form, action="medical",type='add',PetID=PetID)
 
 @clinic_views.route('/clinic/edit_medicalrecord/<int:MID>', methods=['GET', 'POST'])
 @login_required
@@ -245,7 +233,7 @@ def edit_medicalrecord(MID):
         db.session.add(medicalrecord)
         db.session.commit()
         flash('更新病歷成功')
-        return redirect(url_for('clinic_views.pet_info', MID=medicalrecord.MID , medicalrecords=medicalrecord, action="medical"))
+        return redirect(url_for('clinic_views.pet_info', MID=medicalrecord.MID , medicalrecords=medicalrecord, action="medical",PetID=form.PetID.data))
 
     form.MID.data = str(medicalrecord.MID)
     form.PetID.data = str(medicalrecord.PetID)
@@ -257,22 +245,22 @@ def edit_medicalrecord(MID):
     form.note.data = medicalrecord.note
 
     # 利用參數action來做條件，判斷目前是新增還是編輯
-    return render_template('add_records.html', form=form, medicalrecords=medicalrecord, action='edit', action1="medical")
+    return render_template('add_records.html', form=form, medicalrecords=medicalrecord, action='edit', action1="medical",PetID=form.PetID.data)
 
 
-@clinic_views.route('/clinic/pet_medicalrecord/<PID>', methods=['GET', 'POST'])
+@clinic_views.route('/clinic/pet_medicalrecord/<PetID>', methods=['GET', 'POST'])
 @login_required
-def pet_medicalrecord(PID):
+def pet_medicalrecord(PetID):
     """
-    說明：寵物單一病歷資料
+    說明：寵物所有病歷資料
     :param NID:病歷編號
     :return:
     """
     from ..models.user import medicalrecords
-    medicalrecords = medicalrecords.query.filter_by(PetID=PID).all()
+    medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
     if medicalrecords is None:
         abort(404)
-    return render_template('clinic_records.html', medicalrecords=medicalrecords, action="medical")
+    return render_template('clinic_records.html', medicalrecords=medicalrecords, action="medical",PetID=PetID)
 
 @clinic_views.route('/clinic/pet_siglemedicalrecord/<MID>', methods=['GET', 'POST'])
 @login_required
@@ -283,10 +271,10 @@ def pet_singlemedicalrecord(MID):
     :return:
     """
     from ..models.user import medicalrecords
-    medicalrecords = medicalrecords.query.filter_by(MID=MID).all()
+    medicalrecords = medicalrecords.query.filter_by(MID=MID).first()
     if medicalrecords is None:
         abort(404)
-    return render_template('detailed_records.html', medicalrecords=medicalrecords , action="medical",MID=MID)
+    return render_template('detailed_records.html', medicalrecords=medicalrecords , action="medical",MID=MID,PetID=medicalrecords.PetID)
 
 # @clinic_views.route('/clinic/pet_all_medicalrecords/<PetID>', methods=['GET', 'POST'])
 # @login_required
@@ -303,16 +291,17 @@ def pet_singlemedicalrecord(MID):
 #     return render_template('medical_records.html', medicalrecords=medicalrecords)
 
 
-@clinic_views.route('/clinic/medicalrecords/<CID>', methods=['GET', 'POST'])
+@clinic_views.route('/clinic/medicalrecords/<ID>', methods=['GET', 'POST'])
 @login_required
-def medicalrecords(CID):
+def medicalrecords(ID):
     """
     說明：所有病歷資料
     :param CID:診所編號
     :return:
     """
+    clinic = get_clinic_data(ID)
     from ..models.user import medicalrecords
-    medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
+    medicalrecords = medicalrecords.query.filter_by(CID=clinic.CID).all()
     if medicalrecords is None:
         abort(404)
     return render_template('medical_records.html', medicalrecords=medicalrecords, action="manage")

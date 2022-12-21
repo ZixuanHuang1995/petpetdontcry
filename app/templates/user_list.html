@@ -2,12 +2,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
 </head>
 
 <body>
-    
+
     <div class="Title_img p-4">
         <div class="Title_img" style="background-color: yellow;">
             <img src="{{ url_for('static', filename='img/publication-list.png') }}" width="30" height="30">
@@ -18,7 +19,7 @@
             <p class="Title text_center">收藏列表</p>
         </div>
     </div>
-    
+
     <div class="a">
 
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
@@ -47,35 +48,62 @@
                             <table style="display: flex; justify-content: center;">
                                 <tr style="border-style: hidden; margin: 1rem;">
                                     <td style="padding: 0.5rem;">
-                                        <a href="{{ url_for('user_views.edit_publshed' , PublishedID='1111111111') }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                        <a href="{{ url_for('user_views.edit_publshed' , PublishedID=published.PublishedID) }}"><img
+                                                src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10"
+                                                height="10"></a>
                                     </td>
                                     <td style="padding: 0.5rem;">
-                                        <a onclick="showDialog()"><img src="{{ url_for('static', filename='img/material-delete-1.png') }}" width="10" height="10"></a>
-                                        
+                                        <a onclick="showDialog()"><img
+                                                src="{{ url_for('static', filename='img/material-delete-1.png') }}"
+                                                width="10" height="10"></a>
+
                                         <div class="dialog" id="dialog">
-                                            
+
                                             <div style="display: flex; align-items: center; justify-content: center;">
-                                                <img src="{{ url_for('static', filename='img/delete-alert.png') }}" width="30" height="30" style="margin: 1rem;">
+                                                <img src="{{ url_for('static', filename='img/delete-alert.png') }}"
+                                                    width="30" height="30" style="margin: 1rem;">
                                             </div>
 
-                                            <div style="display: flex; align-items: center; justify-content: center;">確定要刪除嗎?</div>
+                                            <div style="display: flex; align-items: center; justify-content: center;">
+                                                確定要刪除嗎?</div>
 
                                             <div style="display: flex; align-items: center;">
-                                                <input type="button" class="button-update" style="margin: 1rem;" value="確定" onclick="hideDialog()">
-                                                <input type="button" class="button-update" style="margin: 1rem;" value="取消" onclick="hideDialog()">
+                                                <input type="button" class="button-update" style="margin: 1rem;"
+                                                    value="確定" onclick="hideDialog()">
+                                                <input type="button" class="button-update" style="margin: 1rem;"
+                                                    value="取消" onclick="hideDialog()">
                                             </div>
-                                        
+
                                         </div>
                                     </td>
                                 </tr>
+                                {% if published.activate == True %}
                                 <tr style="border-style:hidden ;">
                                     <td style="padding: 0.5rem;">
-                                        <a href=""><img src="{{ url_for('static', filename='img/awesome-check-green.png') }}" width="10" height="10"></a>
+                                        <img src="{{ url_for('static', filename='img/awesome-check-green.png') }}"
+                                            width="10" height="10">
+                                    </td>
+
+                                    <td style="padding: 0.5rem;">
+                                        <a href="{{ url_for('user_views.edit_status' , PublishedID=published.PublishedID) }}"><img
+                                                src="{{ url_for('static', filename='img/metro-cross-black.png') }}"
+                                                width="10" height="10"></a>
+                                    </td>
+
+                                </tr>
+                                {% else %}
+                                <tr style="border-style:hidden ;">
+                                    <td style="padding: 0.5rem;">
+                                        <a href="{{ url_for('user_views.edit_status' , PublishedID=published.PublishedID) }}"><img
+                                                src="{{ url_for('static', filename='img/awesome-check-black.png') }}"
+                                                width="10" height="10"></a>
                                     </td>
                                     <td style="padding: 0.5rem;">
-                                        <a href=""><img src="{{ url_for('static', filename='img/metro-cross-black.png') }}" width="10" height="10"></a>
+                                        <img src="{{ url_for('static', filename='img/metro-cross-red.png') }}"
+                                            width="10" height="10">
                                     </td>
                                 </tr>
+                                {% endif %}
                             </table>
                         </td>
                     </tr>
@@ -87,16 +115,16 @@
     </div>
 
     <script>
-        var dialog,x;
-        window.onload=function(){
-            dialog=document.getElementById("dialog");
-            x=document.getElementById("x");
+        var dialog, x;
+        window.onload = function () {
+            dialog = document.getElementById("dialog");
+            x = document.getElementById("x");
         }
-        function showDialog(){
-            dialog.style.display="block";
+        function showDialog() {
+            dialog.style.display = "block";
         }
-        function hideDialog(){
-            dialog.style.display="none";
+        function hideDialog() {
+            dialog.style.display = "none";
         }
     </Script>
 
