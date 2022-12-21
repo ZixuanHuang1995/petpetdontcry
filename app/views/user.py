@@ -2,7 +2,7 @@ import imp
 from flask import Blueprint, render_template,abort, jsonify, request, send_from_directory, flash, redirect, url_for
 import flask
 from ..config_other import photos
-from APP.models.user import published
+from APP.models.user import account, published
 from .index import index_views
 from flask_login import login_user,current_user,login_required,logout_user
 from werkzeug.utils import secure_filename
@@ -112,14 +112,13 @@ def edit_user_info(ID):
     form = FormUserInfo()
     form1 = FormChangePWD()
     if form.validate_on_submit():
-        print("sss",users.name)
         users.name = form.name.data
         users.phone = form.phone.data
         db.session.add(users)
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('user_views.home'))
+        return redirect(url_for('user_views.edit_user_info',ID=ID))
     if form1.validate_on_submit():
         #  透過current_user來使用密碼認證，確認是否與現在的密碼相同
         if current_user.check_password(form1.password_old.data):
@@ -179,15 +178,16 @@ def add_publshed():
             picture=file_name,
             area=form.area.data,
             depiction=form.depiction.data,
-            sex=form.sex.data,
-            variety=form.variety.data,
-            type=int(form.type.data),
-            UID = users.UID,
+            sex = int(form.sex.data),
+            variety = form.variety.data,
+            type= int(form.type.data),
+            UID = int(users.UID),
             activate=True
         )
         db.session.add(Publishing)
         db.session.commit()
         flash('Create New Blog Success')
+        return render_template('miss.html', form=form)
     return render_template('user_postlist.html', form=form)
 
 @user_views.route('/user/mypublished')
@@ -414,6 +414,4 @@ def edit_status(PublishedID):
         published.activate = True
     db.session.add(published)
     db.session.commit()
-    print(published.activate)
-    flash('Edit Your Post Success') 
     return redirect(url_for('user_views.published_info'))
