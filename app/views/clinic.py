@@ -128,18 +128,22 @@ def add_doctor():
     :return:
     """
     clinic = get_clinic_data(current_user.ID)
-    from ..models.user import clinic_doctor
+    from ..models.user import clinic_doctor,user
     form = FormDoctor()
     clinic = clinic.query.filter_by(ID=current_user.ID).first()
     if form.validate_on_submit():
-        doctor = clinic_doctor(
-            CID = clinic.CID,
-            UID = int(form.UID.data)
-        )
-        db.session.add(doctor)
-        db.session.commit()
-        flash('新增成功')
-        return redirect(url_for('clinic_views.doctor',ID=current_user.ID))
+        user = user.query.filter_by(UID=form.UID.data).first()
+        if user:
+            doctor = clinic_doctor(
+                CID = clinic.CID,
+                UID = int(form.UID.data)
+            )
+            db.session.add(doctor)
+            db.session.commit()
+            flash('新增成功')
+            return redirect(url_for('clinic_views.doctor',ID=current_user.ID))
+        flash('請輸入正確的會員編號')
+        return render_template('add_doctor.html', form=form, action="manage")
     return render_template('add_doctor.html', form=form, action="manage")
 
 @clinic_views.route('/clinic/doctor/<ID>')
