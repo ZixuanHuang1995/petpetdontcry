@@ -356,11 +356,14 @@ def miss_detailed(publishedID):
     說明：單一刊登資料
     :return:
     """
-    from ..models.user import published
+    from ..models.user import published,user,account
     published = published.query.filter_by(PublishedID=publishedID).first()
-    if published is None:
+    user = user.query.filter_by(UID=published.UID).first()
+    account = account.query.filter_by(ID=user.ID).first()
+    if published is None or user is None:
         abort(404)
-    return render_template('miss_detailed.html', published=published)
+    print(user)
+    return render_template('miss_detailed.html', published=published,account=account,user=user)
 
 # @user_views.route('/adoption/<PID>')
 # @login_required
