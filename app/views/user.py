@@ -313,7 +313,7 @@ def miss_data():
     :return:
     """
     from ..models.user import published
-    published = published.query.filter(published.type.in_([1, 2, 3])).all()
+    published = published.query.filter_by(activate=1).all()
     if published is None:
         abort(404)
     return render_template('miss.html', published=published)
@@ -351,7 +351,6 @@ def mypet_medicalrecord(MID):
     # return render_template('user_detailedrecords.html',medicalrecords=medicalrecords,vaccine=vaccine)
 
 @user_views.route('/miss/<publishedID>')
-@login_required
 def miss_detailed(publishedID):
     """
     說明：單一刊登資料
@@ -376,20 +375,22 @@ def miss_detailed(publishedID):
 #         abort(404)
 #     return render_template('xxxxxx.html', published=published)
 
-@user_views.route('/editstatus/<PID>')
+@user_views.route('/editstatus/<PublishedID>')
 @login_required
-def edit_status(PID):
+def edit_status(PublishedID):
     """
     說明：更改刊登狀態
     :return:
     """
     from ..models.user import published
-    published = published.query.filter(PID=PID).first()
+    published = published.query.filter_by(PublishedID=PublishedID).first()
+    print("TEST",published.activate)
     if published.activate == True:
         published.activate = False
     else:
         published.activate = True
     db.session.add(published)
     db.session.commit()
+    print(published.activate)
     flash('Edit Your Post Success') 
     return redirect(url_for('user_views.published_info'))
