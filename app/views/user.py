@@ -318,6 +318,26 @@ def miss_data():
         abort(404)
     return render_template('miss.html', published=published)
 
+@user_views.route('/miss')
+def miss_data_filter():
+    from ..models.user import published
+    published = published.query.filter(published.type.in_([1, 2, 3])).all()
+    county = request.form['county']
+    type = request.form['type']
+    pets_type = request.form['pets_type']
+    sex = request.form['sex']
+    if county:
+        published = published.query.filter(area = county).all()
+    if type:
+        published = published.query.filter(type = type).all()
+    if pets_type:
+        published = published.query.filter(species = pets_type).all()
+    if sex:
+        published = published.query.filter(sex = sex).all()
+    if published is None:
+        abort(404)
+    return render_template('miss.html', published=published)
+
 @user_views.route('/adoption')
 def adoption_data():
     """
