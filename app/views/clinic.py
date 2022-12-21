@@ -316,3 +316,20 @@ def medicalrecords(CID):
     if medicalrecords is None:
         abort(404)
     return render_template('medical_records.html', medicalrecords=medicalrecords, action="manage")
+
+@clinic_views.route('/clinic/medicalrecords/<CID>', methods=['POST'])
+@login_required
+def medicalrecords_filter(CID):
+    from ..models.user import medicalrecords
+    doctor_name = request.form['doctor_name']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    medicalrecords = medicalrecords.query.filter(doctor=doctor_name).all()
+    if start_date and end_date:
+        medicalrecords = medicalrecords.query.filter(medicalrecords.time < end_date, medicalrecords.time >= start_date).all()
+    if medicalrecords is None:
+        abort(404)
+    return render_template('medical_records.html', medicalrecords=medicalrecords, action="manage")
+
+
+
