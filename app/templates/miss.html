@@ -20,60 +20,51 @@
     <div style="display: flex; justify-content: center;">
 
         <div class="left" style="border: 1rem;">
-            <div style="display: flex; justify-content: center; align-content: center;">
-                <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
-                <div>條件篩選</div>
-            </div>
-    
-            <div>地區</div>
-            <div>
-                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                    <option value="" disabled>全部縣市</option>
-                    <option value="dog">狗</option>
-                    <option value="cat">貓</option>
-                </select>
-                
-                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                    <option value="" disabled>全部區域</option>
-                    <option value="dog">狗</option>
-                    <option value="cat">貓</option>
-                </select>
-            </div>
-            
-            <div style="display: flex; justify-content: center; margin: 0.5rem;">
-                <input type="radio" name="type" value="1">協尋
-                <input type="radio" name="type" value="2">拾獲
-            </div>
-    
-            <div>動物</div>
+            <form action="#" method="post">
+                <div style="display: flex; justify-content: center; align-content: center;">
+                    <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
+                    <div>條件篩選</div>
+                </div>
+                <div>地區</div>
+                <script src="../static/js/tw-city-selector.js"></script>
+                <script>
+                    new TwCitySelector({
+                    el: '.city-selector-set',
+                    elCounty: '.county', // 在 el 裡查找 element
+                    });
+                </script>
 
-            <div style="display: flex; justify-content: center; margin: 0.5rem;">
+                <div class="city-selector-set form-group col-md-6 ">
+                    <select class="county form-control 
+                    shadow-none col-5" name="county " 
+                    placeholder="城市"></select>
+                </div>
+                <div style="display: flex; justify-content: center; margin: 0.5rem;">
+                    <input type="radio" name="type" value="1">協尋
+                    <input type="radio" name="type" value="2">拾獲
+                </div>
+                <br>
+                <br>
+        
+                <div>動物</div>
 
-                <input type="radio" name="type1" value="1">貓咪
-                <input type="radio" name="type1" value="2">狗狗
-                <input type="radio" name="type1" value="3">鳥
-                <input type="radio" name="type1" value="4">兔子
-                <input type="radio" name="type1" value="5">其它
-            
-            </div>
-    
-            <div>
-                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                    <option value="" disabled>選擇品種</option>
-                    <option value="dog">不懂</option>
-                    <option value="cat">不懂</option>
-                </select>
-                
-                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                    <option value="" disabled>性別</option>
-                    <option value="dog">公</option>
-                    <option value="cat">母</option>
-                </select>
-            </div>
-    
-            <input type="button" class="button-update mb-total" value="搜尋" onclick="location.href=''">
-            <input type="button" class="button-update mb-total" value="清除條件" onclick="location.href=''">
-    
+                <div>
+                    <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                        <option value="" disabled>貓貓 or 狗狗</option>
+                        <option value="cat">貓咪</option>
+                        <option value="dog">狗狗</option>
+                    </select>
+                    
+                    <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                        <option value="" disabled>性別</option>
+                        <option value=1>公</option>
+                        <option value=2>母</option>
+                    </select>
+                </div>
+        
+                <input type="button" class="button-update mb-total" value="搜尋" onclick="location.href='{{ url_for('user_views.miss_data_filter') }}'">
+                <input type="button" class="button-update mb-total" value="清除條件" onclick="location.href=''">
+            </form>
         </div>
     
         <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">

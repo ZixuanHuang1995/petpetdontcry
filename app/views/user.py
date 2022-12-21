@@ -2,7 +2,7 @@ import imp
 from flask import Blueprint, render_template,abort, jsonify, request, send_from_directory, flash, redirect, url_for
 import flask
 from ..config_other import photos
-from APP.models.user import published
+from APP.models.user import account, published
 from .index import index_views
 from flask_login import login_user,current_user,login_required,logout_user
 from werkzeug.utils import secure_filename
@@ -112,14 +112,13 @@ def edit_user_info(ID):
     form = FormUserInfo()
     form1 = FormChangePWD()
     if form.validate_on_submit():
-        print("sss",users.name)
         users.name = form.name.data
         users.phone = form.phone.data
         db.session.add(users)
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
-        return redirect(url_for('user_views.home'))
+        return redirect(url_for('user_views.edit_user_info',ID=ID))
     if form1.validate_on_submit():
         #  透過current_user來使用密碼認證，確認是否與現在的密碼相同
         if current_user.check_password(form1.password_old.data):
@@ -184,10 +183,10 @@ def add_publshed():
             # picture=form.picture.data,
             area=form.area.data,
             depiction=form.depiction.data,
-            sex=form.sex.data,
-            variety=form.variety.data,
-            type=int(form.type.data),
-            UID = users.UID,
+            sex = int(form.sex.data),
+            variety = form.variety.data,
+            type= int(form.type.data),
+            UID = int(users.UID),
             activate=True
         )
         db.session.add(Publishing)
@@ -321,7 +320,27 @@ def miss_data():
     :return:
     """
     from ..models.user import published
+    published = published.query.filter_by(activate=1).all()
+    if published is None:
+        abort(404)
+    return render_template('miss.html', published=published)
+
+@user_views.route('/miss')
+def miss_data_filter():
+    from ..models.user import published
     published = published.query.filter(published.type.in_([1, 2, 3])).all()
+    county = request.form['county']
+    type = request.form['type']
+    pets_type = request.form['pets_type']
+    sex = request.form['sex']
+    if county:
+        published = published.query.filter(area = county).all()
+    if type:
+        published = published.query.filter(type = type).all()
+    if pets_type:
+        published = published.query.filter(species = pets_type).all()
+    if sex:
+        published = published.query.filter(sex = sex).all()
     if published is None:
         abort(404)
     return render_template('miss.html', published=published)
@@ -359,17 +378,19 @@ def mypet_medicalrecord(MID):
     # return render_template('user_detailedrecords.html',medicalrecords=medicalrecords,vaccine=vaccine)
 
 @user_views.route('/miss/<publishedID>')
-@login_required
 def miss_detailed(publishedID):
     """
     說明：單一刊登資料
     :return:
     """
-    from ..models.user import published
+    from ..models.user import published,user,account
     published = published.query.filter_by(PublishedID=publishedID).first()
-    if published is None:
+    user = user.query.filter_by(UID=published.UID).first()
+    account = account.query.filter_by(ID=user.ID).first()
+    if published is None or user is None:
         abort(404)
-    return render_template('miss_detailed.html', published=published)
+    print(user)
+    return render_template('miss_detailed.html', published=published,account=account,user=user)
 
 # @user_views.route('/adoption/<PID>')
 # @login_required
@@ -384,20 +405,20 @@ def miss_detailed(publishedID):
 #         abort(404)
 #     return render_template('xxxxxx.html', published=published)
 
-@user_views.route('/editstatus/<PID>')
+@user_views.route('/editstatus/<PublishedID>')
 @login_required
-def edit_status(PID):
+def edit_status(PublishedID):
     """
     說明：更改刊登狀態
     :return:
     """
     from ..models.user import published
-    published = published.query.filter(PID=PID).first()
+    published = published.query.filter_by(PublishedID=PublishedID).first()
+    print("TEST",published.activate)
     if published.activate == True:
         published.activate = False
     else:
         published.activate = True
     db.session.add(published)
     db.session.commit()
-    flash('Edit Your Post Success') 
     return redirect(url_for('user_views.published_info'))

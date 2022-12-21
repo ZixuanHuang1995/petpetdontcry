@@ -7,7 +7,7 @@
 </head>
 
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
-    
+
     <div class="Title_img">
         <div class="left Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
@@ -38,7 +38,7 @@
                         <td>Jhon Doe</td>
                         <td>$123{{doctors.user.UID}}</td>
                         <td>Paid{{doctors.user.name}}</td>
-                        <td><a class="btn btn-sm btn-primary" href="{{ url_for('clinic_views.delete_doctor' , UID=doctors.user.UID , CID=doctors.clinic.CID) }}">Detail</a></td>
+                        <td><a class="btn btn-sm btn-primary" href="{{ url_for('clinic_views.delete_doctor' , UID=doctors.user.UID , CID=doctors.clinic.CID) }}">刪除</a></td>
                     </tr>
                 </tbody>
             </table>

@@ -14,15 +14,12 @@
             <p class="Title">   詳細病歷   </p>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
-        {% for medicalrecords in medicalrecords %}
         <div class="right">
             <a href="{{ url_for('clinic_views.edit_medicalrecord' , MID = medicalrecords.MID) }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="30" height="30"></a>
         </div>
-        {% endfor %}
     </div>
 
     <div class="a">
-        {% for medicalrecords in medicalrecords %}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
             <table class="table">
                 <tbody class="thead">
@@ -39,17 +36,16 @@
                         <td>{{medicalrecords.type}}</td>
                     </tr>
                     <tr>
-                        <td scope="row" class="font-B">病症</td>
+                        <td scope="row" class="font-B">醫生</td>
                         <td>{{medicalrecords.doctor}}</td>
                     </tr>
                     <tr>
-                        <td scope="row" class="font-B">用藥</td>
-                        <td>{{medicalrecords.medication}}</td>
+                        <td scope="row" class="font-B">疾病</td>
+                        <td>{{medicalrecords.disease}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        {% endfor %}
     </div>
 </body>
 
