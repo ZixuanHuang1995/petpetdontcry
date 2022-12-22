@@ -11,11 +11,6 @@
     {% if type == 'add' %}
     <form method="post" action="/clinic/add_medicalrecords/{{PetID}}">
         {{ form.csrf_token }}
-
-        {% if form.errors %}
-            {{form.errors}}
-        {% endif %}
-        
         <div class="Title_img mb-total">
             <div class="Title_img">
                 <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">

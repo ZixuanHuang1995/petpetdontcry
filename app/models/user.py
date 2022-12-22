@@ -106,11 +106,10 @@ class pet(db.Model):
     sex = db.Column('sex',db.Integer, nullable=False)
     species = db.Column('species', db.String(10), nullable=False)
     fur = db.Column('fur', db.String(10), nullable=False)
-    picture = db.Column('picture', db.String(20), nullable=False)
     variety = db.Column('variety', db.String(10), nullable=False)
     vaccine = db.Column('vaccine',db.Boolean,nullable=False)
     medicalrecords = db.relationship('medicalrecords', backref='pet', lazy='dynamic')
-    def __init__(self,PetID,UID,name,sex,vaccine,species,fur,picture,variety):
+    def __init__(self,PetID,UID,name,sex,vaccine,species,fur,variety):
         self.PetID = PetID
         self.UID = UID
         self.name = name
@@ -118,7 +117,6 @@ class pet(db.Model):
         self.vaccine = vaccine
         self.species = species
         self.fur = fur
-        self.picture = picture
         self.variety = variety
         
         return self.UID

@@ -6,7 +6,6 @@ from ..database import db
 from werkzeug.utils import secure_filename
 # from werkzeug import secure_filename, FileStorage
 from werkzeug.datastructures import FileStorage
-from ..config_other import photos
 from ..controllers import (
     get_clinic_data
 )
@@ -35,22 +34,12 @@ def add_pet():
     """
     from ..models import pet
     form = FormPet()
-    UPLOAD_FOLDER = '/APP/static/uploads/'
-    print(form.picture.data)
-    file = request.form.get("picture")
-    
     if form.validate_on_submit():
-        print(os.path.join(UPLOAD_FOLDER, file))
-        print(form.picture.data)
-        # file_name = photos.save(form.picture.data)
-        filename = secure_filename(form.picture.data)
-        photos.save(os.path.join(UPLOAD_FOLDER, filename))
         Pets = pet(
             PetID=int(form.PetID.data),
             UID=int(form.UID.data),
             name=form.name.data,
             fur=form.fur.data,
-            picture=filename,
             species=form.species.data,
             sex=form.sex.data,
             variety=form.variety.data,
@@ -73,12 +62,10 @@ def edit_pet(PetID):
     pets = pet.query.filter_by(PetID=PetID).first_or_404()
     form = FormPet()
     if form.validate_on_submit():
-        file_name = photos.save(form.picture.data)
         pets.PetID=int(form.PetID.data)
         pets.UID=int(form.UID.data)
         pets.name=form.name.data
         pets.fur=form.fur.data
-        pets.picture=file_name
         pets.species=form.species.data
         pets.sex=form.sex.data
         pets.variety=form.variety.data
@@ -90,7 +77,6 @@ def edit_pet(PetID):
     form.PetID.data = str(pets.PetID)
     form.species.data = pets.species
     form.fur.data = pets.fur
-    form.picture.data = pets.picture
     form.UID.data = str(pets.UID)
     form.name.data = pets.name
     form.sex.data = pets.sex
@@ -127,7 +113,7 @@ def find_pet():
         pets = pet.query.filter_by(PetID=form.PetID.data).first()
         if pets:
             medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
-            return render_template('clinic_records.html', pets=pets, medicalrecords=medicalrecords, action="medical")
+            return render_template('clinic_records.html', pets=pets, medicalrecords=medicalrecords, action="medical",PetID=form.PetID.data)
         flash('請確認輸入正確寵物晶片')
     return render_template('chip_query.html', form=form)
 
@@ -225,10 +211,6 @@ def add_medicalrecord(PetID):
     #form = FormMedicalRecords(doctorList, medicationList)
     form = FormMedicalRecords()
     clinic = get_clinic_data(current_user.ID)
-    print(form.validate_on_submit())
-    print(form.type.data)
-    print(form.validate())
-    print(form.is_submitted())
     if form.validate_on_submit():
         medicalrecord = medicalrecords(
             PetID=int(form.PetID.data),
@@ -242,8 +224,9 @@ def add_medicalrecord(PetID):
         db.session.add(medicalrecord)
         db.session.commit()
         flash('新增病歷成功')
-        
-    return render_template('add_records.html', form=form, action="medical",type='add')
+    form.PetID.data = PetID
+    form.CID.data = clinic.name
+    return render_template('add_records.html', form=form, action="medical",type='add',PetID=PetIDsssss)
 
 @clinic_views.route('/clinic/edit_medicalrecord/<int:MID>', methods=['GET', 'POST'])
 @login_required
