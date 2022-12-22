@@ -26,22 +26,23 @@ class FormRegister(FlaskForm):
     def validate_email(self,field):
         if account.query.filter_by(email=field.data).first():
             raise ValidationError('Email already register by somebody')
-    def validate_identify(self,field):
-        if user.query.filter_by(identify=field.data).first():
-            raise ValidationError('Identify already register by somebody')
+    
 
 class FormUserInfo(FlaskForm):
     UID = StringField('會員編號', render_kw={'readonly': True})
     email = StringField('Email', render_kw={'readonly': True})
     identity = StringField('身分證字號', render_kw={'readonly': True})
     name = StringField('姓名',validators=[
+        validators.Length(3, 10),
         validators.DataRequired()
     ])
     phone = StringField('電話',validators=[
         validators.Length(8, 10),
     ])
     submit = SubmitField('送出')
-
+    def validate_identify(self,field):
+        if user.query.filter_by(identify=field.data).first():
+            raise ValidationError('Identify already register by somebody')
 class FormAddUserInfo(FlaskForm):
     # email = StringField('Email', render_kw={'readonly': True})
     identity = StringField('身分證字號',validators=[

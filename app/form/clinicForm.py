@@ -4,7 +4,6 @@ from nbformat import ValidationError
 from wtforms import StringField,SubmitField,validators,PasswordField,IntegerField,BooleanField,TextAreaField,SelectField,FileField
 from wtforms.fields import EmailField
 from ..models import clinic
-from ..config_other import photos
 from flask_wtf.file import FileAllowed, FileRequired
 # from wtforms.widgets.core.
 # from wtforms.ext.sqlalchemy.fields import QuerySelectField
@@ -40,10 +39,6 @@ class FormPet(FlaskForm):
     sex = SelectField('寵物性別', validators=[
         validators.DataRequired()
      ], choices=[('1', '女'), ('0', '男')])
-    picture = FileField('上傳照片', validators=[
-        FileAllowed(photos, 'IMAGE ONLY'),
-        # FileRequired('IMAGE REQUIRED PLEASE')
-    ])
     vaccine = SelectField('是否打疫苗', validators=[
         validators.DataRequired()
     ], choices=[('True', '是'), ('False', '否')])
