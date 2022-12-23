@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_data.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
+    <div class="Title_img mb-total ">
+        <div class="Title_img rounded bg">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title"> 基本資料 </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="a">
+        <div class="container">
+            <!-- 用來接後端傳來的flash-message -->
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <!-- 弄一個x的button，點擊之後讓訊息消失，可參考bootstrap說明 -->
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+            {% endfor %}
+            
+            {% block page_content %}{% endblock %}
+        </div>
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <form method="post" action="/user/edit_userinfo/{{current_user.ID}}">
+                {{form.csrf_token}}
+                <table class="table">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B">{{form.UID.label}}</td>
+                            <td>{{form.UID(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">Email</td>
+                            <td>{{form.email(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">姓名</td>
+                            <td>{{form.name(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">電話</td>
+                            <td>{{form.phone(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">身分證</td>
+                            <td>{{form.identity(class='input-text')}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="a mb-4">
+                    {{form.submit(class='input-text')}}
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="Title_img mb-total">
+        <div class="Title_img rounded bg">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title"> 修改密碼 </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <form method="post" action="/user/edit_userinfo/{{current_user.ID}}">
+                {{form.csrf_token}}
+                <table class="table">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B">舊密碼</td>
+                            <td>{{form1.password_old(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">新密碼</td>
+                            <td>{{form1.password_new(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">新密碼</td>
+                            <td>{{form1.password_new_confirm(class='input-text')}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="a mb-4">
+                    {{form1.submit(class='input-text')}}
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+{% endblock content %}

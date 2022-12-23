@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chip_add.css') }}">
+</head>
+
+<body style="background-color: #5A62A7;">
+
+    <div class="Title_img mb-total" style="margin-top: 10%;">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title">   更新寵物晶片   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <tbody class="thead">
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">寵物晶片號碼</div></td>
+                        <td id="table-dis">{{form.PetID(class='input-text')}}</td> <!--寵物晶片號碼-->
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">飼主編號</div></td>
+                        <td id="table-dis">{{form.UID(class='input-text')}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">寵物名稱</div></td>
+                        <td id="table-dis">{{form.name(class='input-text')}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">寵物性別</div></td>
+                        <td id="table-dis">
+                            <div style="width: 100%;">
+                                {{form.sex(class='rounded-table input-select')}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">寵物類型</div></td>
+                        <td id="table-dis">{{form.variety(class='input-text')}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">寵物品種</div></td>
+                        <td id="table-dis">{{form.species(class='input-text')}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title">
+                            <div class="mb-total">上傳照片</div>
+                        </td>
+                        <td id="table-dis">
+                            <input type='file' style="vertical-align: middle;" onclick="upload_image">
+                            {{form.picture}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B table-title"><div class="mb-total">是否打疫苗</div></td>
+                        <td id="table-dis">
+                            {{form.vaccine(class='input-select')}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="mb-4 button-dis">
+        <input type="button" class="button-update mb-total" value="送出" onclick="showDialog()">
+
+        <div class="dialog" id="dialog">
+            <div style="display: flex; align-items: center; flex-direction: column;">晶片新增成功!</div>
+            <div style="display: flex; align-items: center; flex-direction: column;">
+                <input type="button" class="button-update mb-total" value="確定" onclick="hideDialog()" > <!--hideDialog()-->
+            </div>
+        </div>
+
+        <script>
+            var dialog,x;
+            window.onload=function(){
+                dialog=document.getElementById("dialog");
+                x=document.getElementById("x");
+            }
+            function showDialog(){
+                dialog.style.display="block";
+            }
+            function hideDialog(){
+                dialog.style.display="none";
+            }
+        </Script>
+
+        <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+    </div>
+
+</body>
+
+{% endblock content %}

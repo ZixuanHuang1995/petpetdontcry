@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detailed_records.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
+    <div class="Title_img" style="margin-top: 10%;">
+        <div class="left Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title" style="display: flex; align-items: center;">   詳細病歷   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+        <div class="right">
+            <a href="{{ url_for('clinic_views.edit_medicalrecord' , MID = medicalrecords.MID) }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="30" height="30"></a>
+        </div>
+    </div>
+
+    <div class="a">
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <tbody class="thead">
+                    <tr>
+                        <td scope="row" class="font-B">寵物晶片號碼</td>
+                        <td>{{medicalrecords.PetID}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">診所名稱</td>
+                        <td>{{medicalrecords.clinic.name}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">就醫類型</td>
+                        <td>
+                            {% if medicalrecords.type == 1 %}
+                            疫苗
+                            {% elif medicalrecords.type == 2 %}
+                            看病
+                            {% else %}
+                            檢查
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">醫生</td>
+                        <td>{{medicalrecords.doctor}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">疾病</td>
+                        <td>{{medicalrecords.disease}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

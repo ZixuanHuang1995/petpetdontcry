@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/miss.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
+    <div>
+
+    </div>
+
+    <div class="Title_img" style="padding: 1.5rem; justify-content: right;">
+        <div><input type="button" class="button-update mb-total" value="我要刊登" onclick="location.href='{{ url_for('user_views.add_publshed') }}'"></div>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+
+        <div class="left" style="border: 1rem;">
+            <form action="#" method="post">
+                <div style="display: flex; justify-content: center; align-content: center;">
+                    <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
+                    <div>條件篩選</div>
+                </div>
+                <div>地區</div>
+                <script src="../static/js/tw-city-selector.js"></script>
+                <script>
+                    new TwCitySelector({
+                    el: '.city-selector-set',
+                    elCounty: '.county', // 在 el 裡查找 element
+                    });
+                </script>
+
+                <div class="city-selector-set form-group col-md-6 ">
+                    <select class="county form-control 
+                    shadow-none col-5" name="county " 
+                    placeholder="城市"></select>
+                </div>
+                <div style="display: flex; justify-content: center; margin: 0.5rem;">
+                    <input type="radio" name="type" value="1">協尋
+                    <input type="radio" name="type" value="2">拾獲
+                </div>
+                <br>
+                <br>
+        
+                <div>動物</div>
+
+                <div>
+                    <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                        <option value="" disabled>貓貓 or 狗狗</option>
+                        <option value="cat">貓咪</option>
+                        <option value="dog">狗狗</option>
+                    </select>
+                    
+                    <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                        <option value="" disabled>性別</option>
+                        <option value=1>公</option>
+                        <option value=2>母</option>
+                    </select>
+                </div>
+        
+                <input type="button" class="button-update mb-total" value="搜尋" onclick="location.href='{{ url_for('user_views.miss_data_filter') }}'">
+                <input type="button" class="button-update mb-total" value="清除條件" onclick="location.href=''">
+            </form>
+        </div>
+    
+        <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">
+            {% for published in published %}
+            <div style="display: flex; margin: 1rem; justify-content: center">
+                <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: 60%; padding: 1.5rem;">
+                    <div class="" style="padding: 1rem;">
+                        <img src="{{published.picture}}" width="80" height="80">
+                    </div>
+            
+                    <div>
+                        <div style="display: flex;">
+                            <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">{{published.area}}</div> <!--讀取區域-->
+                            <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">
+                                {% if published.type == 1 %}
+                                協尋
+                                {% elif published.type == 2 %}
+                                拾獲
+                                {% else %}
+                                領養
+                                {% endif %}
+                            </div> <!--讀取刊登類型-->
+                        </div>
+                        
+                        <div class="bg-table rounded-table h-100 p-4 dis" style="border: solid; width: fit-content;">
+                            <div style="font-weight: bold; margin-right: 0.5rem;">{{published.title}}</div> <!--讀取標題-->
+                            <div>{{published.depiction}}</div> <!--讀取敘述-->
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid">
+                    <div>刊登資料</div>
+                    <div>{{published.time}}</div> <!--讀取日期-->
+                    <div>性別</div>
+                    <div>
+                        {% if published.sex == 0 %}
+                        公
+                        {% elif published.sex == 1 %}
+                        母
+                        {% else %}
+                        未知
+                        {% endif %}
+                    </div><!--讀取性別-->
+                    <div><input type="button" class="button-update mb-total" value="詳細資料" onclick="location.href='{{ url_for('user_views.miss_detailed' , publishedID=published.PublishedID) }}'"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</body>
+
+{% endblock content %}

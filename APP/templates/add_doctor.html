@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_doctor.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
+    <form method="post" action="/clinic/add_doctor">
+        {{form.csrf_token}}
+        <div class="Title_img mb-total" style="margin-top: 10%;">
+            <div class="Title_img">
+                <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+                <div class="Title">   新增醫師   </div>
+                <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            </div>
+        </div>
+    
+        <div style="display: flex; justify-content: center;">
+            <div class="bg-table rounded-table" style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+    
+                <div class="" style="margin: 1rem; display: flex; align-items: center; justify-content: center;">
+                    <div style="font-weight: bold; font-size: 1rem;">醫師編號：</div>
+                    <div>{{form.UID(value="", class="input-text", style="padding: 0.5rem; font-size: 1rem;")}}</div>
+                </div>
+        
+                <div class="" style="margin: 1rem;">
+                    {{form.submit(class='button-update')}}
+                </div>
+        
+            </div>
+        </div>
+    </form>
+
+</body>
+
+{% endblock content %}

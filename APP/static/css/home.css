@@ -1,0 +1,33 @@
+
+.a{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column; /*向下排序*/
+    align-items: center; /*置中*/
+}
+
+.dis {
+    display:flex;
+    justify-content: center;
+}
+
+.font-w{
+    font-weight: bold;
+}
+
+.font-s{
+    font-size: 5rem;
+}
+
+.font-s1{
+    font-size: 3rem;
+}
+
+.c{
+    color: brown;
+}
+
+.c1{
+    color: #F7BBB0;
+}

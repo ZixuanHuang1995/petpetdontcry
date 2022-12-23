@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/miss_detailed.css') }}">
+
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
+    <div>
+
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+
+        <div class="left" style="border: 1rem;">
+
+            <div style="display: flex; justify-content: center; flex-direction: column; margin: 1rem; align-items: center;">
+                <div class="bg rounded" style="width:fit-content; display: flex; justify-content: center; flex-direction: column;">
+                    <div>{{published.time}}</div>
+                    <div style="display: flex; justify-content: center;">
+                        <div>{{published.title}}</div>
+                        <div>|</div>
+                        <div style="color: #F7BBB0;">{{published.area}}</div>
+                    </div>
+                </div>  
+            </div>
+    
+            <div class="" style="display: flex; justify-content: center;">
+                <table class="table" style="border-spacing: 0.5rem; border-collapse:separate;">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="tab-title1">種類</td>
+                            <td>
+                                {% if published.variety == cat %}
+                                貓咪
+                                {% elif published.variety == dog %}
+                                狗
+                                {% else %}
+                                其他
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="tab-title1">公</td>
+                            <td>
+                                {% if published.sex == 0 %}
+                                公
+                                {% else %}
+                                母
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="tab-title1">毛色</td>
+                            <td>{{published.fur}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="tab-title1">地點</td>
+                            <td>{{published.area}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="tab-title1" style="display: flex; justify-content: center; align-item:center; width:auto;">
+                                敘述
+                            </td>
+                            <td>{{published.depiction}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>刊登聯絡人</div>
+
+            <div class="" style="display: flex; justify-content: center;">
+                
+                <table class="table" style="border-spacing: 0.5rem; border-collapse:separate;">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="tab-title2">姓名</td>
+                            <td>{{published.user.name}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="tab-title2">電話</td>
+                            <td>{{published.user.phone}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="tab-title2">Email</td>
+                            <td>{{account.email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            
+        </div>
+
+        <div class="right" style="display: flex; justify-content: center; height: fit-content;">
+            
+            <div id="carousel-bs4" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-bs4" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-bs4" data-slide-to="1"></li>
+                    <li data-target="#carousel-bs4" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('static', filename='img/dog.jpg') }}" width="100%">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='img/dog2.jpg') }}" width="100%">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='img/dog3.jpg') }}" width="100%">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carousel-bs4" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-bs4" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+            </div>
+            
+        </div>
+
+    </div>
+
+</body>
+
+{% endblock content %}

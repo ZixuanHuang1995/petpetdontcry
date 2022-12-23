@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+    
+    <div class="Title_img p-4">
+        <div class="Title_img" style="background-color: rgb(253, 253, 253);">
+            <img src="{{ url_for('static', filename='img/publication-list.png') }}" width="30" height="30">
+            <p class="Title text_center">刊登列表</p>
+        </div>
+        <div class="Title_img" style="background-color: rgb(220, 220, 47);">
+            <img src="{{ url_for('static', filename='img/feather-heart-1.png') }}" width="30" height="30">
+            <p class="Title text_center">收藏列表</p>
+        </div>
+    </div>
+    
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table mb-4">
+                <thead>
+                    <tr class="thread">
+                        <th scope="col">ID</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">類型</th>
+                        <th scope="col">動物</th>
+                        <th scope="col">標題</th>
+                        <th scope="col">地區</th>
+                        <th scope="col">狀態</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">152</td>
+                        <td style="vertical-align: middle;">111.10.15</td>
+                        <td style="vertical-align: middle;">協尋</td>
+                        <td style="vertical-align: middle;">狗</td>
+                        <td style="vertical-align: middle;">協尋我的小乖</td>
+                        <td style="vertical-align: middle;">桃園市中壢區</td>
+                        <td style="vertical-align: middle;">
+                            <table>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <input type="button" value="檢視頁面" class="button_view">
+                                    </td>
+                                    <td>
+                                        <input type="button" value="檢視頁面" class="button_delete">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">152</td>
+                        <td style="vertical-align: middle;">111.10.15</td>
+                        <td style="vertical-align: middle;">協尋</td>
+                        <td style="vertical-align: middle;">狗</td>
+                        <td style="vertical-align: middle;">協尋我的小乖</td>
+                        <td style="vertical-align: middle;">桃園市中壢區</td>
+                        <td style="vertical-align: middle;">
+                            <table>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <input type="button" value="檢視頁面" class="button_view">
+                                    </td>
+                                    <td>
+                                        <input type="button" value="檢視頁面" class="button_delete">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">152</td>
+                        <td style="vertical-align: middle;">111.10.15</td>
+                        <td style="vertical-align: middle;">協尋</td>
+                        <td style="vertical-align: middle;">狗</td>
+                        <td style="vertical-align: middle;">協尋我的小乖</td>
+                        <td style="vertical-align: middle;">桃園市中壢區</td>
+                        <td style="vertical-align: middle;">
+                            <table>
+                                <tr style="border-style:hidden ;">
+                                    <td>
+                                        <input type="button" value="檢視頁面" class="button_view">
+                                    </td>
+                                    <td>
+                                        <input type="button" value="檢視頁面" class="button_delete">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

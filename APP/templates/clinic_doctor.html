@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_doctor.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+
+    <div class="Title_img" style="margin-top: 10%;">
+        <div class="left Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <p class="Title">   診所醫生   </p>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+        <!--
+        <div class="right">
+            <input class="Title_more Title url" type="button" value="新增醫師" onclick="location.href='{{ url_for('clinic_views.add_doctor') }}'">
+        </div>-->
+    </div>
+    
+    <div class="a">
+        {% for doctors in doctors %}
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table mb-4">
+                <thead>
+                    <tr class="thread">
+                        <th scope="col">醫師編號</th>
+                        <th scope="col">醫師姓名</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="thread">
+                        <td>{{doctors.user.UID}}</td>
+                        <td>{{doctors.user.name}}</td>
+                        <td><a class="btn btn-sm btn-primary" href="{{ url_for('clinic_views.delete_doctor' , UID=doctors.user.UID , CID=doctors.clinic.CID) }}">刪除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+{% endblock content %}

@@ -1,0 +1,104 @@
+.bg-light{
+    background-color: rgb(36, 213, 119);
+}
+.bg-table{
+    background-color:bisque;
+}
+.url{
+    background-color: aquamarine;
+    color: white;
+}
+.font-B{
+    font-weight: bold;
+}
+
+.rounded{
+    border-radius: 30px;
+}
+.rounded-table{
+    border-radius: 30px; /*圓框*/
+}
+
+.h-100{
+    height: auto;
+}
+.w-80{
+    width: 50%;
+}
+
+.p-4{
+    padding: 1.5rem; /*間隔*/
+}
+
+.a{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column; /*向下排序*/
+    align-items: center; /*置中*/
+}
+
+.Title_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Title_more{
+    display: flex;
+    justify-content: right;
+}
+
+.Title{
+    font-size: 1.5rem;
+    color: blue;
+}
+
+.mb-4{
+    margin: 1rem; /*間隔*/
+}
+
+.dis {
+    display:flex;
+    justify-content: center;
+    align-items: center; /*置中*/
+}
+
+.table{
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    display: blocks;
+}
+
+.thead{
+    text-align: center;
+}
+
+/*新加的不用檢查是不是沒用到*/
+
+.input-text{
+    border-radius: 30px;
+    text-justify: center;
+    text-align: center;
+    background-color: #707070;
+}
+
+.mb-total{
+    margin: 1rem;
+}
+
+.button-update{
+    background-color: #F7BBB0;
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.font-s{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.p{
+    padding: 1.5rem;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+    
+    <div class="Title_img p-4">
+        <div class="Title_img bg rounded">
+            <img src="{{ url_for('static', filename='img/publication-list.png') }}" width="30" height="30">
+            <p class="Title text_center">刊登列表</p>
+        </div>
+    </div>
+
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table mb-4">
+                <thead>
+                    <tr class="thread">
+                        <th style="text-align: center;" scope="col">ID</th>
+                        <th style="text-align: center;" scope="col">日期</th>
+                        <th style="text-align: center;" scope="col">類型</th>
+                        <th style="text-align: center;" scope="col">動物</th>
+                        <th style="text-align: center;" scope="col">標題</th>
+                        <th style="text-align: center;" scope="col">地區</th>
+                        <th style="text-align: center;" scope="col">狀態</th>
+                    </tr>
+                </thead>
+                {% for published in publisheds %}
+                <tbody>
+                    <tr class="thread">
+                        <td style="vertical-align: middle;">{{published.PublishedID}}</td>
+                        <td style="vertical-align: middle;">{{published.time}}</td>
+                        <td style="vertical-align: middle;">{{published.type}}</td>
+                        <td style="vertical-align: middle;">{{published.variety}}</td>
+                        <td style="vertical-align: middle;">{{published.title}}</td>
+                        <td style="vertical-align: middle;">{{published.area}}</td>
+                        <td style="vertical-align: middle;">
+                            <table style="display: flex; justify-content: center;">
+                                <tr style="border-style: hidden; margin: 1rem;">
+                                    <td style="padding: 0.5rem;" colspan="2">
+                                        <a href="{{ url_for('user_views.edit_publshed' , PublishedID=published.PublishedID) }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>
+                                    </td>
+                                </tr>
+                                {% if published.activate == True %}
+                                <tr style="border-style:hidden ;">
+                                    <td style="padding: 0.5rem;">
+                                        <img src="{{ url_for('static', filename='img/awesome-check-green.png') }}"
+                                            width="10" height="10">
+                                    </td>
+
+                                    <td style="padding: 0.5rem;">
+                                        <a href="{{ url_for('user_views.edit_status' , PublishedID=published.PublishedID) }}"><img
+                                                src="{{ url_for('static', filename='img/metro-cross-black.png') }}"
+                                                width="10" height="10"></a>
+                                    </td>
+
+                                </tr>
+                                {% else %}
+                                <tr style="border-style:hidden ;">
+                                    <td style="padding: 0.5rem;">
+                                        <a href="{{ url_for('user_views.edit_status' , PublishedID=published.PublishedID) }}"><img
+                                                src="{{ url_for('static', filename='img/awesome-check-black.png') }}"
+                                                width="10" height="10"></a>
+                                    </td>
+                                    <td style="padding: 0.5rem;">
+                                        <img src="{{ url_for('static', filename='img/metro-cross-red.png') }}"
+                                            width="10" height="10">
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var dialog, x;
+        window.onload = function () {
+            dialog = document.getElementById("dialog");
+            x = document.getElementById("x");
+        }
+        function showDialog() {
+            dialog.style.display = "block";
+        }
+        function hideDialog() {
+            dialog.style.display = "none";
+        }
+    </Script>
+
+</body>
+
+{% endblock content %}
