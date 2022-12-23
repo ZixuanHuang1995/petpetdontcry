@@ -37,12 +37,12 @@
                         <thead class="thead">
                             <tr style="color:red; border-top-style: hidden;">
 
-                                <th style="text-align: center;" scope="col">晶片號碼</th>
-                                <th style="text-align: center;" scope="col">性別</th>
-                                <th style="text-align: center;" scope="col">類型</th>
-                                <th style="text-align: center;" scope="col">品種</th>
-                                <th style="text-align: center;" scope="col">疫苗紀錄</th>
-                                <th style="text-align: center;" scope="col">就醫紀錄</th>
+                                <th scope="col">晶片號碼</th>
+                                <th scope="col">性別</th>
+                                <th scope="col">類型</th>
+                                <th scope="col">品種</th>
+                                <th scope="col">疫苗紀錄</th>
+                                <th scope="col">就醫紀錄</th>
                             </tr>
                         </thead>
                         <tbody class="thead">
@@ -61,14 +61,12 @@
                                 <td>{{pet.variety}}</td>
                                 <td>{{pet.species}}</td>
                                 <td>
-                                    <img src="{{ url_for('static', filename='img/syringe.png') }}" onclick="showDialog()" width="30" height="30">
-                                    
+                                    <img src="{{ url_for('static', filename='img/syringe.png') }}" onclick="showDialog('{{pet.PetID}}')" width="30" height="30">
                                     <div class="dialog" id="dialog">
                                         <div style="display: flex; align-items: center; justify-content: center;">
                                             <img src="{{ url_for('static', filename='img/syringe.png') }}" width="30" height="30">
-                                            <div style="display: flex; align-items: center; margin: 1rem;">就醫紀錄</div>
+                                            <div style="display: flex; align-items: center; margin: 1rem;">疫苗紀錄</div>
                                         </div>
-
                                         <div>
                                             <table class="table">
                                                 <thead class="thead">
@@ -77,11 +75,8 @@
                                                         <th>疫苗名稱</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="vertical-align: middle;">111/11/20</td>
-                                                        <td style="vertical-align: middle;">五合一疫苗</td>
-                                                    </tr>
+                                                <tbody id="petvaccine">
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -104,23 +99,14 @@
                                             <table class="table">
                                                 <thead class="thead">
                                                     <tr>
-                                                        <th>診所名稱</th>
                                                         <th>就醫日期</th>
                                                         <th>就醫類型</th>
                                                         <th>醫師姓名</th>
                                                         <th>詳細</th>
                                                     </tr>
                                                 </thead>                            
-                                                <tbody>
-                                                    <tr id="datatable">
-                                                        {% for medicalrecord in pets_medicalrecords %}
-                                                        <td style="vertical-align: middle;">NCU診所{{medicalrecord.CID}}</td>
-                                                        <td style="vertical-align: middle;">NCU診所</td>
-                                                        <td style="vertical-align: middle;">NCU診所</td>
-                                                        <td style="vertical-align: middle;">NCU診所</td>
-                                                        <td><a href="{{ url_for('user_views.mypet_medicalrecord' , MID = medicalrecord.ID) }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></a></td>
-                                                        {% endfor %}
-                                                    </tr>
+                                                <tbody id="petrecords">
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -148,13 +134,52 @@
             dialog1=document.getElementById("dialog1");
             x=document.getElementById("x");
         }
-        function showDialog(){
+
+        function showDialog(PetID){
+            vaccine(PetID);
             dialog.style.display="block";
         }
         function hideDialog(){
             dialog.style.display="none";
         }
-        function submit(PetID) {
+
+        function showDialog1(PetID){
+            // debugger
+            records(PetID);
+            dialog1.style.display="block";
+        }
+        function hideDialog1(){
+            dialog1.style.display="none";
+        }
+
+        function vaccine(PetID) {  /*疫苗資料*/
+            debugger
+            $.ajax({
+                url: "/user/petrrrr", /*資料提交到submit處*/
+                type: "GET",  /*采用POST方法提交*/
+                data: { "PetID": PetID },  /*提交的資料（json格式），從輸入框中獲取*/
+                /*result為后端函式回傳的json*/
+                success: function (result) {
+                    
+                    var html='';
+                    for (var i=0;i<result.pets_vaccinerecords.length;i++)
+                    {                        
+                        var NowDate = new Date(result.pets_vaccinerecords[i].time);    
+                        date = '' + NowDate.toLocaleString('zh-TW', { hour12: false });
+                        html+=`
+                            <tr>
+                            <td style="vertical-align: middle;">${date}</td>
+                            <td style="vertical-align: middle;">${result.pets_vaccinerecords[i].vaccine}</td>
+                            </tr>  
+                        `
+                    }
+                    $("#petvaccine").html(html)
+                }
+
+            });
+        }
+
+        function records(PetID) {  /*病歷資料*/
             debugger
             $.ajax({
                 url: "/user/petssss", /*資料提交到submit處*/
@@ -162,33 +187,34 @@
                 data: { "PetID": PetID },  /*提交的資料（json格式），從輸入框中獲取*/
                 /*result為后端函式回傳的json*/
                 success: function (result) {
-
-                    var m ="<ul>"
-                    result=JSON.parse(result);
-                    $.each(result, function(i,n){
-                        console.log(n);
-                        m+="<li>"+ "</li>";
-                    });
-                    m+="</ul>";
-
-                   /* if (result.message == "success!") {
-                        alert(result.pets_medicalrecords[0].CID)
+                    var html='';
+                    let midrecords=[];
+                    for (var i=0;i<result.pets_medicalrecords.length;i++)
+                    {
+                        type_name=""
+                        if(result.pets_medicalrecords[i].type==1)
+                            type_name="疫苗"
+                        else if(result.pets_medicalrecords[i].type==2)
+                            type_name="看病"
+                        else 
+                            type_name="檢查"
+                        
+                        var NowDate = new Date(result.pets_medicalrecords[i].time);    
+                        date = '' + NowDate.toLocaleString('zh-TW', { hour12: false });
+                        midrecords[i]=result.pets_medicalrecords[i].MID;
+                        html+=`
+                            <tr>
+                            <td style="vertical-align: middle;">${date}</td>
+                            <td style="vertical-align: middle;">${type_name}</td>
+                            <td style="vertical-align: middle;">${result.pets_medicalrecords[i].doctor}</td>
+                            </tr>  
+                        `
                     }
-                    else {
-                        alert(result.message)
-                    }*/
+                    $("#petrecords").html(html)
                 }
             });
         }
         
-        function showDialog1(PetID){
-            // debugger
-            submit(PetID)
-            dialog1.style.display="block";
-        }
-        function hideDialog1(){
-            dialog1.style.display="none";
-        }
 // function submit() {
 //     var xhr = new XMLHttpRequest();
 //     xhr.open("POST", "/predict"); 
