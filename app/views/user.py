@@ -11,7 +11,8 @@ from ..controllers import (
     get_all_users,
     get_all_users_json,
     get_user_data,
-    get_pet_all_medicalrecords
+    get_pet_all_medicalrecords,
+    get_pet_all_vaccinerecords
 )
 from ..form.userForm import FormRegister,FormUserInfo,FormAddUserInfo,FormChangePWD
 from ..form.publishedForm import FormPublished, FormeditPublished
@@ -271,12 +272,31 @@ def pet_medicalrecords():
         # 回傳的形式為 json
         return {'message':"error!"}
     else:
-        return {'message':"success!",'pets_medicalrecords':get_pet_all_medicalrecords(PetID)}
-    # users = get_user_data(current_user.ID)
+        return {'message':"success!",'pets_vaccinerecords':get_pet_all_medicalrecords(PetID)}
     
-    # pets = pet.query.filter_by(UID=users.UID).all()
-    
-    # return flask.render_template('user_pet.html', pets_medicalrecords=pets_medicalrecords )
+@user_views.route('/user/petrrrr')
+@login_required
+def pet_vaccinerecords():
+    """
+    說明：我的寵物資訊呈現(疫苗)
+    :param UID:使用者UID
+    :return:
+    """
+    #由于POST、GET獲取資料的方式不同，需要使用if陳述句進行判斷
+    if request.method == "POST":
+        # 從前端拿數據
+        PetID = request.form.get("PetID")
+    if request.method == "GET":
+        PetID = request.args.get("PetID")
+    print(PetID)
+    print(get_pet_all_vaccinerecords(PetID))
+    #如果獲取的資料為空
+    if len(PetID) == 0:
+        # 回傳的形式為 json
+        return {'message':"error!"}
+    else:
+        return {'message':"success!",'pets_vaccinerecords':get_pet_all_vaccinerecords(PetID)}
+
 
 @user_views.route('/user/edit_published/<int:PublishedID>', methods=['GET', 'POST'])
 @login_required
@@ -338,7 +358,7 @@ def miss_data():
         ).all()
     if published is None:
         abort(404)
-    return render_template('miss.html', published=published)
+    return render_template('miss.html', published=published,action="miss")
 
 @user_views.route('/miss')
 def miss_data_filter():
@@ -372,26 +392,18 @@ def adoption_data():
         abort(404)
     return render_template('miss.html', published=published)
 
-
 @login_required
 def mypet_medicalrecord(MID):
     """
     說明：我寵物病歷
     :return:
     """
-
     from ..models.user import medicalrecords, clinic
     medicalrecords = medicalrecords.query.filter_by(MID=MID).all()
     if medicalrecords is None:
         abort(404)
     return render_template('user_detailedrecords.html', medicalrecords=medicalrecords)
-    # from ..models.user import medicalrecords
-    # medicalrecords = medicalrecords.query.filter_by(PetID=PetID).all()
-    # vaccine = medicalrecords.query.filter_by(PetID=PetID,type=1).all()
-    # if medicalrecords is None:
-    #     abort(404)
-    # return render_template('user_detailedrecords.html',medicalrecords=medicalrecords,vaccine=vaccine)
-
+    
 @user_views.route('/miss/<publishedID>')
 def miss_detailed(publishedID):
     """
