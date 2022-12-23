@@ -18,13 +18,15 @@
 
         <div class="left" style="border: 1rem;">
 
-            <div style="display: flex; justify-content: center; flex-direction: column; margin: 1rem;">
-                <div>2022.11.8{{published.time}}</div>
-                <div style="display: flex; justify-content: center;">
-                    <div>嘟嘟走失了{{published.title}}</div>
-                    <div>|</div>
-                    <div style="color: #F7BBB0;">台北市松山區{{published.area}}</div>
-                </div>
+            <div style="display: flex; justify-content: center; flex-direction: column; margin: 1rem; align-items: center;">
+                <div class="bg rounded" style="width:fit-content; display: flex; justify-content: center; flex-direction: column;">
+                    <div>{{published.time}}</div>
+                    <div style="display: flex; justify-content: center;">
+                        <div>{{published.title}}</div>
+                        <div>|</div>
+                        <div style="color: #F7BBB0;">{{published.area}}</div>
+                    </div>
+                </div>  
             </div>
     
             <div class="" style="display: flex; justify-content: center;">
@@ -32,23 +34,39 @@
                     <tbody class="thead">
                         <tr>
                             <td scope="row" class="tab-title1">種類</td>
-                            <td>狗{{published.variety}}</td>
+                            <td>
+                                {% if published.variety == cat %}
+                                貓咪
+                                {% elif published.variety == dog %}
+                                狗
+                                {% else %}
+                                其他
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">公</td>
-                            <td>鬥牛犬{{published.sex}}</td>
+                            <td>
+                                {% if published.sex == 0 %}
+                                公
+                                {% else %}
+                                母
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">毛色</td>
-                            <td>米黃{{published.fur}}</td>
+                            <td>{{published.fur}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">地點</td>
-                            <td>台北市松山區復興北路99號{{published.area}}</td>
+                            <td>{{published.area}}</td>
                         </tr>
                         <tr>
-                            <td scope="row" class="tab-title1">敘述</td>
-                            <td>2022/10/24 晚上7點22分從復興北路的大潤發賣場跑掉了,監視器都照不到他。{{published.depiction}}</td>
+                            <td scope="row" class="tab-title1" style="display: flex; justify-content: center; align-item:center; width:auto;">
+                                敘述
+                            </td>
+                            <td>{{published.depiction}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -62,11 +80,11 @@
                     <tbody class="thead">
                         <tr>
                             <td scope="row" class="tab-title2">姓名</td>
-                            <td>王聖智{{published.user.name}}</td>
+                            <td>{{published.user.name}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title2">電話</td>
-                            <td>09912345678{{published.user.phone}}</td>
+                            <td>{{published.user.phone}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title2">Email</td>

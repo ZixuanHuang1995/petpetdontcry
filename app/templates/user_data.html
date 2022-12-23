@@ -8,8 +8,8 @@
 
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
 
-    <div class="Title_img mb-total">
-        <div class="Title_img">
+    <div class="Title_img mb-total ">
+        <div class="Title_img rounded bg">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
             <div class="Title"> 基本資料 </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
@@ -29,6 +29,7 @@
             
             {% block page_content %}{% endblock %}
         </div>
+
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
             <form method="post" action="/user/edit_userinfo/{{current_user.ID}}">
                 {{form.csrf_token}}
@@ -54,43 +55,51 @@
                             <td scope="row" class="font-B">身分證</td>
                             <td>{{form.identity(class='input-text')}}</td>
                         </tr>
-                        <div class="a mb-4">
-                            {{form.submit(class='input-text')}}
-                        </div>
                     </tbody>
                 </table>
+
+                <div class="a mb-4">
+                    {{form.submit(class='input-text')}}
+                </div>
+
             </form>
         </div>
     </div>
 
     <div class="Title_img mb-total">
-        <div class="Title_img">
+        <div class="Title_img rounded bg">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
             <div class="Title"> 修改密碼 </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div class="a">
+
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
             <form method="post" action="/user/edit_userinfo/{{current_user.ID}}">
                 {{form.csrf_token}}
-                <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
-                    <table class="table">
-                        <tbody class="thead">
-                            <tr>
-                                <td scope="row" class="font-B">舊密碼</td>
-                                <td>{{form1.password_old(class='input-text')}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" class="font-B">新密碼</td>
-                                <td>{{form1.password_new(class='input-text')}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" class="font-B">新密碼</td>
-                                <td>{{form1.password_new_confirm(class='input-text')}}</td>
-                            </tr>
-                            <div class="a mb-4">
-                                {{form1.submit(class='input-text')}}
-                            </div>
-                        </tbody>
-                    </table>
+                <table class="table">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B">舊密碼</td>
+                            <td>{{form1.password_old(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">新密碼</td>
+                            <td>{{form1.password_new(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">新密碼</td>
+                            <td>{{form1.password_new_confirm(class='input-text')}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="a mb-4">
+                    {{form1.submit(class='input-text')}}
                 </div>
+
             </form>
         </div>
     </div>
