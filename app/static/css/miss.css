@@ -11,6 +11,10 @@
     background-color: #fef3ab;
 }
 
+.rounded{
+    border-radius: 30px; /*圓框*/
+}
+
 .rounded-table{
     border-radius: 30px; /*圓框*/
 }
