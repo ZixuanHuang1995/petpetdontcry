@@ -5,14 +5,11 @@
 .navbar .nav.pull-center {
     float: none;
     margin: 0 auto;
+    height: auto;
     display:inline-block;
     *display:inline; /* ie7 fix */
     *zoom:1; /* hasLayout ie7 trigger */
     vertical-align: top;
-}
-  
-.navbar>li :hover{
-    background: var(--yellow);
 }
   
 .navbar-inner {
@@ -20,9 +17,14 @@
 }
   
 .img-clinic{
-    width: 50%;
+    max-width: 75%;
 }
 
 .img-base{
-    width: 50%;
+    max-width: 75%;
+}
+
+nav li{
+    margin :0 20px;
+    font-size:25px; 
 }

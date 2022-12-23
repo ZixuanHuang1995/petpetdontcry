@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+<!--引入jQuery包用于使用ajax-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge_product.css') }}">
+</head>
+
+<div id="contain"></div>
+<h1>動物收容所</h1>
+<div id="contain"></div>
+
+
+<script>
+    var dataUrl = "https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=2thVboChxuKs"
+
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET',dataUrl, true)
+    xhr.send()
+    xhr.onload = function(){
+        var dataset = JSON.parse(this.responseText)
+        print(dataset)
+    }
+
+    function print(dataset){
+        dataset.forEach( (data, index) => {
+            let newCard = document.createElement("div")
+            newCard.className = "infoCard"
+            document.querySelector("#contain").appendChild(newCard)
+            let newCardInfo = `
+                <span>${index + 1}</span>
+                <p >${data.ShelterName}</p>
+                <p >${data.Address}</p>
+                <p >${data.Phone}</p>
+                <p >${data.OpenTime}</p>
+            `
+            newCard.innerHTML = newCardInfo
+        })
+    }
+
+</script>
+{% endblock content %}
+
