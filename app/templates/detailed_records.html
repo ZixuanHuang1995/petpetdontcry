@@ -11,7 +11,7 @@
     <div class="Title_img" style="margin-top: 10%;">
         <div class="left Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <p class="Title">   詳細病歷   </p>
+            <div class="Title" style="display: flex; align-items: center;">   詳細病歷   </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
         <div class="right">
@@ -33,7 +33,15 @@
                     </tr>
                     <tr>
                         <td scope="row" class="font-B">就醫類型</td>
-                        <td>{{medicalrecords.type}}</td>
+                        <td>
+                            {% if medicalrecords.type == 1 %}
+                            疫苗
+                            {% elif medicalrecords.type == 2 %}
+                            看病
+                            {% else %}
+                            檢查
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row" class="font-B">醫生</td>

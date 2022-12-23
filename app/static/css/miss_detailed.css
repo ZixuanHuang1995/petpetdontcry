@@ -1,3 +1,7 @@
+.bg{
+    background-color: #eff493;
+}
+
 .bg-light{
     background-color: rgb(36, 213, 119);
 }
@@ -9,6 +13,10 @@
 }
 .bg-name{
     background-color: #fef3ab;
+}
+
+.rounded{
+    border-radius: 30px; /*圓框*/
 }
 
 .rounded-table{
