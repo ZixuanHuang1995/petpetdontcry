@@ -14,25 +14,22 @@
 
     </div>
 
-    <div class="Title_img" style="padding: 1.5rem;">
-        <div class="Title_img bg rounded">
+    <div class="Title_img" style="padding: 1.5rem; margin-top: 5%;">
+        <div class="Title_img rounded">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <div class="Title">   寵物列表   </div>
+            <div class="Title" style="color: brown;">   寵物列表   </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
 
     {% for pet in pets %}
-    <div style="display: flex; justify-content: center; align-items: center;    flex-direction: column">
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
         
-        <div class="" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: fit-content; padding: 1.5rem; border-radius: 30px; margin: 1rem">
+        <div class="" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: 60%; padding: 1.5rem; border-radius: 30px; margin: 1rem">
             
-            <div class="" style="padding: 1rem;">
-                <img width="80" height="80">
-            </div>
-            <div>
+            <div style="width: 100%;">
                 <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">
-                    小橘子
+                    {{pet.name}}
                 </div>
                 
                 <div class="bg-table rounded-table h-100 p-4 dis">
@@ -40,19 +37,27 @@
                         <thead class="thead">
                             <tr style="color:red; border-top-style: hidden;">
 
-                                <th scope="col">晶片號碼</th>
-                                <th scope="col">性別</th>
-                                <th scope="col">類型</th>
-                                <th scope="col">品種</th>
-                                <th scope="col">疫苗紀錄</th>
-                                <th scope="col">就醫紀錄</th>
+                                <th style="text-align: center;" scope="col">晶片號碼</th>
+                                <th style="text-align: center;" scope="col">性別</th>
+                                <th style="text-align: center;" scope="col">類型</th>
+                                <th style="text-align: center;" scope="col">品種</th>
+                                <th style="text-align: center;" scope="col">疫苗紀錄</th>
+                                <th style="text-align: center;" scope="col">就醫紀錄</th>
                             </tr>
                         </thead>
                         <tbody class="thead">
 
                             <tr>
                                 <td id="ID">{{pet.PetID}}</td>
-                                <td>{{pet.sex}}</td>
+                                <td>
+                                    {% if pet.sex == 0 %}
+                                    公
+                                    {% elif pet.sex == 1 %}
+                                    母
+                                    {% else %}
+                                    未知
+                                    {% endif %}
+                                </td>
                                 <td>{{pet.variety}}</td>
                                 <td>{{pet.species}}</td>
                                 <td>

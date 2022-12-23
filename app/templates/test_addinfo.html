@@ -16,21 +16,20 @@
         <form method="post" action="/user/register">
             {{form.csrf_token}}
             <div class="dis-f">
-    
-                <div style="display: flex;">
-                    <div class="font-s mb-total">電子郵件</div>
-                    <div>{{form.email(class="input-text font-s mb-total")}}</div>
-                </div>
-        
-                <div style="display: flex;">
-                    <div class="font-s mb-total">輸入密碼</div>
-                    <div>{{form.password(class="input-text font-s mb-total")}}</div>         
-                </div>
-        
-                <div style="display: flex;">
-                    <div class="font-s mb-total">確認密碼</div>
-                    <div>{{form.password2(class="input-text font-s mb-total")}}</div>   
-                </div>
+                <table>
+                    <tr>
+                        <td><div class="font-s mb-total" style="text-align: center;">身分證字號</div></td>
+                        <td><div>{{form.identity(class="input-text font-s mb-total")}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="font-s mb-total" style="text-align: center;">姓名</div></td>
+                        <td><div>{{form.name(class="input-text font-s mb-total")}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="font-s mb-total" style="text-align: center;">電話</div></td>
+                        <td><div>{{form.phone(class="input-text font-s mb-total")}}</div></td>
+                    </tr>
+                </table>
             </div>
         
             <div class="dis">

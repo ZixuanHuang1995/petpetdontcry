@@ -111,7 +111,7 @@ def add_userinfo(ID):
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
         flash('You Have Already Edit Your Info')
         return redirect(url_for('user_views.home'))
-    return render_template('test.html',form = form)
+    return render_template('test_addinfo.html',form = form)
 
 @user_views.route('/user/edit_userinfo/<ID>', methods=['GET', 'POST'])
 @login_required
