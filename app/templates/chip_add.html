@@ -8,15 +8,14 @@
 </head>
 
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
-
+    {% if type == 'edit' %}
     <div class="Title_img mb-total" style="margin-top: 10%;">
         <div class="Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <div class="Title"style="font-weight: bold;"> 新增寵物晶片 </div>
+            <div class="Title"style="font-weight: bold;"> 修改寵物晶片 </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
-    {% if type == 'edit' %}
     <form method="post" action="/clinic/edit_pet/{{PetID}}">
         {{form.csrf_token}}
         <div class="a">
@@ -56,13 +55,13 @@
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
-                                <div class="mb-total">寵物類型</div>
+                                <div class="mb-total">寵物品種</div>
                             </td>
                             <td id="table-dis">{{form.variety(class='rounded-table input-select')}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
-                                <div class="mb-total">寵物品種</div>
+                                <div class="mb-total">寵物類型</div>
                             </td>
                             <td id="table-dis">{{form.species(class='input-text')}}</td>
                         </tr>
@@ -111,6 +110,13 @@
     <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
     </div>
     {% else %}
+    <div class="Title_img mb-total" style="margin-top: 10%;">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title"style="font-weight: bold;"> 新增寵物晶片 </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
     <form method="post" action="/clinic/add_pet">
         {{form.csrf_token}}
         <div class="a">
@@ -150,13 +156,13 @@
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
-                                <div class="mb-total">寵物類型</div>
+                                <div class="mb-total">寵物品種</div>
                             </td>
                             <td id="table-dis">{{form.variety(class='rounded-table input-select')}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
-                                <div class="mb-total">寵物品種</div>
+                                <div class="mb-total">寵物類型</div>
                             </td>
                             <td id="table-dis">{{form.species(class='input-text')}}</td>
                         </tr>
