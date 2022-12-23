@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template,abort, jsonify, request, send_from_directory, flash, redirect, url_for
 import flask,os
 from flask_login import login_user,current_user,login_required,logout_user
-from ..form.clinicForm import FormPet,FormDoctor, FormMedicalRecords,FormFindPet
+from ..form.clinicForm import FormPet,FormDoctor, FormMedicalRecords,FormFindPet,FormPetEdit
 from ..database import db
 from werkzeug.utils import secure_filename
 # from werkzeug import secure_filename, FileStorage
@@ -34,6 +34,7 @@ def add_pet():
     """
     from ..models import pet
     form = FormPet()
+    print(form.validate_on_submit())
     if form.validate_on_submit():
         Pets = pet(
             PetID=int(form.PetID.data),
@@ -41,13 +42,14 @@ def add_pet():
             name=form.name.data,
             fur=form.fur.data,
             species=form.species.data,
-            sex=form.sex.data,
+            sex=int(form.sex.data),
             variety=form.variety.data,
-            vaccine=form.vaccine.data,
+            vaccine=int(form.vaccine.data)
         )
         db.session.add(Pets)
         db.session.commit()
         flash('新增寵物成功')
+        return redirect(url_for('clinic_views.find_pet'))
     return render_template('chip_add.html', form=form)
 
 @clinic_views.route('/clinic/edit_pet/<int:PetID>', methods=['GET', 'POST'])
@@ -60,20 +62,20 @@ def edit_pet(PetID):
     """
     from ..models import pet
     pets = pet.query.filter_by(PetID=PetID).first_or_404()
-    form = FormPet()
+    form = FormPetEdit()
     if form.validate_on_submit():
         pets.PetID=int(form.PetID.data)
         pets.UID=int(form.UID.data)
         pets.name=form.name.data
         pets.fur=form.fur.data
         pets.species=form.species.data
-        pets.sex=form.sex.data
+        pets.sex=int(form.sex.data)
         pets.variety=form.variety.data
-        pets.vaccine=form.vaccine.data
+        pets.vaccine=int(form.vaccine.data)
         db.session.add(pets)
         db.session.commit()
         flash('更新寵物成功')
-        return redirect(url_for('clinic_views.pet_info', PetID=PetID))
+        return redirect(url_for('clinic_views.pet_medicalrecord', PetID=PetID))
     form.PetID.data = str(pets.PetID)
     form.species.data = pets.species
     form.fur.data = pets.fur
@@ -116,21 +118,6 @@ def find_pet():
             return render_template('clinic_records.html', pets=pets, medicalrecords=medicalrecords, action="medical",PetID=form.PetID.data)
         flash('請確認輸入正確寵物晶片')
     return render_template('chip_query.html', form=form)
-
-# @clinic_views.route('/clinic/find_pet', methods=['GET', 'POST'])
-# @login_required
-# def find_pet():
-#     """
-#     說明：查詢寵物
-#     :return:
-#     """
-#     from ..models.user import pet,medicalrecords
-#     form = FormFindPet()
-#     if form.validate_on_submit():
-#         pets = pet.query.filter_by(PetID=form.PetID.data).all()
-#         medicalrecords = medicalrecords.query.filter_by(PetID=form.PetID.data).all()
-#         return render_template('clinic_medical.html', pets=pets,medicalrecords=medicalrecords)
-#     return render_template('chip_query.html', form=form)
 
 @clinic_views.route('/clinic/add_doctor', methods=['GET', 'POST'])
 @login_required
@@ -226,7 +213,7 @@ def add_medicalrecord(PetID):
         flash('新增病歷成功')
     form.PetID.data = PetID
     form.CID.data = clinic.name
-    return render_template('add_records.html', form=form, action="medical",type='add',PetID=PetIDsssss)
+    return render_template('add_records.html', form=form, action="medical",type='add',PetID=PetID)
 
 @clinic_views.route('/clinic/edit_medicalrecord/<int:MID>', methods=['GET', 'POST'])
 @login_required

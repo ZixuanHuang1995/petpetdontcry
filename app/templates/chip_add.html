@@ -16,10 +16,10 @@
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
-    <form method="post" action="/clinic/add_pet">
+    {% if type == 'edit' %}
+    <form method="post" action="/clinic/edit_pet/{{PetID}}">
         {{form.csrf_token}}
         <div class="a">
-
             <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
                 <table class="table">
                     <tbody class="thead">
@@ -56,13 +56,19 @@
                             <td scope="row" class="font-B table-title">
                                 <div class="mb-total">寵物類型</div>
                             </td>
-                            <td id="table-dis">{{form.variety(class='input-text')}}</td>
+                            <td id="table-dis">{{form.variety(class='rounded-table input-select')}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
                                 <div class="mb-total">寵物品種</div>
                             </td>
                             <td id="table-dis">{{form.species(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物毛色</div>
+                            </td>
+                            <td id="table-dis">{{form.fur(class='input-text')}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
@@ -76,35 +82,126 @@
                 </table>
             </div>
         </div>
+        <div class="mb-4 button-dis">
+            <input type="button" class="button-update mb-total" value="送出" onclick="showDialog()">
 
+            <div class="dialog" id="dialog">
+                <div style="display: flex; align-items: center; flex-direction: column;">晶片修改成功!</div>
+                <div style="display: flex; align-items: center; flex-direction: column;">
+                    {{form.submit}}
+                </div>
+            </div>
+
+            <script>
+                var dialog, x;
+                window.onload = function () {
+                    dialog = document.getElementById("dialog");
+                    x = document.getElementById("x");
+                }
+                function showDialog() {
+                    dialog.style.display = "block";
+                }
+                function hideDialog() {
+                    dialog.style.display = "none";
+                }
+            </Script>
     </form>
-    <div class="mb-4 button-dis">
-        <input type="button" class="button-update mb-total" value="送出" onclick="showDialog()">
+    <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+    </div>
+    {% else %}
+    <form method="post" action="/clinic/add_pet">
+        {{form.csrf_token}}
+        <div class="a">
 
-        <div class="dialog" id="dialog">
-            <div style="display: flex; align-items: center; flex-direction: column;">晶片新增成功!</div>
-            <div style="display: flex; align-items: center; flex-direction: column;">
-                {{form.submit}}
+            <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+                <table class="table">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物晶片號碼</div>
+                            </td>
+                            <td id="table-dis">{{form.PetID(class='input-text')}}</td>
+                            {% if form.PetID.errors %} {{ form.PetID.errors.0 }} {% endif %}
+                            <!--寵物晶片號碼-->
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">飼主編號</div>
+                            </td>
+                            <td id="table-dis">{{form.UID(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物名稱</div>
+                            </td>
+                            <td id="table-dis">{{form.name(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物性別</div>
+                            </td>
+                            <td id="table-dis">
+                                <div style="width: 100%;">
+                                    {{form.sex(class='rounded-table input-select')}}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物類型</div>
+                            </td>
+                            <td id="table-dis">{{form.variety(class='rounded-table input-select')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物品種</div>
+                            </td>
+                            <td id="table-dis">{{form.species(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">寵物毛色</div>
+                            </td>
+                            <td id="table-dis">{{form.fur(class='input-text')}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">是否打疫苗</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.vaccine(class='input-select')}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+        <div class="mb-4 button-dis">
+            <input type="button" class="button-update mb-total" value="送出" onclick="showDialog()">
 
-        <script>
-            var dialog, x;
-            window.onload = function () {
-                dialog = document.getElementById("dialog");
-                x = document.getElementById("x");
-            }
-            function showDialog() {
-                dialog.style.display = "block";
-            }
-            function hideDialog() {
-                dialog.style.display = "none";
-            }
-        </Script>
+            <div class="dialog" id="dialog">
+                <div style="display: flex; align-items: center; flex-direction: column;">晶片新增成功!</div>
+                <div style="display: flex; align-items: center; flex-direction: column;">
+                    {{form.submit}}
+                </div>
+            </div>
 
-        <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+            <script>
+                var dialog, x;
+                window.onload = function () {
+                    dialog = document.getElementById("dialog");
+                    x = document.getElementById("x");
+                }
+                function showDialog() {
+                    dialog.style.display = "block";
+                }
+                function hideDialog() {
+                    dialog.style.display = "none";
+                }
+            </Script>
+    </form>
+    <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
     </div>
-
+    {% endif %}
 </body>
-
 {% endblock content %}
