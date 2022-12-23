@@ -46,8 +46,8 @@
 }
 
 .Title{
-    font-size: 1.5rem;
-    color: blue;
+    font-size: 3rem;
+    color: #5a62a7;
 }
 
 .mb-4{
@@ -81,5 +81,4 @@
     width: 80%;
     height:auto;
     text-align:center;
-    margin-left: 220px; /*大概的位置，需要與right差100*/
 }
