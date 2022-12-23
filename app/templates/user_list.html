@@ -36,7 +36,15 @@
                     <tr class="thread">
                         <td style="vertical-align: middle;">{{published.PublishedID}}</td>
                         <td style="vertical-align: middle;">{{published.time}}</td>
-                        <td style="vertical-align: middle;">{{published.type}}</td>
+                        <td style="vertical-align: middle;">
+                            {% if published.type == 1 %}
+                            協尋
+                            {% elif published.type == 2 %}
+                            拾獲
+                            {% else %}
+                            領養
+                            {% endif %}
+                        </td>
                         <td style="vertical-align: middle;">{{published.variety}}</td>
                         <td style="vertical-align: middle;">{{published.title}}</td>
                         <td style="vertical-align: middle;">{{published.area}}</td>

@@ -9,17 +9,13 @@
 
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
 
-    <div>
-
-    </div>
-
     <div class="Title_img" style="padding: 1.5rem; justify-content: right;">
         <div><input type="button" class="button-update mb-total" value="我要刊登" onclick="location.href='{{ url_for('user_views.add_publshed') }}'"></div>
     </div>
 
     <div style="display: flex; justify-content: center;">
 
-        <div class="left" style="border: 1rem;">
+        <div class="left rounded" style="border: 1rem; background: white; height: fit-content; margin-left: 1%; padding: 1rem;">
             <form action="#" method="post">
                 <div style="display: flex; justify-content: center; align-content: center;">
                     <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
@@ -69,13 +65,17 @@
     
         <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">
             {% for published in published %}
+            
             <div style="display: flex; margin: 1rem; justify-content: center">
-                <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: 60%; padding: 1.5rem;">
-                    <div class="" style="padding: 1rem;">
-                        <img src="{{published.picture}}" width="80" height="80">
+                <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: 60%; padding: 1.5rem; background: white;">
+                    
+                    <div class="left">
+                        <div class="" style="padding: 1rem;">
+                            <img src="/static/uploads/{{published.picture}}" width="80" height="80"> <!--讀取圖片-->
+                        </div>
                     </div>
             
-                    <div>
+                    <div class="right">
                         <div style="display: flex;">
                             <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">{{published.area}}</div> <!--讀取區域-->
                             <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">
@@ -96,7 +96,7 @@
                     </div>
                 </div>
     
-                <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid">
+                <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid; background: white;">
                     <div>刊登資料</div>
                     <div>{{published.time}}</div> <!--讀取日期-->
                     <div>性別</div>

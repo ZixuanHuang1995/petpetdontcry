@@ -9,7 +9,7 @@
 
 <body style="background-color: #5A62A7;">
 
-    <div class="Title_img mb-total" style="margin-top: 10%;">
+    <div class="Title_img mb-total" style="">
         <div class="Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
             <div class="Title"> 新增寵物晶片 </div>
@@ -27,7 +27,10 @@
                             <td scope="row" class="font-B table-title">
                                 <div class="mb-total">寵物晶片號碼</div>
                             </td>
-                            <td id="table-dis">{{form.PetID(class='input-text')}}</td>
+                            <td id="table-dis">
+                                {{form.PetID(class='input-text')}}
+                                {{field.errors.0}}
+                            </td>
                             <!--寵物晶片號碼-->
                         </tr>
                         <tr>
