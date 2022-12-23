@@ -30,7 +30,7 @@ def medication():
 def shelter():
     return render_template('knowledge_shelter.html')
 
-@user_views.route('/test')
+@user_views.route('/')
 @login_required
 def home():
     return render_template('home.html')
