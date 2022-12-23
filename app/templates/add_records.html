@@ -41,7 +41,11 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">醫師姓名</td>
                             <td>
-                                {{form.doctor(class="rounded-table input-text")}}
+                                <select>
+                                    {% for doctor in doctors %}
+                                    <option>{{doctor}}</option>
+                                    {% endfor %}
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -53,7 +57,12 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">用藥</td>
                             <td>
-                                <!--{{form.medication}}-->
+                                <input list="medicine-flavors" id="medicine-choice" name="medicine-choice">
+                                <datalist id="medicine-flavors">
+                                    {% for medicine in medicationList %}
+                                    <option>{{medicine}}</option>
+                                    {% endfor %}
+                                </datalist>
                             </td>
                         </tr>
                     </tbody>
