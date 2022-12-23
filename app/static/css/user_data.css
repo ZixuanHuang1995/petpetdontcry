@@ -1,3 +1,7 @@
+.bg{
+    background-color: #f4ccc5;
+}
+
 .bg-light{
     background-color: rgb(36, 213, 119);
 }
@@ -51,6 +55,10 @@
 .Title{
     font-size: 1.5rem;
     color: blue;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mb-4{

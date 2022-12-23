@@ -332,7 +332,10 @@ def miss_data():
     :return:
     """
     from ..models.user import published
-    published = published.query.filter_by(activate=1).all()
+    published = published.query.filter(
+        published.activate == 1,
+        published.type.in_([1, 2])
+        ).all()
     if published is None:
         abort(404)
     return render_template('miss.html', published=published)
@@ -364,10 +367,10 @@ def adoption_data():
     :return:
     """
     from ..models.user import published
-    published = published.query.filter_by(type=3).all()
+    published = published.query.filter_by(type=3,activate=1).all()
     if published is None:
         abort(404)
-    return render_template('adoption.html', published=published)
+    return render_template('miss.html', published=published)
 
 
 @login_required

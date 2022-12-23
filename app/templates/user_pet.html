@@ -15,9 +15,11 @@
     </div>
 
     <div class="Title_img" style="padding: 1.5rem;">
-        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-        <div class="Title">   寵物列表   </div>
-        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        <div class="Title_img bg rounded">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title">   寵物列表   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
     </div>
 
     {% for pet in pets %}
