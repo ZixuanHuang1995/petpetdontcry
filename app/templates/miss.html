@@ -35,10 +35,12 @@
                     shadow-none col-5" name="county " 
                     placeholder="城市"></select>
                 </div>
+                {% if action == 'miss' %}
                 <div style="display: flex; justify-content: center; margin: 0.5rem;">
                     <input type="radio" name="type" value="1">協尋
                     <input type="radio" name="type" value="2">拾獲
                 </div>
+                {% endif %}
                 <br>
                 <br>
         

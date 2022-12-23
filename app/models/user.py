@@ -147,6 +147,11 @@ class medicalrecords(db.Model):
             'type': self.type,
             'doctor': self.doctor
         }
+    def toJSON1(self):
+        return {
+            'time':self.time,
+            'vaccine':self.disease
+        }
 
 # 診所醫生資料
 class clinic_doctor(db.Model):
