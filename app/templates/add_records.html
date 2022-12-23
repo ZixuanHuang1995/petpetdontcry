@@ -11,7 +11,7 @@
     {% if type == 'add' %}
     <form method="post" action="/clinic/add_medicalrecords/{{PetID}}">
         {{ form.csrf_token }}
-        <div class="Title_img mb-total">
+        <div class="Title_img mb-total" style="margin-top: 10%;">
             <div class="Title_img">
                 <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
                 <div class="Title">   病歷   </div>
@@ -50,6 +50,12 @@
                                 {{form.disease}}
                             </td>
                         </tr>
+                        <tr>
+                            <td scope="row" class="font-B">用藥</td>
+                            <td>
+                                <!--{{form.disease}}-->
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -80,7 +86,7 @@
                         </tr>
                         <tr>
                             <td scope="row" class="font-B">診所名稱</td>
-                            <td><div style="text-justify: center; text-align: center; font-weight: bold;">NCU診所{{form.CID}}</div></td>
+                            <td><div style="text-justify: center; text-align: center; font-weight: bold;">{{form.CID}}</div></td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B">就醫類型</td>
@@ -100,6 +106,12 @@
                             <td scope="row" class="font-B">病症</td>
                             <td>
                                 {{form.disease}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">用藥</td>
+                            <td>
+                                <!--{{form.disease}}-->
                             </td>
                         </tr>
                     </tbody>

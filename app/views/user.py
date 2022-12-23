@@ -18,6 +18,10 @@ from ..form.publishedForm import FormPublished, FormeditPublished
 from ..database import db
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
+@user_views.route('/know')
+def know():
+    return render_template('knowledge_product.html')
+
 @user_views.route('/test')
 @login_required
 def home():

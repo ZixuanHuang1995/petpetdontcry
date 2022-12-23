@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+<!--引入jQuery包用于使用ajax-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
 {% block content %}
 
@@ -398,4 +400,20 @@
     </div>
 </div>
 
+<script>
+function medication() {
+    debugger
+    $.ajax({
+        url: "https://data.coa.gov.tw/Service/OpenData/FromM/ADProData.aspx", /*資料提交到submit處*/
+        type: "GET",
+        dataType:"json",
+        success: function (info) {
+
+        
+
+        }
+    });
+}
+</script>
 {% endblock content %}
+

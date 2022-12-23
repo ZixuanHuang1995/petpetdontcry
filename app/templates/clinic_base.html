@@ -20,7 +20,7 @@
           <span class="icon-bar"></span>
         </button>
         <!-- 透過url_for設定HOME連結綁定index -->
-        <a class="navbar-left" href="{{ url_for('user_views.test_index')}}">
+        <a class="navbar-left" href="{{ url_for('clinic_views.home')}}">
           <img class="img-clinic" src="{{ url_for('static', filename='img/clinic-logo.png') }}" alt="">
         </a>
 
@@ -38,7 +38,7 @@
               <a class="nav-link" href="{{ url_for('clinic_views.medicalrecords' , ID = current_user.ID) }}">Medical records<br>所有病歷</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束診所管理</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.home') }}">END<br>結束診所管理</a>
             </li>
            {% elif action=='medical' %} 
            <!--看診-->
@@ -52,7 +52,7 @@
               <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = PetID) }}">Edit chip<br>修改晶片</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束看診</a>
+              <a class="nav-link" href="{{ url_for('clinic_views.home') }}">END<br>結束看診</a>
             </li>
             {% elif action1=='medical' %} 
            <!--看診-->
@@ -66,12 +66,12 @@
             <a class="nav-link" href="{{ url_for('clinic_views.edit_pet', PetID = PetID) }}">Edit chip<br>修改晶片</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index_views.logout') }}">END<br>結束看診</a>
+            <a class="nav-link" href="{{ url_for('clinic_views.home') }}">END<br>結束看診</a>
           </li>
           
           {% else %} 
           <li class="nav-item navbar-right">
-            <a class="nav-link" href="#">登出</a>
+            <a class="nav-link" href="{{ url_for('index_views.logout') }}">登出</a>
           </li>
 
           {% endif %}

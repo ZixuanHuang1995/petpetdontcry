@@ -1,0 +1,28 @@
+.navbar-container{
+    background-color: var(--lightyellow);
+}
+  
+.navbar .nav.pull-center {
+    float: none;
+    margin: 0 auto;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+    *zoom:1; /* hasLayout ie7 trigger */
+    vertical-align: top;
+}
+  
+.navbar>li :hover{
+    background: var(--yellow);
+}
+  
+.navbar-inner {
+    text-align:center;
+}
+  
+.img-clinic{
+    width: 50%;
+}
+
+.img-base{
+    width: 50%;
+}
