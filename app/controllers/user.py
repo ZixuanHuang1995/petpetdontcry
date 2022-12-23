@@ -43,3 +43,11 @@ def get_pet_all_medicalrecords(PetID):
     print(pets_medicalrecords)
     return pets_medicalrecords
     
+def get_pet_all_vaccinerecords(PetID):
+    from ..models.user import medicalrecords
+    pets_vaccinerecords = medicalrecords.query.filter_by(PetID=PetID, type=1).all()
+    if not pets_vaccinerecords:
+        return []
+    pets_vaccinerecords = [medicalrecords.toJSON1() for  medicalrecords in pets_vaccinerecords]
+    print(pets_vaccinerecords)
+    return pets_vaccinerecords
