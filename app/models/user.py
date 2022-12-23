@@ -118,8 +118,7 @@ class pet(db.Model):
         self.species = species
         self.fur = fur
         self.variety = variety
-        
-        return self.UID
+
 # 寵物病歷
 class medicalrecords(db.Model):
     __tablename__ = 'medicalrecords'
