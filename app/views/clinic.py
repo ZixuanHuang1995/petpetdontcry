@@ -226,7 +226,7 @@ def add_medicalrecord(PetID):
         flash('新增病歷成功')
     form.PetID.data = PetID
     form.CID.data = clinic.name
-    return render_template('add_records.html', form=form, action="medical",type='add',PetID=PetIDsssss)
+    return render_template('add_records.html', form=form, action="medical",type='add',PetID=PetID)
 
 @clinic_views.route('/clinic/edit_medicalrecord/<int:MID>', methods=['GET', 'POST'])
 @login_required
