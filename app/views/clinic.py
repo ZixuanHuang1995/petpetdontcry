@@ -15,7 +15,8 @@ clinic_views = Blueprint('clinic_views', __name__, template_folder='../templates
 
 @clinic_views.route('/clinic/home')
 def home():
-    return render_template('clinic_home.html')
+    clinic = get_clinic_data(current_user.ID)
+    return render_template('clinic_home.html',name=clinic.name)
 
 @clinic_views.route('/test_clinic')
 @login_required
