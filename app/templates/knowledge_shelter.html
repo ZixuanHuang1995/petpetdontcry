@@ -35,6 +35,29 @@
                 <p >${data.Address}</p>
                 <p >${data.Phone}</p>
                 <p >${data.OpenTime}</p>
+                <div>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th>收容所名稱</th>
+                                <th>通訊地址</th>
+                                <th>聯絡電話</th>
+                                <th>營業時間</th>
+                            </tr>
+                        </thead>                            
+                        <tbody>
+                            <tr id="datatable">
+                                {% for medicalrecord in pets_medicalrecords %}
+                                <td style="vertical-align: middle;">NCU診所{{medicalrecord.CID}}</td>
+                                <td style="vertical-align: middle;">NCU診所</td>
+                                <td style="vertical-align: middle;">NCU診所</td>
+                                <td style="vertical-align: middle;">NCU診所</td>
+                                <td><a href="{{ url_for('user_views.mypet_medicalrecord' , MID = medicalrecord.ID) }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></a></td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             `
             newCard.innerHTML = newCardInfo
         })
