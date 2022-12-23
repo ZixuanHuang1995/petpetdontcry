@@ -9,17 +9,7 @@
     <div class="container">
         <div class="row">
             <h2>Select a file to upload</h2>
-            <p>
-                {% with messages = get_flashed_messages() %}
-                  {% if messages %}
-                    <ul>
-                    {% for message in messages %}
-                      <li>{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                  {% endif %}
-                {% endwith %}
-            </p>
+            
             {% if image_path %}
                 <div>
                     <img src="{{image_path}}">
