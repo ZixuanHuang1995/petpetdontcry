@@ -29,25 +29,25 @@
       <div class="collapse navbar-collapse navbar-right pull-center navbar-inner" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav ">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('user_views.miss_data') }}">Adoption<br>領養</a>
+            <a class="nav-link" href="{{ url_for('user_views.miss_data') }}">Adoption<br><br>領養</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('user_views.miss_data') }}">Miss&Found<br>協尋/拾獲</a>
+            <a class="nav-link" href="{{ url_for('user_views.miss_data') }}">Miss&Found<br><br>協尋/拾獲</a>
           </li>  
 
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Knowledge<br>相關資訊<span class="caret"></span></a>
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Knowledge<br><br>相關資訊<span class="caret"></span></a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">寵物用品</a></li>
-              <li><a class="dropdown-item" href="#">寵物食品</a></li>
-              <li><a class="dropdown-item" href="#">寵物用藥</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('user_views.shelter') }}">動物收容所</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('user_views.food') }}">寵物食品</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('user_views.medication') }}">寵物用藥</a></li>
             </ul>
           </li> 
 
           {% if current_user.is_authenticated %}
             <!-- 透過url_for設定LOGOUT連結綁定LOGOUT -->
             <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User<br>會員管理<span class="caret"></span></a>
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User<br><br>會員管理<span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="{{ url_for('user_views.edit_user_info' , ID = current_user.ID ) }}">基本資料</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('user_views.pet_info' , ID=current_user.ID) }}">寵物列表</a></li>
@@ -59,15 +59,9 @@
           {% else %}
             <!-- 透過url_for設定LOGIN連結綁定LOGIN -->
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('index_views.login') }}">Login/Register<br>登入/註冊</a>    
+              <a class="nav-link" href="{{ url_for('index_views.login') }}">Login/Register<br><br>登入/註冊</a>    
             </li>
           {% endif %}
-
-          <li class="nav-item navbar-right">
-            <a class="navbar-brand" href="#">
-              <img src="{{ url_for('static', filename='img/clinic.png') }}" width="40" height="40" alt="">
-            </a>
-          </li>
 
         </ul>   
       </div><!-- /.navbar-collapse -->

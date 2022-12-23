@@ -11,7 +11,7 @@
     <form method="post" action="/clinic/find_pet">
         {{form.csrf_token}}
 
-        <div class="Title_img mb-total">
+        <div class="Title_img mb-total" style="margin-top: 10%;">
             <div class="Title_img">
                 <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
                 <div class="Title">   寵物晶片查詢   </div>
@@ -30,7 +30,6 @@
                 
                 <div class="" style="margin: 1rem; display: flex;">
                     {{form.submit(class='button-update', value="晶片查詢")}}
-                    
                     <input type="button" value="新增晶片" onclick="location.href='{{ url_for('clinic_views.add_pet') }}'" class="button-update">
                 </div>
         
