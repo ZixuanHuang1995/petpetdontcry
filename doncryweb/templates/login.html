@@ -1,0 +1,15 @@
+{% extends "auth_base.html" %}
+
+{% block header %}
+  <h1>{% block title %}會員登入{% endblock %}</h1>
+{% endblock %}
+
+{% block sub_content %}
+<form method="post" style="margin: auto; width: 220px;">
+    <label for="email">信箱</label>
+    <input name="email" id="email" required>
+    <label for="password">密碼</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="登入">
+</form>
+{% endblock  %}

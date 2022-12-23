@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+<!--引入jQuery包用于使用ajax-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_pet.css') }}">
+</head>
+
+<body>
+
+    <div>
+
+    </div>
+
+    <div class="Title_img" style="padding: 1.5rem;">
+        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        <div class="Title">   寵物列表   </div>
+        <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+    </div>
+
+    {% for pet in pets %}
+    <div style="display: flex; justify-content: center; align-items: center;    flex-direction: column">
+        
+        <div class="" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: fit-content; padding: 1.5rem; border-radius: 30px; margin: 1rem">
+            
+            <div class="" style="padding: 1rem;">
+                <img width="80" height="80">
+            </div>
+            <div>
+                <div class="rounded-name bg-name" style="margin: 1rem; padding: 0.5rem; width: fit-content;">
+                    小橘子
+                </div>
+                
+                <div class="bg-table rounded-table h-100 p-4 dis">
+                    <table class="table">
+                        <thead class="thead">
+                            <tr style="color:red; border-top-style: hidden;">
+
+                                <th scope="col">晶片號碼</th>
+                                <th scope="col">性別</th>
+                                <th scope="col">類型</th>
+                                <th scope="col">品種</th>
+                                <th scope="col">疫苗紀錄</th>
+                                <th scope="col">就醫紀錄</th>
+                            </tr>
+                        </thead>
+                        <tbody class="thead">
+
+                            <tr>
+                                <td id="ID">{{pet.PetID}}</td>
+                                <td>{{pet.sex}}</td>
+                                <td>{{pet.variety}}</td>
+                                <td>{{pet.species}}</td>
+                                <td>
+                                    <img src="{{ url_for('static', filename='img/syringe.png') }}" onclick="showDialog()" width="30" height="30">
+                                    
+                                    <div class="dialog" id="dialog">
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <img src="{{ url_for('static', filename='img/syringe.png') }}" width="30" height="30">
+                                            <div style="display: flex; align-items: center; margin: 1rem;">就醫紀錄</div>
+                                        </div>
+
+                                        <div>
+                                            <table class="table">
+                                                <thead class="thead">
+                                                    <tr>
+                                                        <th>接種日期</th>
+                                                        <th>疫苗名稱</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">111/11/20</td>
+                                                        <td style="vertical-align: middle;">五合一疫苗</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <input type="button" class="button-update mb-total" value="關閉" onclick="hideDialog()">
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <img src="{{ url_for('static', filename='img/medical-records.png') }}" onclick="showDialog1('{{pet.PetID}}') " width="30" height="30">
+                                    <div class="dialog" id="dialog1">
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <img src="{{ url_for('static', filename='img/medical-records.png') }}" width="30" height="30">
+                                            <div style="display: flex; align-items: center; margin: 1rem;">就醫紀錄</div>
+                                        </div>
+
+                                        <div>
+                                            <table class="table">
+                                                <thead class="thead">
+                                                    <tr>
+                                                        <th>診所名稱</th>
+                                                        <th>就醫日期</th>
+                                                        <th>就醫類型</th>
+                                                        <th>醫師姓名</th>
+                                                        <th>詳細</th>
+                                                    </tr>
+                                                </thead>                            
+                                                <tbody>
+                                                    <tr id="datatable">
+                                                        {% for medicalrecord in pets_medicalrecords %}
+                                                        <td style="vertical-align: middle;">NCU診所{{medicalrecord.CID}}</td>
+                                                        <td style="vertical-align: middle;">NCU診所</td>
+                                                        <td style="vertical-align: middle;">NCU診所</td>
+                                                        <td style="vertical-align: middle;">NCU診所</td>
+                                                        <td><a href="{{ url_for('user_views.mypet_medicalrecord' , PetID = pet.PetID) }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></a></td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div style="display: flex; align-items: center; flex-direction: column;">
+                                            <input type="button" class="button-update mb-total" value="關閉" onclick="hideDialog1()">
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+  
+    <script>
+        var dialog,dialog1,x;
+        window.onload=function(){
+            dialog=document.getElementById("dialog");
+            dialog1=document.getElementById("dialog1");
+            x=document.getElementById("x");
+        }
+        function showDialog(){
+            dialog.style.display="block";
+        }
+        function hideDialog(){
+            dialog.style.display="none";
+        }
+        function submit(PetID) {
+            debugger
+            $.ajax({
+                url: "/user/petssss", /*資料提交到submit處*/
+                type: "GET",  /*采用POST方法提交*/
+                data: { "PetID": PetID },  /*提交的資料（json格式），從輸入框中獲取*/
+                /*result為后端函式回傳的json*/
+                success: function (result) {
+
+                    var m ="<ul>"
+                    result=JSON.parse(result);
+                    $.each(result, function(i,n){
+                        console.log(n);
+                        m+="<li>"+ "</li>";
+                    });
+                    m+="</ul>";
+
+                   /* if (result.message == "success!") {
+                        alert(result.pets_medicalrecords[0].CID)
+                    }
+                    else {
+                        alert(result.message)
+                    }*/
+                }
+            });
+        }
+        
+        function showDialog1(PetID){
+            // debugger
+            submit(PetID)
+            dialog1.style.display="block";
+        }
+        function hideDialog1(){
+            dialog1.style.display="none";
+        }
+// function submit() {
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", "/predict"); 
+//     xhr.onload = function(event){ 
+//         alert("Success, server responded with: " + event.target.response); // raw response in alert popup
+//         document.getElementById("predict_content").innerHTML = event.target.response; // set content of the div with id "predict_content" to the server response.
+//     }; 
+//     // or onerror, onabort
+//     var formData = new FormData(document.getElementById("myForm")); 
+//     xhr.send(formData);
+// }
+    </Script>
+
+</body>
+
+{% endblock content %}

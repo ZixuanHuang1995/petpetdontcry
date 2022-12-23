@@ -1,0 +1,86 @@
+CREATE TABLE account (
+	"ID" INTEGER NOT NULL, 
+	"email" VARCHAR(50) NOT NULL, 
+	"password" VARCHAR(128) NOT NULL, 
+	"role" VARCHAR(10) NOT NULL, 
+	"first" BOOLEAN, 
+	PRIMARY KEY ("ID" AUTOINCREMENT)
+);
+
+CREATE TABLE clinic (
+	"CID" INTEGER NOT NULL, 
+	"name" VARCHAR(20) NOT NULL, 
+	"phone" VARCHAR(10) NOT NULL, 
+	"address" VARCHAR(30) NOT NULL, 
+	"emergency" BOOLEAN NOT NULL, 
+	"ID" INTEGER NOT NULL, 
+	PRIMARY KEY ("CID" AUTOINCREMENT), 
+	FOREIGN KEY("ID") REFERENCES account ("ID")
+);
+
+CREATE TABLE clinic_doctor (
+	"CID" INTEGER NOT NULL, 
+	"UID" INTEGER NOT NULL, 
+	PRIMARY KEY ("CID", "UID"), 
+	FOREIGN KEY("CID") REFERENCES clinic ("CID"), 
+	FOREIGN KEY("UID") REFERENCES user ("UID")
+);
+
+CREATE TABLE medicalrecords (
+	"MID" INTEGER NOT NULL, 
+	"PetID" INTEGER NOT NULL, 
+	"CID" INTEGER NOT NULL, 
+	"disease" TEXT, 
+	"doctor" VARCHAR(10) NOT NULL, 
+	"medication" VARCHAR(30), 
+	"time" DATETIME, 
+	"update_time" DATETIME, 
+	"note" TEXT, 
+	type INTEGER NOT NULL, 
+	PRIMARY KEY ("MID" AUTOINCREMENT), 
+	FOREIGN KEY("PetID") REFERENCES pet ("PetID"), 
+	FOREIGN KEY("CID") REFERENCES clinic ("CID")
+);
+
+CREATE TABLE pet (
+	"PetID" INTEGER NOT NULL, 
+	"UID" INTEGER NOT NULL, 
+	"name" VARCHAR(20) NOT NULL, 
+	"sex" INTEGER NOT NULL, 
+	"species" VARCHAR(10) NOT NULL, 
+	"fur" VARCHAR(10) NOT NULL, 
+	"picture" VARCHAR(20) NOT NULL, 
+	"variety" VARCHAR(10) NOT NULL, 
+	"vaccine" BOOLEAN NOT NULL, 
+	PRIMARY KEY ("PetID" AUTOINCREMENT), 
+	FOREIGN KEY("UID") REFERENCES user ("UID")
+);
+
+CREATE TABLE published (
+	"PublishedID" INTEGER NOT NULL, 
+	"UID" INTEGER NOT NULL, 
+	"title" VARCHAR(20) NOT NULL, 
+	"species" VARCHAR(10) NOT NULL, 
+	"fur" VARCHAR(10) NOT NULL, 
+	"picture" VARCHAR(20) NOT NULL, 
+	"area" VARCHAR(10) NOT NULL, 
+	"time" DATETIME, 
+	"update_time" DATETIME, 
+	"depiction" TEXT, 
+	"activate" BOOLEAN, 
+	"variety" VARCHAR(10), 
+	"type" INTEGER NOT NULL, 
+	"sex" INTEGER, 
+	PRIMARY KEY ("PublishedID" AUTOINCREMENT), 
+	FOREIGN KEY("UID") REFERENCES user ("UID")
+);
+
+CREATE TABLE user (
+	"UID" INTEGER NOT NULL, 
+	"name" VARCHAR(20), 
+	"identity" VARCHAR(10) NOT NULL, 
+	"phone" VARCHAR(10), 
+	"ID" INTEGER NOT NULL, 
+	PRIMARY KEY ("UID" AUTOINCREMENT), 
+	FOREIGN KEY("ID") REFERENCES account ("ID")
+);

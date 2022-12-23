@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>{% block title %}{% endblock %} Pet pet dont cry</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div style="padding: auto; text-align: center; width: 50vw; margin-left : 25vw;">
+    <section class="content">
+        <header>
+        {% block header %}{% endblock %}
+        </header>
+        {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% block sub_content %}{% endblock %}
+    </section>
+    <nav>
+        <ul>
+            {% if g.user %}
+            <li><span>{{ g.user['account_ID'] }}</span>
+            <li><a href="{{ url_for('auth.logout') }}">登出</a>
+            {% else %}
+            <li><a href="{{ url_for('auth.user_register') }}">會員註冊</a>
+            <li><a href="{{ url_for('auth.clinic_register') }}">診所註冊</a>
+            <li><a href="{{ url_for('auth.login') }}">登入</a>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

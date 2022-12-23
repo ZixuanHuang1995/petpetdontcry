@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_data.css') }}">
+</head>
+
+<body>
+    {% if type == 'add' %}
+    <form method="post" action="/clinic/add_medicalrecords">
+    {% else %}
+    <form method="post" action="/clinic/edit_medicalrecord/{{MID}}">
+    {% endif %}
+        {{form.csrf_token}}
+        <div class="Title_img mb-total">
+            <div class="Title_img">
+                <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+                <div class="Title">   病歷   </div>
+                <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            </div>
+        </div>
+    
+        <div class="a">
+            <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+                <table class="table">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B">寵物晶片號碼</td>
+                            <td><div style="text-justify: center; text-align: center; font-weight: bold;">{{form.PetID}}</div></td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">診所名稱</td>
+                            <td><div style="text-justify: center; text-align: center; font-weight: bold;">NCU診所{{form.name}}</div></td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">就醫類型</td>
+                            <td>
+                                <div style="display: flex; justify-content: center; margin: 0.5rem;">
+                                    {{form.type}}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">醫師姓名</td>
+                            <td>
+                                {{form.doctor(class="rounded-table input-select", style="width: 60%; margin: 0.5rem; text-align: center;")}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B">病症</td>
+                            <td>
+                                {{form.disease}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <div class="a mb-4">
+            {{form.submit(class='button-update')}}
+        </div>
+    </form>
+
+    <script>
+        var editor = CKEDITOR.replace('editorDemo');
+    </script>
+</body>
+
+{% endblock content %}

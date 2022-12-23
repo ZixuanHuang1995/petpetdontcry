@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+    
+    <div class="a" style="position:fixed; top: 50%; left: 50%; width: fit-content; transform:translate(-50%,-50%);">
+        <div class="dis" style="flex-direction: column;">
+            <div style="display: flex; justify-content: center;">Welcome to PetPet Dontcry</div>
+            <div style="display: flex; justify-content: center;">Best help for your Best friends</div>
+            <div style="display: flex; justify-content: center;">願所有寵物都有好的歸屬</div>
+        </div>
+    </div>
+
+</body>
+
+{% endblock content %}

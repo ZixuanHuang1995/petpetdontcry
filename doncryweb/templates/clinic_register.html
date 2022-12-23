@@ -1,0 +1,23 @@
+{% extends "auth_base.html" %}
+
+{% block header %}
+  <h1>{% block title %}診所註冊{% endblock %}</h1>
+{% endblock %}
+
+{% block sub_content %}
+<form method="post" style="margin: auto; width: 220px;">
+    <label for="email">信箱</label>
+    <input name="email" id="email" required>
+    <label for="password">密碼</label>
+    <input type="password" name="password" id="password" required>
+    <label for="name">診所名稱</label>
+    <input name="name" id="name" required>
+    <label for="phone">電話</label>
+    <input name="phone" id="phone" required>
+    <label for="address">診所地址</label>
+    <input name="address" id="address" required>
+    <label for="emergency">是否提供急診</label>
+    <input type="checkbox" name="emergency" id="emergency" required>
+    <input type="submit" value="註冊">
+</form>
+{% endblock %}

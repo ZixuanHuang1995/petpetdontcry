@@ -1,0 +1,90 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Pet Pet Dontcry{% endblock title %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('static', filename='style.css')}}">
+{% endblock %}
+
+{% block navbar %}
+  <nav class="navbar navbar-default ">
+    <div class="container-fluid navbar-container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!-- 透過url_for設定HOME連結綁定index -->
+        <a class="navbar-left" href="{{ url_for('home')}}">
+          <img class="img-base" src="{{ url_for('static', filename='img/logo.png') }}"  alt="" style="padding:1.5rem;">
+        </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-right pull-center navbar-inner" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav ">
+          <li class="nav-item">
+            <a class="nav-link" href="">Adoption<br>領養</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="">Miss&Found<br>協尋/拾獲</a>
+          </li>  
+
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Knowledge<br>相關資訊<span class="caret"></span></a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">寵物用品</a></li>
+              <li><a class="dropdown-item" href="#">寵物食品</a></li>
+              <li><a class="dropdown-item" href="#">寵物用藥</a></li>
+            </ul>
+          </li> 
+
+          {% if g.user %}
+            <!-- 透過url_for設定LOGOUT連結綁定LOGOUT -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User<br>會員管理<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="">基本資料</a></li>
+                <li><a class="dropdown-item" href="">寵物列表</a></li>
+                <li><a class="dropdown-item" href="">刊登列表</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">登出</a></li>
+              </ul>
+            </li>
+            
+          {% else %}
+            <!-- 透過url_for設定LOGIN連結綁定LOGIN -->
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login/Register<br>登入/註冊</a>    
+            </li>
+          {% endif %}
+
+          <li class="nav-item navbar-right">
+            <a class="navbar-brand" href="#">
+              <img src="/static/img/clinic.png" width="40" height="40" alt="">
+            </a>
+          </li>
+
+        </ul>   
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+{% endblock navbar %}
+
+{% block content %}
+<div class="container">
+    <!-- 用來接後端傳來的flash-message -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <!-- 弄一個x的button，點擊之後讓訊息消失，可參考bootstrap說明 -->
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock content %}

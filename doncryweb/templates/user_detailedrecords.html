@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
+</head>
+
+<body>
+
+    <div class="Title_img">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/image-left.png') }}" width="30" height="30">
+            <div class="Title">詳細就醫紀錄</div>
+        </div>
+    </div>
+
+    <div class="a">
+        {% for medicalrecord in medicalrecords %}
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <tbody class="thead">
+                    <tr>
+                        <td scope="row" class="font-B">寵物晶片號碼</td>
+                        <td>{{medicalrecord.PetID}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">診所名稱</td>
+                        <td>NCU診所{{medicalrecord.name}}</td> <!--需要用外鍵到clinic拿診所名稱-->
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">就醫類型</td>
+                        <td>看診{{medicalrecord.type}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">病症</td>
+                        <td>王聖智{{medicalrecord.disease}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" class="font-B">用藥</td>
+                        <td>Artuvetrin{{medicalrecord.medication}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="Title_img"> 
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/clinic.png') }}" width="30" height="30">
+            <div class="Title">NCU診所</div>
+        </div>
+    </div>
+
+    <div class="a">
+        {% for medicalrecord in medicalrecords %}
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <tbody class="thead">
+                    <tr style="border-style:hidden;">
+                        <td scope="row" class="font-B rounded-table bg-text">醫院地址</td>
+                        <td>{{medicalrecord.clinic.address}}</td>
+                    </tr>
+                    <tr style="border-style:hidden;">
+                        <td scope="row" class="font-B rounded-table bg-text">電話</td>
+                        <td>{{medicalrecord.clinic.phone}}</td>
+                    </tr>
+                    <tr style="border-style:hidden;">
+                        <td scope="row" class="font-B rounded-table bg-text">急診</td>
+                        <td>{{medicalrecord.clinic.emergency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+{% endblock content %}

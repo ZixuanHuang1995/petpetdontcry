@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends "clinic_base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_records.css') }}">
+</head>
+
+<body style="background-color: #5A62A7;">
+    <div class="a">
+
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <p class="Title">   近期病歷紀錄   </p>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+        {% for medicalrecords in medicalrecords%}
+        <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+            <table class="table">
+                <thead class="thead">
+                    <tr style="color:red">
+                        
+                        <th scope="col">日期</th>
+                        <th scope="col">診所</th>
+                        <th scope="col">看診類型</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="thead">
+                    <tr>
+                        <td>John {{medicalrecords.time}}</td>
+                        <td>Doe {{medicalrecords.clinic.name}}</td>
+                        <td>jhon@email.com{{medicalrecords.type}}</td>
+                        <th><input type="button" value="詳細資料" onclick="location.href='{{ url_for('clinic_views.pet_singlemedicalrecord' , MID = medicalrecords.MID) }}'"></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+{% endblock content %}
