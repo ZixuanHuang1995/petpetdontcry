@@ -85,6 +85,8 @@ class published(db.Model):
     variety = db.Column('variety', db.String(10))
     type = db.Column('type',db.Integer, nullable=False)
     sex = db.Column('sex',db.Integer)
+    county = db.Column('county', db.String(10), nullable=False)
+    district = db.Column('district', db.String(10), nullable=False)
     def __init__(self,UID,title,species,fur,picture,area,depiction,activate,type,variety,sex):  
         self.UID = UID
         self.title = title

@@ -24,43 +24,40 @@
                 <div>地區</div>
                 <script src="../static/js/tw-city-selector.js"></script>
                 <script>
-                    new TwCitySelector({
-                    el: '.city-selector-set',
-                    elCounty: '.county', // 在 el 裡查找 element
-                    });
+                    new TwCitySelector();
                 </script>
-
-                <div class="city-selector-set form-group col-md-6 ">
-                    <select class="county form-control 
-                    shadow-none col-5" name="county " 
-                    placeholder="城市"></select>
-                </div>
+                
+                <div role="tw-city-selector"></div>
+                
                 {% if action == 'miss' %}
-                <div style="display: flex; justify-content: center; margin: 0.5rem;">
-                    <input type="radio" name="type" value="1">協尋
-                    <input type="radio" name="type" value="2">拾獲
+                <div>貼文類型</div>
+
+                <div>
+                    <select name="post_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                        <option value="1">協尋</option>
+                        <option value="2">拾獲</option>
+                    </select>
+
                 </div>
                 {% endif %}
-                <br>
-                <br>
         
                 <div>動物</div>
 
                 <div>
                     <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                        <option value="" disabled>貓貓 or 狗狗</option>
-                        <option value="cat">貓咪</option>
-                        <option value="dog">狗狗</option>
+                        <option value="貓">貓咪</option>
+                        <option value="狗">狗狗</option>
+                        <option value="other">其他</option>
                     </select>
                     
-                    <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                        <option value="" disabled>性別</option>
+                    <select name="pet_sex" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
                         <option value=1>公</option>
                         <option value=2>母</option>
                     </select>
                 </div>
+
         
-                <input type="button" class="button-update mb-total" value="搜尋" onclick="location.href='{{ url_for('user_views.miss_data_filter') }}'">
+                <input type="submit" class="button-update mb-total" value="搜尋"> <!--套用篩選條件並重新回到此頁-->
                 <input type="button" class="button-update mb-total" value="清除條件" onclick="location.href=''">
             </form>
         </div>
@@ -100,15 +97,7 @@
     
                 <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid; background: white;">
                     <div>刊登資料</div>
-                    <div id="newtime"></div> <!--讀取日期-->
-                        <script>
-                            var time= '{{published.time}}';
-                            function date(time){                   
-                                return new Date(time).toLocaleString('zh-TW', { hour12: false });
-                            }   
-                            document.getElementById("newtime").innerHTML = date(time);
-                        </script>
-                        
+                    <div>{{published.time}}</div> <!--讀取日期-->
                     <div>性別</div>
                     <div>
                         {% if published.sex == 0 %}
