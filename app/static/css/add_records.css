@@ -51,6 +51,7 @@
 .Title{
     font-size: 3rem;
     color: #5a62a7;
+    font-weight: bold;
 }
 
 .mb-4{
@@ -64,7 +65,7 @@
 
 .table{
     margin-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 2rem;
     display: blocks;
 }
 
@@ -79,7 +80,8 @@
 }
 
 .button-update{
-    background-color: #F7BBB0;
+    background-color: #5a62a7;
     color: white;
     text-align: center;
+    font-size: 2rem;
 }

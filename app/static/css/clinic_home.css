@@ -55,7 +55,7 @@
 }
 
 .mb-4{
-    margin: 1rem; /*間隔*/
+    margin: 2rem; /*間隔*/
 }
 
 .dis {
@@ -84,21 +84,21 @@
 }
 
 .mb-total{
-    margin: 1rem;
+    margin: 3rem;
 }
 
 .button-update{
-    background-color: #F7BBB0;
+    background-color: #5a62a7;;
     color: white;
     text-align: center;
     border-radius: 15px;
 }
 
 .font-s{
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 
 .p{
-    padding: 1.5rem;
+    padding: 3rem;
 }

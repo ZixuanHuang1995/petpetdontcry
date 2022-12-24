@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% extends "clinic_base.html" %}
-
+<!--引入jQuery包用于使用ajax-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 {% block content %}
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_records.css') }}">
@@ -18,7 +19,7 @@
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
             <table class="table">
                 <thead class="thead">
-                    <tr style="color: red;">
+                    <tr>
                         
                         <th style="text-align: center;" scope="col">日期</th>
                         <th style="text-align: center;" scope="col">診所</th>
@@ -28,7 +29,15 @@
                 </thead>
                 <tbody class="thead">
                     <tr>
-                        <td>{{medicalrecords.time}}</td>
+                        <td id="newtime"></td>
+                        <script>
+                            var time= '{{medicalrecords.time}}';
+                            function date(time){                   
+                                return new Date(time).toLocaleString('zh-TW', { hour12: false });
+                            }   
+                            document.getElementById("newtime").innerHTML = date(time);
+                        </script>
+                        
                         <td>{{medicalrecords.clinic.name}}</td>
                         <td>
                             {% if medicalrecords.type == 1 %}
@@ -44,8 +53,13 @@
                 </tbody>
             </table>
         </div>
+        
+        
         {% endfor %}
     </div>
+
+    
+
 </body>
 
 {% endblock content %}
