@@ -100,9 +100,9 @@
                     <div>{{published.time}}</div> <!--讀取日期-->
                     <div>性別</div>
                     <div>
-                        {% if published.sex == 1 %}
+                        {% if published.sex == 0 %}
                         公
-                        {% elif published.sex == 2 %}
+                        {% elif published.sex == 1 %}
                         母
                         {% else %}
                         未知
