@@ -60,7 +60,10 @@ class FormPetEdit(FlaskForm):
     更新寵物
     """
     PetID = StringField('寵物晶片號碼', render_kw={'readonly': True})
-    UID = StringField('飼主編號', render_kw={'readonly': True})
+    UID = StringField('飼主編號', validators=[
+        validators.DataRequired(),
+        validators.Length(0, 10)
+    ])
     name = StringField('寵物名稱', validators=[
         validators.DataRequired(),
         validators.Length(0, 20)
@@ -85,6 +88,9 @@ class FormPetEdit(FlaskForm):
     ], choices=[('1', '是'), ('0', '否')])
     submit = SubmitField('送出')
 
+    def validate_UID(self,field):
+        if user.query.filter_by(UID=field.data).first() is None:
+            raise ValidationError('請填寫正確的使用者編號')
 class FormDoctor(FlaskForm):
     UID = StringField('醫師編號', validators=[
         validators.DataRequired(),
@@ -98,7 +104,7 @@ class FormMedicalRecords(FlaskForm):
     CID = StringField('診所名稱', render_kw={'readonly': True})
     type = SelectField('就醫類型', validators=[
         validators.DataRequired()
-    ], choices=[('0', '看診'), ('1', '檢查'), ('2', '疫苗施打')]
+    ], choices=[('2', '看診'), ('3', '檢查'), ('1', '疫苗')]
     )
 
     doctor = SelectField('醫師姓名', validators=[

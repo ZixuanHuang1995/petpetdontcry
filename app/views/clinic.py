@@ -258,8 +258,8 @@ def edit_medicalrecord(MID):
     # form.MID.data = str(medicalrecord.MID)
     form.PetID.data = str(medicalrecord.PetID)
     form.CID.data = clinic.name
-    form.type.data = medicalrecord.type
-    form.doctor.data = medicalrecord.doctor
+    form.type.data = str(medicalrecord.type)
+    form.doctor.data = str(medicalrecord.doctor)
     form.disease.data = medicalrecord.disease
     form.medication.data = medicalrecord.medication
     form.note.data = medicalrecord.note
