@@ -204,7 +204,7 @@ def add_publshed():
         )
         db.session.add(Publishing)
         db.session.commit()
-        flash('Create New Blog Success')
+        flash('Create New Blog Success') # this line could be removed!
     return render_template('user_postlist.html', form=form, type="add")
 
 @user_views.route('/user/mypublished')

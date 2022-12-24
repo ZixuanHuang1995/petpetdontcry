@@ -48,7 +48,12 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.variety(class='input-text')}} <!--輸入動物類型-->
+                                <!--{{form.variety(class='input-text')}} 輸入動物類型-->
+                                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value="貓">貓咪</option>
+                                    <option value="狗">狗狗</option>
+                                    <option value="other">其他</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -118,7 +123,6 @@
 
         </div>
     </form>
-
     {% endif %}
 </body>
 

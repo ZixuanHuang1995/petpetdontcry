@@ -332,6 +332,12 @@ def medicalrecords(ID):
         doctor_name = request.form['doctor_name']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
+        # if 使用者為輸入開始或結束日期，提供預設值
+        if start_date == '':
+            start_date= '0000-00-00'
+        if end_date == '':
+            end_date= '2024-06-10'
+        # 依據篩選條件獲取資料
         from datetime import datetime, timedelta
         end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()+ \
                         timedelta(days = 1)
