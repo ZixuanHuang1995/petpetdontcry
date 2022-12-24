@@ -188,7 +188,6 @@
                 /*result為后端函式回傳的json*/
                 success: function (result) {
                     var html='';
-                    let midrecords=[];
                     for (var i=0;i<result.pets_medicalrecords.length;i++)
                     {
                         type_name=""
@@ -201,20 +200,23 @@
                         
                         var NowDate = new Date(result.pets_medicalrecords[i].time);    
                         date = '' + NowDate.toLocaleString('zh-TW', { hour12: false });
-                        midrecords[i]=result.pets_medicalrecords[i].MID;
+
+                        var midrecords=result.pets_medicalrecords[i].MID;
                         html+=`
                             <tr>
                             <td style="vertical-align: middle;">${date}</td>
                             <td style="vertical-align: middle;">${type_name}</td>
                             <td style="vertical-align: middle;">${result.pets_medicalrecords[i].doctor}</td>
-                            </tr>  
-                        `
+                            <td><a href="{{ url_for('user_views.mypet_medicalrecord' , MID='${midrecords}') }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;" ></a></td>
+                            </tr>          
+                        `           
                     }
                     $("#petrecords").html(html)
                 }
+                
             });
         }
-        
+
 // function submit() {
 //     var xhr = new XMLHttpRequest();
 //     xhr.open("POST", "/predict"); 

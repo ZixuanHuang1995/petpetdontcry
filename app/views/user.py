@@ -272,8 +272,9 @@ def pet_medicalrecords():
         # 回傳的形式為 json
         return {'message':"error!"}
     else:
-        return {'message':"success!",'pets_vaccinerecords':get_pet_all_medicalrecords(PetID)}
-    
+        return {'message':"success!",'pets_medicalrecords':get_pet_all_medicalrecords(PetID)}
+
+
 @user_views.route('/user/petrrrr')
 @login_required
 def pet_vaccinerecords():
@@ -392,12 +393,14 @@ def adoption_data():
         abort(404)
     return render_template('miss.html', published=published)
 
+@user_views.route('/user/pet_medicalrecord/<MID>')
 @login_required
 def mypet_medicalrecord(MID):
     """
     說明：我寵物病歷
     :return:
     """
+    print(MID)
     from ..models.user import medicalrecords, clinic
     medicalrecords = medicalrecords.query.filter_by(MID=MID).all()
     if medicalrecords is None:
