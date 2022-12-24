@@ -65,8 +65,10 @@
                             <td>
                                 {% if published.sex == 0 %}
                                 公
-                                {% else %}
+                                {% elif published.sex == 1 %}
                                 母
+                                {% else %}
+                                未知
                                 {% endif %}
                             </td>
                         </tr>
