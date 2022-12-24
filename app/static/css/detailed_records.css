@@ -54,7 +54,7 @@
 }
 
 .mb-4{
-    margin-bottom: 1rem; /*間隔*/
+    margin-bottom: 1.5rem; /*間隔*/
 }
 
 .dis {
@@ -64,7 +64,7 @@
 
 .table{
     margin-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 2rem;
     display: blocks;
 }
 
@@ -78,12 +78,10 @@
     text-align:center;
     line-height:auto;
     float:right;
-    margin-right: 60px;
 }
 
 .left{
     width: 80%;
     height:auto;
     text-align:center;
-    margin-left: 80px; /*大概的位置，需要與right差100*/
 }

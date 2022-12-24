@@ -22,13 +22,13 @@
         <div style="display: flex; justify-content: center;">
             <div class="bg-table rounded-table" style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
     
-                <div class="" style="margin: 1rem; display: flex; align-items: center; justify-content: center;">
+                <div class="" style="margin: 2rem; display: flex; align-items: center; justify-content: center;">
                     <img src="{{ url_for('static', filename='img/magnifier.png') }}" width="30" height="30">
-                    <div style="font-weight: bold; font-size: 1rem;">晶片號碼：</div>
+                    <div style="font-weight: bold; font-size: 2rem;">晶片號碼：</div>
                     <div>{{form.PetID(class='input-text', style='padding: 0.5rem; font-size: 1rem;')}}</div>
                 </div>
                 
-                <div class="" style="margin: 1rem; display: flex;">
+                <div class="" style="margin: 1rem; display: flex; font-size: 2rem;">
                     {{form.submit(class='button-update', value="晶片查詢")}}
                     <input type="button" value="新增晶片" onclick="location.href='{{ url_for('clinic_views.add_pet') }}'" class="button-update">
                 </div>

@@ -2,6 +2,10 @@
 
 {% extends "base.html" %}
 
+<!--引入jQuery包用于使用ajax-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   
+
 {% block content %}
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/miss_detailed.css') }}">
@@ -19,8 +23,16 @@
         <div class="left" style="border: 1rem; margin-top: 5%;">
 
             <div style="display: flex; justify-content: center; flex-direction: column; margin: 1rem; align-items: center;">
-                <div class="bg rounded" style="width:fit-content; display: flex; justify-content: center; flex-direction: column;">
-                    <div>{{published.time}}</div>
+                <div class="bg rounded" style="width:fit-content; display: flex; justify-content: center; flex-direction: column;" >
+                    <div id="newtime"></div>
+                        <script>
+                            var time= '{{published.time}}';
+                            function date(time){                   
+                                return new Date(time).toLocaleString('zh-TW', { hour12: false });
+                            }   
+                            document.getElementById("newtime").innerHTML = date(time);
+                        </script>
+                        
                     <div style="display: flex; justify-content: center;">
                         <div>{{published.title}}</div>
                         <div>|</div>
@@ -114,7 +126,6 @@
         </div>
 
     </div>
-
 </body>
 
 {% endblock content %}

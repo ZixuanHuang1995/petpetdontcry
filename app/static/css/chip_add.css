@@ -64,7 +64,7 @@
 
 .table{
     margin-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 2rem;
     display: blocks;
     width: fit-content;
 }
@@ -80,11 +80,11 @@
     border-radius: 30px;
     text-justify: center;
     text-align: center;
-    background-color: #707070;
+    background-color: #ffff;
 }
 
 .input-select{
-    background-color: #fef3ab;
+    background-color: #ffff;
 }
 
 .mb-total{
@@ -95,6 +95,7 @@
     background-color: #5a62a7;
     color: white;
     text-align: center;
+    font-size: 2rem;
 }
 
 .button-dis{
