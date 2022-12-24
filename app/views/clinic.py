@@ -346,7 +346,3 @@ def medicalrecords(ID):
         if doctor not in doctors: 
             doctors.append(doctor)
     return render_template('medical_records.html', medicalrecords=medicalrecords , doctors = doctors, action="manage")
-
-
-
-
