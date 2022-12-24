@@ -318,9 +318,6 @@ def medicalrecords(ID):
     doctors = []
     from ..models.user import medicalrecords
     medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
-    print("++++++++")
-    for record in medicalrecords:
-        print(record.time)
 
     if medicalrecords is None:
         abort(404)
@@ -329,9 +326,6 @@ def medicalrecords(ID):
         doctor_name = request.form['doctor_name']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
-        print("=========")
-        print(start_date)
-        print(end_date)
         from ..models.user import medicalrecords
         medicalrecords = medicalrecords.query.filter(
             medicalrecords.CID == CID,
