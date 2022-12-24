@@ -378,7 +378,7 @@ def miss_data():
             published = []
     return render_template('miss.html', published=published,action="miss")
 
-@user_views.route('/adoption')
+@user_views.route('/adoption', methods=['GET', 'POST'])
 def adoption_data():
     """
     說明：所有刊登資訊呈現
@@ -388,6 +388,22 @@ def adoption_data():
     published = published.query.filter_by(type=3,activate=1).all()
     if published is None:
         abort(404)
+    # 依據使用者自訂條件篩選 published 資料
+    if request.method == 'POST':
+        county = request.form['county']
+        district = request.form['district']
+        pets_type = request.form['pets_type']
+        sex = request.form['pet_sex']
+        from ..models.user import published
+        published = published.query.filter(
+            published.activate == 1,
+            published.county == county,
+            published.district == district,
+            published.species == pets_type,
+            published.sex == sex
+            ).all()
+        if published is None:
+            published = []
     return render_template('miss.html', published=published)
 
 @login_required
