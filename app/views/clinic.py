@@ -326,12 +326,15 @@ def medicalrecords(ID):
         doctor_name = request.form['doctor_name']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
+        from datetime import datetime, timedelta
+        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()+ \
+                        timedelta(days = 1)
+        end_date = str(end_date_datetime)
         from ..models.user import medicalrecords
         medicalrecords = medicalrecords.query.filter(
             medicalrecords.CID == CID,
             medicalrecords.doctor == doctor_name,
-            medicalrecords.time >= start_date,
-            medicalrecords.time <= end_date
+            medicalrecords.time.between(start_date, end_date)
             ).all()
         if medicalrecords is None:
             medicalrecords = []
