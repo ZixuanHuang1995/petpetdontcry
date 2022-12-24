@@ -41,11 +41,9 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">醫師姓名</td>
                             <td>
-                                <select>
-                                    {% for doctor in doctors %}
-                                    <option>{{doctor}}</option>
-                                    {% endfor %}
-                                </select>
+                                <div style="display: flex; justify-content: center; margin: 0.5rem;">
+                                    {{form.doctor(class="input-text")}}
+                            </div>
                             </td>
                         </tr>
                         <tr>
@@ -57,12 +55,18 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">用藥</td>
                             <td>
-                                <input list="medicine-flavors" id="medicine-choice" name="medicine-choice">
+                                {{form.medication(list="medicine-flavors") }}
                                 <datalist id="medicine-flavors">
                                     {% for medicine in medicationList %}
                                     <option>{{medicine}}</option>
                                     {% endfor %}
                                 </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B" style="vertical-align: middle;">備註</td>
+                            <td>
+                                {{form.note(class="input-text")}}
                             </td>
                         </tr>
                     </tbody>
@@ -120,7 +124,18 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">用藥</td>
                             <td>
-                                <!--{{form.medication}}-->
+                                {{form.medication(list="medicine-flavors") }}
+                                <datalist id="medicine-flavors">
+                                    {% for medicine in medicationList %}
+                                    <option>{{medicine}}</option>
+                                    {% endfor %}
+                                </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B" style="vertical-align: middle;">備註</td>
+                            <td>
+                                {{form.note(class="input-text")}}
                             </td>
                         </tr>
                     </tbody>

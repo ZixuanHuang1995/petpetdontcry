@@ -134,12 +134,12 @@ class medicalrecords(db.Model):
     update_time = db.Column(db.DateTime, onupdate=datetime.now, default=datetime.now)
     note = db.Column('note', db.Text)
     type = db.Column('type',db.Integer, nullable=False)
-    def __init__(self,PetID,CID,disease,doctor,note,type):  
+    def __init__(self,PetID,CID,disease,doctor,note,type,medication):  
         self.PetID = PetID
         self.CID = CID
         self.disease = disease
         self.doctor = doctor
-        # self.medication = medication
+        self.medication = medication
         self.note = note
         self.type = type
     def toJSON(self):
