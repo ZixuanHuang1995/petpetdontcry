@@ -346,7 +346,7 @@ def edit_publshed(PublishedID):
     # 利用參數action來做條件，判斷目前是新增還是編輯
     return render_template('user_postlist.html', form=form, type='edit',PublishedID=PublishedID)
 
-@user_views.route('/miss')
+@user_views.route('/miss', methods=['GET', 'POST'])
 def miss_data():
     """
     說明：所有刊登資訊呈現
@@ -359,27 +359,25 @@ def miss_data():
         ).all()
     if published is None:
         abort(404)
+    # 依據使用者自訂條件篩選 published 資料
+    if request.method == 'POST':
+        county = request.form['county']
+        district = request.form['district']
+        post_type = request.form['post_type']
+        pets_type = request.form['pets_type']
+        sex = request.form['pet_sex']
+        from ..models.user import published
+        published = published.query.filter(
+            published.activate == 1,
+            published.county == county,
+            published.district == district,
+            published.type == post_type,
+            published.species == pets_type,
+            published.sex == sex
+            ).all()
+        if published is None:
+            published = []
     return render_template('miss.html', published=published,action="miss")
-
-@user_views.route('/miss')
-def miss_data_filter():
-    from ..models.user import published
-    published = published.query.filter(published.type.in_([1, 2, 3])).all()
-    county = request.form['county']
-    type = request.form['type']
-    pets_type = request.form['pets_type']
-    sex = request.form['sex']
-    if county:
-        published = published.query.filter(area = county).all()
-    if type:
-        published = published.query.filter(type = type).all()
-    if pets_type:
-        published = published.query.filter(species = pets_type).all()
-    if sex:
-        published = published.query.filter(sex = sex).all()
-    if published is None:
-        abort(404)
-    return render_template('miss.html', published=published)
 
 @user_views.route('/adoption')
 def adoption_data():

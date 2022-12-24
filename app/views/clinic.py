@@ -315,26 +315,38 @@ def medicalrecords(ID):
     """
     clinic = get_clinic_data(ID)
     CID=clinic.CID
+    doctors = []
     from ..models.user import medicalrecords
     medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
 
     if medicalrecords is None:
         abort(404)
-    return render_template('medical_records.html', medicalrecords=medicalrecords, action="manage")
+    # 依據使用者自訂條件篩選 medicalrecords 資料
+    if request.method == 'POST':
+        doctor_name = request.form['doctor_name']
+        start_date = request.form['start_date']
+        end_date = request.form['end_date']
+        from datetime import datetime, timedelta
+        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()+ \
+                        timedelta(days = 1)
+        end_date = str(end_date_datetime)
+        from ..models.user import medicalrecords
+        medicalrecords = medicalrecords.query.filter(
+            medicalrecords.CID == CID,
+            medicalrecords.doctor == doctor_name,
+            medicalrecords.time.between(start_date, end_date)
+            ).all()
+        if medicalrecords is None:
+            medicalrecords = []
 
-@clinic_views.route('/clinic/medicalrecords/<CID>', methods=['POST'])
-@login_required
-def medicalrecords_filter(CID):
-    from ..models.user import medicalrecords
-    doctor_name = request.form['doctor_name']
-    start_date = request.form['start_date']
-    end_date = request.form['end_date']
-    medicalrecords = medicalrecords.query.filter(doctor=doctor_name).all()
-    if start_date and end_date:
-        medicalrecords = medicalrecords.query.filter(medicalrecords.time < end_date, medicalrecords.time >= start_date).all()
-    if medicalrecords is None:
-        abort(404)
-    return render_template('medical_records.html', medicalrecords=medicalrecords, action="manage")
+    # 取得 doctors list
+    doctors = []
+    for medicalrecord in medicalrecords:
+        doctor = medicalrecord.doctor
+        if doctor not in doctors: 
+            doctors.append(doctor)
+    return render_template('medical_records.html', medicalrecords=medicalrecords , doctors = doctors, action="manage")
+
 
 
 
