@@ -24,7 +24,278 @@
     <div>
         <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
     </div>
-    <form method="post" action="/user/addpublished">
+    <form method="post" action="/user/addpublished" enctype="multipart/form-data">
+        <div class="a">
+            <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+                <table class="table" style="font-size: 2rem;">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登類型</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <select name="post_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value> 選擇刊登類型 </option>
+                                    <option value="1">協尋</option>
+                                    <option value="2">拾獲</option>
+                                </select>
+                                <!--輸入刊登類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登標題</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="title" value="標題..."><br>
+                                <!--輸入標題-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物類型</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value> 選擇寵物 </option>
+                                    <option value="貓">貓咪</option>
+                                    <option value="狗">狗狗</option>
+                                    <option value="other">其他</option>
+                                </select>
+                                <!--輸入動物類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物品種</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="fname" value="品種..."><br>
+                                <!--輸入動物品種-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">毛色</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="fur" value="毛色..."><br>
+                                <!--輸入毛色-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">性別</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <select name="pet_sex" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value> 選擇公or母 </option>
+                                    <option value=0>公</option>
+                                    <option value=1>母</option>
+                                </select>
+                                <!--輸入性別-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">發現地區</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <div style="display: flex; flex-wrap:wrap; justify-content: center;">
+                                    <div class="city-selector">
+                                        <div>
+                                          <!-- 縣市選單 -->
+                                          <select class="county" ></select>
+                                        </div>
+                                        <div>
+                                          <!-- 區域選單 -->
+                                          <select class="district" ></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">敘述</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="depiction" value="敘述..."><br>
+                                <!--輸入敘述-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">照片</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <p>
+                                    <input type="file" name="file" class="form-control" autocomplete="off" required>
+                                </p>
+                                <br>
+                                <input type="submit" value="送出" class="btn btn-info">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-4 button-dis">
+
+        </div>
+    </form>
+
+
+
+
+    {% elif type == 'edit' %}
+
+    <form method="post" action="/user/edit_published/{{PublishedID}}" enctype="multipart/form-data">
+        {{form.csrf_token}}
+        <div class="a">
+
+            <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+                <table class="table" style="font-size: 2rem;">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登類型</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <select name="post_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value> 選擇刊登類型 </option>
+                                    <option value="1">協尋</option>
+                                    <option value="2">拾獲</option>
+                                </select>
+                                <!--輸入刊登類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登標題</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="title" value="標題..."><br>
+                                <!--輸入標題-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物類型</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value> 選擇寵物 </option>
+                                    <option value="貓">貓咪</option>
+                                    <option value="狗">狗狗</option>
+                                    <option value="other">其他</option>
+                                </select>
+                                <!--輸入動物類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物品種</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="fname" value="品種..."><br>
+                                <!--輸入動物品種-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">毛色</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="fur" value="毛色..."><br>
+                                <!--輸入毛色-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">性別</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <select name="pet_sex" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
+                                    <option value> 選擇公or母 </option>
+                                    <option value=0>公</option>
+                                    <option value=1>母</option>
+                                </select>
+                                <!--輸入性別-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">發現地區</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <div class="city-selector">
+                                    <div>
+                                      <!-- 縣市選單 -->
+                                      <select class="county" ></select>
+                                    </div>
+                                    <div>
+                                      <!-- 區域選單 -->
+                                      <select class="district" ></select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">敘述</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                <input type="text" id="fname" name="fname" value="敘述..."><br>
+                                <!--輸入敘述-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-4 button-dis">
+            <br>
+            <input type="submit" value="送出" class="btn btn-info">
+        </div>
+    </form>
+    {% endif %}
+
+    {% if form %}
+    {% if type == 'wtf_add' %}
+    <div class="Title_img mb-total" style="margin-top: 10%;">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title font-B"> 我要刊登 </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+
+    <div>
+        <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+    </div>
+    <form method="post" action="/user/addpublished" enctype="multipart/form-data">
         {{form.csrf_token}}
         <div class="a">
             <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
@@ -99,13 +370,14 @@
                                 <div style="display: flex; flex-wrap:wrap; justify-content: center;">
                                     <div class="city-selector-set form-group col-md-6 ">
                                         <div>
-                                            {{form.county(class='county form-control 
-                                            shadow-none col-5')}}
+                                            <!-- 縣市選單 -->
+                                            <select class="county" data-value={{form.county.data}}></select>
+                                          </div>
+                                          <div>
+                                            <!-- 區域選單 -->
+                                            <select class="district" data-value={{form.district.data}}></select>
+                                          </div>
                                         </div>
-                                    
-                                        <div>
-                                            {{form.district(class='district form-control 
-                                            shadow-none col-5')}}
 
                                     </div>
                                 </div>
@@ -118,7 +390,7 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.depiction(class='input-text')}}
+                                <input type="text" id="fname" name="fname" value="敘述..."><br>
                                 <!--輸入敘述-->
                             </td>
                         </tr>
@@ -128,9 +400,7 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                               
-                                <input type="file" name="file" class="form-control" autocomplete="off" required>
-                                <!--輸入照片-->
+                                {{form.photo}}
                             </td>
                         </tr>
                     </tbody>
@@ -139,19 +409,16 @@
         </div>
 
         <div class="mb-4 button-dis">
-
-            {{form.submit(class='button-update mb-total')}}
-            <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
-
+            <input type="submit" class="button-update mb-total" value="送出"> 
         </div>
     </form>
 
 
 
 
-    {% elif type == 'edit' %}
+    {% elif type == 'wtf_edit' %}
 
-    <form method="post" action="/user/edit_published/{{PublishedID}}">
+    <form method="post" action="/user/edit_published/{{PublishedID}}" enctype="multipart/form-data">
         {{form.csrf_token}}
         <div class="a">
 
@@ -263,8 +530,11 @@
         </div>
     </form>
     {% endif %}
+    {% endif %}
 </body>
-<script src="../static/js/tw-city-selector.js"></script>
+<script src="../static/js/tw-city-selector.js">
+    new TwCitySelector();
+</script>
 
 <script>
     new TwCitySelector({

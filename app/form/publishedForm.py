@@ -4,6 +4,7 @@ from wtforms.validators import InputRequired
 from ..models import user
 from ..config_other import photos
 from flask_wtf.file import FileAllowed, FileRequired
+
 class FormPublished(FlaskForm):
     type = RadioField('刊登類型', 
     choices=[('1','協尋'),('2','拾獲'),('3','領養')],
@@ -35,13 +36,10 @@ class FormPublished(FlaskForm):
     depiction = TextAreaField('敘述', validators=[
         validators.Length(0, 300)
     ])
-    # picture = FileField('上傳照片', validators=[
-    #     FileAllowed(photos, 'IMAGE ONLY'),
-    #     # FileRequired('IMAGE REQUIRED PLEASE')
-    # ])
-    # picture = TextAreaField('上傳照片', validators=[
-    #     validators.Length(0, 300)
-    # ])
+    photo = FileField('image', validators=[
+        FileRequired(),
+        FileAllowed(['jpg', 'png'], 'Images only!')
+    ])
     submit = SubmitField('送出')
 
 class FormeditPublished(FlaskForm):
