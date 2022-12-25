@@ -48,12 +48,13 @@ class FormPet(FlaskForm):
         validators.DataRequired()
     ], choices=[('1', '是'), ('0', '否')])
     submit = SubmitField('送出')
-    def validate_PetID(self,field):
-        if pet.query.filter_by(PetID=field.data).first():
-            raise ValidationError('寵物晶片已登入過')
-    def validate_UID(self,field):
-        if user.query.filter_by(UID=field.data).first() is None:
-            raise ValidationError('請填寫正確的使用者編號')
+    
+    # def validate_PetID(self,field):
+    #     if pet.query.filter_by(PetID=field.data).first():
+    #         raise ValidationError('寵物晶片已登入過')
+    # def validate_UID(self,field):
+    #     if user.query.filter_by(UID=field.data).first() is None:
+    #         raise ValidationError('請填寫正確的使用者編號')
 
 class FormPetEdit(FlaskForm):
     """

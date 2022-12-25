@@ -81,7 +81,11 @@ def user_register():
     """
     from ..models import account
     form = FormRegister()
+
     if form.validate_on_submit():
+        if account.query.filter_by(email=form.email.data).first():
+            flash('Email already register by somebody')
+            return render_template('test.html',form = form)
         accounts = account(
             email = form.email.data,
             password = form.password.data,

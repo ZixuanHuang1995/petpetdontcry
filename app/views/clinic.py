@@ -33,10 +33,19 @@ def add_pet():
     說明：新增寵物晶片
     :return:
     """
-    from ..models import pet
+    from ..models import pet, user
     form = FormPet()
+
     print(form.validate_on_submit())
     if form.validate_on_submit():
+        if pet.query.filter_by(PetID=form.PetID.data).first():
+            flash('寵物晶片已登入過')
+            return render_template('chip_add.html', form=form)
+
+        if user.query.filter_by(UID=form.UID.data).first() is None:
+            flash('請填寫正確的飼主編號')
+            return render_template('chip_add.html', form=form)
+
         Pets = pet(
             PetID=int(form.PetID.data),
             UID=int(form.UID.data),
