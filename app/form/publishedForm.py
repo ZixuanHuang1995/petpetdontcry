@@ -12,18 +12,18 @@ class FormPublished(FlaskForm):
         validators.DataRequired(),
         validators.Length(0, 20)
     ])
-    species = StringField('寵物類型', validators=[
-        validators.DataRequired(),
-        validators.Length(0, 10)
-    ])
+    species = SelectField('寵物類型', validators=[
+        validators.DataRequired()
+        ], choices=[('dog', '狗'), ('cat', '貓'),('other','其它')]
+    )
     fur = StringField('毛色', validators=[
         validators.DataRequired(),
         validators.Length(0, 10)
     ])
-    area = StringField('發現地區', validators=[
-        validators.DataRequired(),
-        validators.Length(0, 10)
-    ])
+    county = SelectField('縣市', choices=[],  validate_choice=False
+    )
+    district = SelectField('區域',choices=[],  validate_choice=False
+    )
     variety = StringField('寵物品種', validators=[
         validators.Length(0, 10)
     ])
@@ -35,10 +35,10 @@ class FormPublished(FlaskForm):
     depiction = TextAreaField('敘述', validators=[
         validators.Length(0, 300)
     ])
-    picture = FileField('上傳照片', validators=[
-        FileAllowed(photos, 'IMAGE ONLY'),
-        FileRequired('IMAGE REQUIRED PLEASE')
-    ])
+    # picture = FileField('上傳照片', validators=[
+    #     FileAllowed(photos, 'IMAGE ONLY'),
+    #     # FileRequired('IMAGE REQUIRED PLEASE')
+    # ])
     # picture = TextAreaField('上傳照片', validators=[
     #     validators.Length(0, 300)
     # ])
@@ -52,18 +52,18 @@ class FormeditPublished(FlaskForm):
         validators.DataRequired(),
         validators.Length(0, 20)
     ])
-    species = StringField('寵物類型', validators=[
-        validators.DataRequired(),
-        validators.Length(0, 10)
-    ])
+    species = SelectField('寵物類型', validators=[
+        validators.DataRequired()
+        ], choices=[('dog', '狗'), ('cat', '貓'),('other','其它')]
+    )
     fur = StringField('毛色', validators=[
         validators.DataRequired(),
         validators.Length(0, 10)
     ])
-    area = StringField('發現地區', validators=[
-        validators.DataRequired(),
-        validators.Length(0, 10)
-    ])
+    county = SelectField('縣市', validate_choice=False, choices=[]
+    )
+    district = SelectField('區域', validate_choice=False, choices=[]
+    )
     variety = StringField('寵物品種', validators=[
         validators.Length(0, 10)
     ])
