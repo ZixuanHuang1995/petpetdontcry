@@ -232,6 +232,7 @@ def add_publshed():
             type= int(post_type),
             UID = int(users.UID),
             activate=True,
+            area="#",
             county=county,
             district=district
         )
