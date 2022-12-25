@@ -100,7 +100,7 @@
     
                 <div class="right-1" style="display: flex; align-items: center; justify-content: center; flex-direction: column; border:solid; background: white;">
                     <div>刊登資料</div>
-                    <div>{{published.time}}</div> <!--讀取日期-->
+                    <div>{{ moment(published.time).format('YYYY / MM / DD') }}</div> <!--讀取日期-->
                     <div>性別</div>
                     <div>
                         {% if published.sex == 0 %}

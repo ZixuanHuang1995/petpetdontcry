@@ -71,7 +71,7 @@
                         <tbody>
                             <tr class="thread">
                                 <td>{{medicalrecords.MID}}</td>
-                                <td>{{medicalrecords.time}}</td>
+                                <td>{{ moment(medicalrecords.time).format('YYYY / MM / DD') }}</td>
                                 <td>{{medicalrecords.PetID}}</td>
                                 <td>{{medicalrecords.doctor}}</td>
                                 <td>

@@ -149,7 +149,11 @@ class medicalrecords(db.Model):
             'clinic': self.CID, # 診所名稱
             'time': self.time, # 就醫日期
             'type': self.type,
-            'doctor': self.doctor
+            'doctor': self.doctor,
+            'medication':self.medication, #用藥
+            'disease':self.disease, #病症
+            'note':self.note #備註
+
         }
     def toJSON1(self):
         return {

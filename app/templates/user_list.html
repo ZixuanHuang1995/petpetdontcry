@@ -35,7 +35,7 @@
                 <tbody>
                     <tr class="thread">
                         <td style="vertical-align: middle;">{{published.PublishedID}}</td>
-                        <td style="vertical-align: middle;">{{published.time}}</td>
+                        <td style="vertical-align: middle;">{{ moment(published.time).format('YYYY / MM / DD') }}</td>
                         <td style="vertical-align: middle;">
                             {% if published.type == 1 %}
                             協尋
@@ -45,7 +45,7 @@
                             領養
                             {% endif %}
                         </td>
-                        <td style="vertical-align: middle;">{{published.variety}}</td>
+                        <td style="vertical-align: middle;">{{published.species}}</td>
                         <td style="vertical-align: middle;">{{published.title}}</td>
                         <td style="vertical-align: middle;">{{published.county}}{{published.district}}</td>
                         <td style="vertical-align: middle;">
@@ -93,6 +93,7 @@
     </div>
 
     <script>
+
         var dialog, x;
         window.onload = function () {
             dialog = document.getElementById("dialog");
