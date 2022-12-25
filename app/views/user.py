@@ -366,20 +366,67 @@ def miss_data():
     if request.method == 'POST':
         county = request.form['county']
         district = request.form['district']
-        post_type = request.form['post_type']
-        pets_type = request.form['pets_type']
-        sex = request.form['pet_sex']
+        post_type = [request.form['post_type']]
+        pets_type = [request.form['pets_type']]
+        sex = [request.form['pet_sex']]
+
+        if post_type[0] == '':
+            post_type = ['1', '2']
+        if pets_type[0] == '':
+            pets_type = ['貓', '狗', 'other']
+        if sex[0] == '':
+            sex = ['0', '1']
+        
+        if county == '':
+            if district == '':
+                from ..models.user import published
+                published = published.query.filter(
+                    published.activate == 1,
+                    published.type.in_(post_type),
+                    published.species.in_(pets_type),
+                    published.sex.in_(sex)
+                    ).all()
+                if published is None:
+                    published = []
+                return render_template('miss.html', published=published,action="miss")
+
+            from ..models.user import published
+            published = published.query.filter(
+                published.activate == 1,
+                published.district == district,
+                published.type.in_(post_type),
+                published.species.in_(pets_type),
+                published.sex.in_(sex)
+                ).all()
+            if published is None:
+                published = []
+            return render_template('miss.html', published=published,action="miss")
+
+        if district == '':
+            from ..models.user import published
+            published = published.query.filter(
+                published.activate == 1,
+                published.county == county,
+                published.type.in_(post_type),
+                published.species.in_(pets_type),
+                published.sex.in_(sex)
+                ).all()
+            if published is None:
+                published = []
+            return render_template('miss.html', published=published,action="miss")
+
         from ..models.user import published
         published = published.query.filter(
             published.activate == 1,
             published.county == county,
             published.district == district,
-            published.type == post_type,
-            published.species == pets_type,
-            published.sex == sex
+            published.type.in_(post_type),
+            published.species.in_(pets_type),
+            published.sex.in_(sex)
             ).all()
         if published is None:
             published = []
+
     return render_template('miss.html', published=published,action="miss")
 
 @user_views.route('/adoption', methods=['GET', 'POST'])
