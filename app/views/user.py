@@ -342,7 +342,7 @@ def edit_publshed(PublishedID):
     form.species.data = Publishing.species
     form.fur.data = Publishing.fur
     form.depiction.data = Publishing.depiction
-    form.sex.data = Publishing.sex
+    form.sex.data = str(Publishing.sex)
     form.county.data=Publishing.county
     form.district.data=Publishing.district
     form.variety.data = Publishing.variety
