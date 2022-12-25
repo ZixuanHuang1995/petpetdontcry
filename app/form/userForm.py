@@ -23,9 +23,10 @@ class FormRegister(FlaskForm):
     ])
     submit = SubmitField('註冊')
 
-    def validate_email(self,field):
-        if account.query.filter_by(email=field.data).first():
-            raise ValidationError('Email already register by somebody')
+    # def validate_email(self,field):
+    #     if account.query.filter_by(email=field.data).first():
+    #         raise ValidationError('Email already register by somebody')
+
     
 
 class FormUserInfo(FlaskForm):
