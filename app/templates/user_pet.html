@@ -35,7 +35,7 @@
                 <div class="bg-table rounded-table h-100 p-4 dis">
                     <table class="table" style="font-size: 2rem;">
                         <thead class="thead">
-                            <tr style="color:red; border-top-style: hidden;">
+                            <tr style="color:black; border-top-style: hidden;">
 
                                 <th scope="col" style="text-align: center;">晶片號碼</th>
                                 <th scope="col" style="text-align: center;">性別</th>
@@ -60,6 +60,7 @@
                                 </td>
                                 <td>{{pet.variety}}</td>
                                 <td>{{pet.species}}</td>
+                                
                                 <td>
                                     <img src="{{ url_for('static', filename='img/syringe.png') }}" onclick="showDialog('{{pet.PetID}}')" width="30" height="30">
                                     <div class="dialog" id="dialog">
@@ -102,7 +103,9 @@
                                                         <th>就醫日期</th>
                                                         <th>就醫類型</th>
                                                         <th>醫師姓名</th>
-                                                        <th>詳細</th>
+                                                        <th>病症</th>
+                                                        <th>用藥</th>
+                                                        <th>備註</th>
                                                     </tr>
                                                 </thead>                            
                                                 <tbody id="petrecords">
@@ -128,6 +131,8 @@
     </div>
   
     <script>
+        {{ super() }}
+
         var dialog,dialog1,x;
         window.onload=function(){
             dialog=document.getElementById("dialog");
@@ -164,8 +169,7 @@
                     var html='';
                     for (var i=0;i<result.pets_vaccinerecords.length;i++)
                     {                        
-                        var NowDate = new Date(result.pets_vaccinerecords[i].time);    
-                        date = '' + NowDate.toLocaleString('zh-TW', { hour12: false });
+                        date = ''+ moment(result.pets_vaccinerecords[i].time).format('YYYY / MM / DD');   
                         html+=`
                             <tr>
                             <td style="vertical-align: middle;">${date}</td>
@@ -188,7 +192,6 @@
                 /*result為后端函式回傳的json*/
                 success: function (result) {
                     var html='';
-                    let midrecords=[];
                     for (var i=0;i<result.pets_medicalrecords.length;i++)
                     {
                         type_name=""
@@ -199,14 +202,15 @@
                         else 
                             type_name="檢查"
                         
-                        var NowDate = new Date(result.pets_medicalrecords[i].time);    
-                        date = '' + NowDate.toLocaleString('zh-TW', { hour12: false });
-                        midrecords[i]=result.pets_medicalrecords[i].MID;
+                        date = ''+ moment(result.pets_medicalrecords[i].time).format('YYYY / MM / DD'); 
                         html+=`
                             <tr>
                             <td style="vertical-align: middle;">${date}</td>
                             <td style="vertical-align: middle;">${type_name}</td>
                             <td style="vertical-align: middle;">${result.pets_medicalrecords[i].doctor}</td>
+                            <td style="vertical-align: middle;">${result.pets_medicalrecords[i].disease}</td>
+                            <td style="vertical-align: middle;">${result.pets_medicalrecords[i].medication}</td>
+                            <td style="vertical-align: middle;">${result.pets_medicalrecords[i].note}</td>
                             </tr>  
                         `
                     }

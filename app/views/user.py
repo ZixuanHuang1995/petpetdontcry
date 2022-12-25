@@ -276,7 +276,7 @@ def pet_medicalrecords():
         # 回傳的形式為 json
         return {'message':"error!"}
     else:
-        return {'message':"success!",'pets_vaccinerecords':get_pet_all_medicalrecords(PetID)}
+        return {'message':"success!",'pets_medicalrecords':get_pet_all_medicalrecords(PetID)}
     
 @user_views.route('/user/petrrrr')
 @login_required
