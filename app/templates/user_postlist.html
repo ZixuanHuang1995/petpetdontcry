@@ -2,40 +2,31 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
+
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_postlist.css') }}">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}"
+    style="background-size: cover; font-size: 2rem;">
 
     {% if type == 'add' %}
     <div class="Title_img mb-total" style="margin-top: 10%;">
         <div class="Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <div class="Title font-B">   我要刊登   </div>
+            <div class="Title font-B"> 我要刊登 </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
-    {{ form.csrf_token }}
-    {{ wtf.quick_form(form, form_type="") }}
+
     <div>
         <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
     </div>
-
-    {% elif type == 'edit' %}
-    <div class="Title_img mb-total" style="margin-top: 10%;">
-        <div class="Title_img">
-            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <div class="Title font-B">   刊登修改   </div>
-            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-        </div>
-    </div>
-
-    <form method="post" action="/user/edit_published/{{PublishedID}}">
+    <form method="post" action="/user/addpublished">
         {{form.csrf_token}}
-
         <div class="a">
-
             <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
                 <table class="table" style="font-size: 2rem;">
                     <tbody class="thead">
@@ -45,7 +36,19 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.type(class='input-radio',style='list-style-type: none; display: flex; justify-content: center;')}} <!--輸入刊登類型-->
+                                {{form.type(class='input-radio',style='list-style-type: none; display: flex;
+                                justify-content: center;')}}
+                                <!--輸入刊登類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登標題</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.title(class='input-text')}}
+                                <!--輸入標題-->
                             </td>
                         </tr>
                         <tr>
@@ -63,16 +66,8 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.variety(class='input-text')}} <!--輸入動物品種-->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row" class="font-B table-title">
-                                <div class="mb-total">刊登標題</div>
-                                <div class="text-warn">必填</div>
-                            </td>
-                            <td id="table-dis">
-                                {{form.title(class='input-text')}} <!--輸入標題-->
+                                {{form.variety(class='input-text')}}
+                                <!--輸入動物品種-->
                             </td>
                         </tr>
                         <tr>
@@ -81,7 +76,18 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.fur(class='input-text')}} <!--輸入毛色-->
+                                {{form.fur(class='input-text')}}
+                                <!--輸入毛色-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">性別</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.sex(class='input-text')}}
+                                <!--輸入性別-->
                             </td>
                         </tr>
                         <tr>
@@ -91,9 +97,117 @@
                             </td>
                             <td id="table-dis">
                                 <div style="display: flex; flex-wrap:wrap; justify-content: center;">
-                                    {{form.area(class='input-text')}} <!--輸入縣市-->
+                                    <div class="city-selector-set form-group col-md-6 ">
+                                        <div>
+                                            {{form.county(class='county form-control 
+                                            shadow-none col-5')}}
+                                        </div>
+                                    
+                                        <div>
+                                            {{form.district(class='district form-control 
+                                            shadow-none col-5')}}
+
+                                    </div>
                                 </div>
-                            </td>   
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">敘述</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.depiction(class='input-text')}}
+                                <!--輸入敘述-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">照片</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                               
+                                <input type="file" name="file" class="form-control" autocomplete="off" required>
+                                <!--輸入照片-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-4 button-dis">
+
+            {{form.submit(class='button-update mb-total')}}
+            <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
+
+        </div>
+    </form>
+
+
+
+
+    {% elif type == 'edit' %}
+
+    <form method="post" action="/user/edit_published/{{PublishedID}}">
+        {{form.csrf_token}}
+        <div class="a">
+
+            <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
+                <table class="table" style="font-size: 2rem;">
+                    <tbody class="thead">
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登類型</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.type(class='input-radio',style='list-style-type: none; display: flex;
+                                justify-content: center;')}}
+                                <!--輸入刊登類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">刊登標題</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.title(class='input-text')}}
+                                <!--輸入標題-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物類型</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.species(class='input-text')}}
+                                <!--輸入動物類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物品種</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.variety(class='input-text')}}
+                                <!--輸入動物類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">毛色</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.fur(class='input-text')}}
+                                <!--輸入毛色-->
+                            </td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
@@ -101,23 +215,49 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.sex(class='input-text')}} <!--輸入性別-->
+                                {{form.sex(class='input-text')}}
+                                <!--輸入性別-->
                             </td>
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
-                                <div class="mb-total">走失敘述</div>
+                                <div class="mb-total">發現地區</div>
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                {{form.depiction(class='input-text')}} <!--輸入敘述-->
+                                <div style="display: flex; flex-wrap:wrap; justify-content: center;">
+                                    <div class="city-selector-set form-group col-md-6 ">
+                                        <div>
+                                            {{form.county(class='county form-control 
+                                            shadow-none col-5',value=form.county.data)}}
+                                        </div>
+                                    
+                                        <div>
+                                            {{form.district.data}}
+                                            {{form.district(class='district form-control 
+                                            shadow-none col-5',default=form.district.data)}}
+
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">敘述</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.depiction(class='input-text')}}
+                                <!--輸入敘述-->
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    
+
         <div class="mb-4 button-dis">
 
             {{form.submit(class='button-update mb-total')}}
@@ -127,5 +267,15 @@
     </form>
     {% endif %}
 </body>
+<script src="../static/js/tw-city-selector.js"></script>
+
+<script>
+    new TwCitySelector({
+      el: '.city-selector-set',
+      elCounty: '.county', // 在 el 裡查找 element
+      elDistrict: '.district', // 在 el 裡查找 element
+    });
+ </script>
+  
 
 {% endblock content %}
