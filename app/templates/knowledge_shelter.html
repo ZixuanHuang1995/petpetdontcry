@@ -8,10 +8,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge_product.css') }}">
 </head>
 
-<div id="contain"></div>
-<h1>動物收容所</h1>
-<div id="contain"></div>
-
+<body style="font-size: 2rem;">
+    <div class="Title_img" style="padding: 1.5rem;">
+        <div class="Title_img rounded" style=" display: flex; align-items: center;">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title font-B" style="font-size: 3rem; color: brown;">   動物收容所   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+    
+    <div id="contain"></div>
+    
+    <div id="contain"></div>
+</body>
 
 <script>
     var dataUrl = "https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=2thVboChxuKs"
@@ -30,35 +39,30 @@
             newCard.className = "infoCard"
             document.querySelector("#contain").appendChild(newCard)
             let newCardInfo = `
-                <span>${index + 1}</span>
-                <p >${data.ShelterName}</p>
-                <p >${data.Address}</p>
-                <p >${data.Phone}</p>
-                <p >${data.OpenTime}</p>
-                <div>
-                    <table class="table">
-                        <thead class="thead">
-                            <tr>
-                                <th>收容所名稱</th>
-                                <th>通訊地址</th>
-                                <th>聯絡電話</th>
-                                <th>營業時間</th>
-                            </tr>
-                        </thead>                            
-                        <tbody>
-                            <tr id="datatable">
-                                {% for medicalrecord in pets_medicalrecords %}
-                                <td style="vertical-align: middle;">NCU診所{{medicalrecord.CID}}</td>
-                                <td style="vertical-align: middle;">NCU診所</td>
-                                <td style="vertical-align: middle;">NCU診所</td>
-                                <td style="vertical-align: middle;">NCU診所</td>
-                                <td><a href="{{ url_for('user_views.mypet_medicalrecord' , MID = medicalrecord.ID) }}"><img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30" style="margin: 1rem;"></a></td>
-                                {% endfor %}
-                            </tr>
-                        </tbody>
-                    </table>
+                <!--<span>${index + 1}</span>-->
+                <div style="display: flex; justify-content: center;">
+                    <div style="width: 80%;">
+                        <table class="table bg-table rounded">
+                            <thead class="thead">
+                                <tr>
+                                    <th class="tb-text" style="width: 20%;">收容所名稱</th>
+                                    <th class="tb-text" style="width: 35%;">通訊地址</th>
+                                    <th class="tb-text" style="width: 10%;">聯絡電話</th>
+                                    <th class="tb-text" style="width: 35%;">營業時間</th>
+                                </tr>
+                            </thead>                            
+                            <tbody>
+                                <tr id="datatable">
+                                    <td class="tb-text" style="vertical-align: middle;">${data.ShelterName}</td>
+                                    <td class="tb-text" style="vertical-align: middle;">${data.Address}</td>
+                                    <td class="tb-text" style="vertical-align: middle;">${data.Phone}</td>
+                                    <td class="tb-text" style="vertical-align: middle;">${data.OpenTime}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            `
+                `
             newCard.innerHTML = newCardInfo
         })
     }

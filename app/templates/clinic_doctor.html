@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_doctor.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
 
     <div class="Title_img" style="margin-top: 10%;">
         <div class="left Title_img">
@@ -23,7 +23,7 @@
     <div class="a">
         {% for doctors in doctors %}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
-            <table class="table mb-4">
+            <table class="table mb-4" style="font-size: 2rem;">
                 <thead>
                     <tr class="thread">
                         <th scope="col">醫師編號</th>

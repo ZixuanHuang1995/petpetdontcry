@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_records.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
     <div class="a">
 
         <div class="Title_img" style="margin-top: 10%;">
@@ -17,7 +17,7 @@
         </div>
         {% for medicalrecords in medicalrecords%}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
-            <table class="table">
+            <table class="table" style="font-size: 2rem;">
                 <thead class="thead">
                     <tr>
                         

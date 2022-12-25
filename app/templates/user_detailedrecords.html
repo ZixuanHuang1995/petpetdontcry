@@ -6,19 +6,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
 
     <div class="Title_img">
         <div class="Title_img">
             <img src="{{ url_for('static', filename='img/image-left.png') }}" width="30" height="30">
-            <div class="Title">詳細就醫紀錄</div>
+            <div class="Title font-B">詳細就醫紀錄</div>
         </div>
     </div>
 
     <div class="a">
         {% for medicalrecord in medicalrecords %}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
-            <table class="table">
+            <table class="table" style="font-size: 2rem;">
                 <tbody class="thead">
                     <tr>
                         <td scope="row" class="font-B">寵物晶片號碼</td>
@@ -56,7 +56,7 @@
     <div class="a">
         {% for medicalrecord in medicalrecords %}
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
-            <table class="table">
+            <table class="table" style="font-size: 2rem;">
                 <tbody class="thead">
                     <tr style="border-style:hidden;">
                         <td scope="row" class="font-B rounded-table bg-text">醫院地址</td>

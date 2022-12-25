@@ -205,6 +205,10 @@ def add_publshed():
         db.session.add(Publishing)
         db.session.commit()
         flash('Create New Blog Success') # this line could be removed!
+        if form.type.data == '3':
+            return redirect(url_for('user_views.adoption_data'))
+        else:
+            return redirect(url_for('user_views.miss_data'))
     return render_template('user_postlist.html', form=form, type="add")
 
 @user_views.route('/user/mypublished')

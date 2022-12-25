@@ -7,19 +7,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_list.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
     
     <div class="Title_img p-4" style="margin-top: 5%;">
         <div class="Title_img" style=" display: flex; align-items: center;">
             <img src="{{ url_for('static', filename='img/publication-list.png') }}" width="30" height="30">
-            <div class="Title text_center" style="font-size: 3rem; color: brown;">刊登列表</div>
+            <div class="Title text_center font-B" style="font-size: 3rem; color: brown;">刊登列表</div>
         </div>
     </div>
 
     <div class="a">
 
         <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis">
-            <table class="table mb-4">
+            <table class="table mb-4" style="font-size: 2rem;">
                 <thead>
                     <tr class="thread">
                         <th style="text-align: center;" scope="col">ID</th>
@@ -49,7 +49,7 @@
                         <td style="vertical-align: middle;">{{published.title}}</td>
                         <td style="vertical-align: middle;">{{published.area}}</td>
                         <td style="vertical-align: middle;">
-                            <table style="display: flex; justify-content: center;">
+                            <table style="display: flex; justify-content: center; font-size: 2rem;">
                                 <tr style="border-style: hidden; margin: 1rem;">
                                     <td style="padding: 0.5rem;" colspan="2">
                                         <a href="{{ url_for('user_views.edit_publshed' , PublishedID=published.PublishedID) }}"><img src="{{ url_for('static', filename='img/editing-pen.png') }}" width="10" height="10"></a>

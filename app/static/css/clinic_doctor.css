@@ -4,6 +4,11 @@
 .bg-table{
     background-color:bisque;
 }
+
+.font-B{
+    font-weight: bold;
+}
+
 .url{
     background-color: aquamarine;
     color: white;

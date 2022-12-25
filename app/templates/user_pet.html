@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user_pet.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
 
     <div>
 
@@ -17,7 +17,7 @@
     <div class="Title_img" style="padding: 1.5rem; margin-top: 5%;">
         <div class="Title_img rounded" style=" display: flex; align-items: center;">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
-            <div class="Title" style="font-size: 3rem; color: brown;">   寵物列表   </div>
+            <div class="Title font-B" style="font-size: 3rem; color: brown;">   寵物列表   </div>
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
@@ -33,16 +33,16 @@
                 </div>
                 
                 <div class="bg-table rounded-table h-100 p-4 dis">
-                    <table class="table">
+                    <table class="table" style="font-size: 2rem;">
                         <thead class="thead">
                             <tr style="color:red; border-top-style: hidden;">
 
-                                <th scope="col">晶片號碼</th>
-                                <th scope="col">性別</th>
-                                <th scope="col">類型</th>
-                                <th scope="col">品種</th>
-                                <th scope="col">疫苗紀錄</th>
-                                <th scope="col">就醫紀錄</th>
+                                <th scope="col" style="text-align: center;">晶片號碼</th>
+                                <th scope="col" style="text-align: center;">性別</th>
+                                <th scope="col" style="text-align: center;">類型</th>
+                                <th scope="col" style="text-align: center;">品種</th>
+                                <th scope="col" style="text-align: center;">疫苗紀錄</th>
+                                <th scope="col" style="text-align: center;">就醫紀錄</th>
                             </tr>
                         </thead>
                         <tbody class="thead">
@@ -68,7 +68,7 @@
                                             <div style="display: flex; align-items: center; margin: 1rem;">疫苗紀錄</div>
                                         </div>
                                         <div>
-                                            <table class="table">
+                                            <table class="table" style="font-size: 2rem;">
                                                 <thead class="thead">
                                                     <tr>
                                                         <th>接種日期</th>
@@ -96,7 +96,7 @@
                                         </div>
 
                                         <div>
-                                            <table class="table">
+                                            <table class="table" style="font-size: 2rem;">
                                                 <thead class="thead">
                                                     <tr>
                                                         <th>就醫日期</th>
