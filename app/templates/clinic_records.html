@@ -32,8 +32,9 @@
                         <td id="newtime"></td>
                         <script>
                             var time= '{{medicalrecords.time}}';
-                            function date(time){                   
-                                return new Date(time).toLocaleString('zh-TW', { hour12: false });
+                            function date(time){       
+                                var newdate= new Date(time).toLocaleString('zh-TW', { hour12: false });           
+                                return newdate
                             }   
                             document.getElementById("newtime").innerHTML = date(time);
                         </script>
