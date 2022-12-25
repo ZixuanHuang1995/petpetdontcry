@@ -47,6 +47,7 @@ class FormUserInfo(FlaskForm):
 class FormAddUserInfo(FlaskForm):
     # email = StringField('Email', render_kw={'readonly': True})
     identity = StringField('身分證字號',validators=[
+        validators.Regexp('^[A-Z][0-9]{9}$',message="一個大寫跟數字呦"),
         validators.DataRequired(),
         validators.Length(10,10),
     ])
@@ -54,7 +55,7 @@ class FormAddUserInfo(FlaskForm):
         validators.DataRequired()
     ])
     phone = StringField('電話',validators=[
-        validators.Length(8, 10),
+        validators.Length(10, 10),
     ])
     submit = SubmitField('送出')
 

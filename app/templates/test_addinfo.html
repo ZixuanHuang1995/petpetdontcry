@@ -12,8 +12,13 @@
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; background-width:fit-content;">
     
     <div class="container" style="margin-top: 10%;">
+<<<<<<< HEAD
         <h1 style="font-weight:bold; color: #F7BBB0; text-align:center;">輸入基本資料</h1>
         <form method="post" action="/user/register">
+=======
+        <h1 style="font-weight:bold; color: #F7BBB0; text-align:center;">基本資料</h1>
+        <form method="post" action="/user/add_userinfo/{{current_user.ID}}">
+>>>>>>> main
             {{form.csrf_token}}
             <div class="dis-f">
                 <table>

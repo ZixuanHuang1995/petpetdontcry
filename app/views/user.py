@@ -198,13 +198,14 @@ def add_publshed():
             fur=form.fur.data,
             picture=file_name,
             # picture=form.picture.data,
-            area=form.area.data,
             depiction=form.depiction.data,
             sex = int(form.sex.data),
             variety = form.variety.data,
             type= int(form.type.data),
             UID = int(users.UID),
-            activate=True
+            activate=True,
+            county=form.county.data,
+            district=form.district.data
         )
         db.session.add(Publishing)
         db.session.commit()
@@ -328,13 +329,14 @@ def edit_publshed(PublishedID):
         Publishing.title=form.title.data
         Publishing.species=form.species.data
         Publishing.fur=form.fur.data
-        Publishing.area=form.area.data
         Publishing.depiction=form.depiction.data
         Publishing.sex=form.sex.data
         Publishing.variety=form.variety.data
         Publishing.type=int(form.type.data)
         Publishing.UID=users.UID
         Publishing.activate=True
+        Publishing.county=form.county.data
+        Publishing.district=form.district.data
         db.session.add(Publishing)
         db.session.commit()
         flash('Edit Your Post Success')
@@ -343,9 +345,10 @@ def edit_publshed(PublishedID):
     form.title.data = Publishing.title
     form.species.data = Publishing.species
     form.fur.data = Publishing.fur
-    form.area.data = Publishing.area
     form.depiction.data = Publishing.depiction
-    form.sex.data = Publishing.sex
+    form.sex.data = str(Publishing.sex)
+    form.county.data=Publishing.county
+    form.district.data=Publishing.district
     form.variety.data = Publishing.variety
     # 單選預設是str，但資料庫是int，所以要改型態才會顯示
     form.type.data = str(Publishing.type)
@@ -370,20 +373,67 @@ def miss_data():
     if request.method == 'POST':
         county = request.form['county']
         district = request.form['district']
-        post_type = request.form['post_type']
-        pets_type = request.form['pets_type']
-        sex = request.form['pet_sex']
+        post_type = [request.form['post_type']]
+        pets_type = [request.form['pets_type']]
+        sex = [request.form['pet_sex']]
+
+        if post_type[0] == '':
+            post_type = ['1', '2']
+        if pets_type[0] == '':
+            pets_type = ['貓', '狗', 'other']
+        if sex[0] == '':
+            sex = ['0', '1']
+        
+        if county == '':
+            if district == '':
+                from ..models.user import published
+                published = published.query.filter(
+                    published.activate == 1,
+                    published.type.in_(post_type),
+                    published.species.in_(pets_type),
+                    published.sex.in_(sex)
+                    ).all()
+                if published is None:
+                    published = []
+                return render_template('miss.html', published=published,action="miss")
+
+            from ..models.user import published
+            published = published.query.filter(
+                published.activate == 1,
+                published.district == district,
+                published.type.in_(post_type),
+                published.species.in_(pets_type),
+                published.sex.in_(sex)
+                ).all()
+            if published is None:
+                published = []
+            return render_template('miss.html', published=published,action="miss")
+
+        if district == '':
+            from ..models.user import published
+            published = published.query.filter(
+                published.activate == 1,
+                published.county == county,
+                published.type.in_(post_type),
+                published.species.in_(pets_type),
+                published.sex.in_(sex)
+                ).all()
+            if published is None:
+                published = []
+            return render_template('miss.html', published=published,action="miss")
+
         from ..models.user import published
         published = published.query.filter(
             published.activate == 1,
             published.county == county,
             published.district == district,
-            published.type == post_type,
-            published.species == pets_type,
-            published.sex == sex
+            published.type.in_(post_type),
+            published.species.in_(pets_type),
+            published.sex.in_(sex)
             ).all()
         if published is None:
             published = []
+
     return render_template('miss.html', published=published,action="miss")
 
 @user_views.route('/adoption', methods=['GET', 'POST'])

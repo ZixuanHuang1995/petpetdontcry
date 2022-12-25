@@ -77,7 +77,6 @@ class published(db.Model):
     species = db.Column('species', db.String(10), nullable=False)
     fur = db.Column('fur', db.String(10), nullable=False)
     picture = db.Column('picture', db.String(20), nullable=False)
-    area = db.Column('area', db.String(10), nullable=False)
     time = db.Column('time', db.DateTime, default=datetime.now)
     update_time = db.Column(db.DateTime, onupdate=datetime.now,default=datetime.now)
     depiction = db.Column('depiction', db.Text)
@@ -87,18 +86,19 @@ class published(db.Model):
     sex = db.Column('sex',db.Integer)
     county = db.Column('county', db.String(10), nullable=False)
     district = db.Column('district', db.String(10), nullable=False)
-    def __init__(self,UID,title,species,fur,picture,area,depiction,activate,type,variety,sex):  
+    def __init__(self,UID,title,species,fur,picture,depiction,activate,type,variety,sex,county,district):  
         self.UID = UID
         self.title = title
         self.species = species
         self.fur = fur
         self.picture = picture
-        self.area = area
         self.depiction = depiction
         self.activate = activate
         self.type = type
         self.variety = variety
         self.sex = sex
+        self.county = county
+        self.district = district
 # 寵物
 class pet(db.Model):
     __tablename__ = 'pet'
