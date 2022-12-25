@@ -8,10 +8,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge_product.css') }}">
 </head>
 
-<div id="contain"></div>
-<h1>寵物食品</h1>
-<div id="contain"></div>
-
+<body style="font-size: 2rem; width: 100%">
+    <div class="Title_img" style="padding: 1.5rem;">
+        <div class="Title_img rounded" style=" display: flex; align-items: center;">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title font-B" style="font-size: 3rem; color: brown;">   寵物食品   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+    
+    <div id="contain"></div>
+    
+    <div id="contain"></div>    
+</body>
 
 <script>
     var dataUrl = "https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=wxV177kLhEE3"
@@ -30,12 +39,22 @@
             newCard.className = "infoCard"
             document.querySelector("#contain").appendChild(newCard)
             let newCardInfo = `
-                <span>${index + 1}</span>
-                <p>${data.fusage1}</p>
-                <p>${data.fname}</p>
-                <p>${data.fitem}</p>
-                <p>${data.fmat}</p>
-                <p>${data.fnut}</p>
+                <!--<span>${index + 1}</span>-->
+                <div style="display: flex; justify-content: center;">
+                    <div style="width: 80%;">
+                        <table class="table bg-table rounded">                        
+                            <tbody>
+                                <tr id="datatable">
+                                    <td class="tb-text" style="vertical-align: middle; width: 15%;">${data.fusage1}</td>
+                                    <td class="tb-text" style="vertical-align: middle; width: 15%;">${data.fname}</td>
+                                    <td class="tb-text" style="vertical-align: middle; width: 10%;">${data.fitem}</td>
+                                    <td class="tb-text" style="vertical-align: middle; width: 25%;">${data.fmat}</td>
+                                    <td class="tb-text" style="vertical-align: middle; width: 35%;">${data.fnut}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `
             newCard.innerHTML = newCardInfo
         })

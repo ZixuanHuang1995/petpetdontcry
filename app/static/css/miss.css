@@ -11,6 +11,10 @@
     background-color: #fef3ab;
 }
 
+.font-B{
+    font-weight: bold;
+}
+
 .rounded{
     border-radius: 30px; /*圓框*/
 }
@@ -20,6 +24,10 @@
 }
 .rounded-name{
     border-radius: 30px; /*圓框*/
+}
+
+.mb-total{
+    margin: 1rem;;
 }
 
 .h-100{

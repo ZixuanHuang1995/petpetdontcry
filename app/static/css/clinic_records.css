@@ -5,6 +5,10 @@
     background-color:bisque;
 }
 
+.font-B{
+    font-weight: bold;
+}
+
 .rounded{
     border-radius: 30px;
 }

@@ -15,6 +15,10 @@
     background-color: #fef3ab;
 }
 
+.font-B{
+    font-weight: bold;
+}
+
 .rounded{
     border-radius: 30px;
 }

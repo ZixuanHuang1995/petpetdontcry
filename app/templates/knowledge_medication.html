@@ -8,10 +8,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge_product.css') }}">
 </head>
 
-<div id="contain"></div>
-<h1>寵物用品</h1>
-<div id="contain"></div>
-
+<body style="font-size: 2rem;">
+    <div class="Title_img" style="padding: 1.5rem;">
+        <div class="Title_img rounded" style=" display: flex; align-items: center;">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title font-B" style="font-size: 3rem; color: brown;">   寵物用藥   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
+    
+    <div id="contain"></div>
+    
+    <div id="contain"></div>
+</body>
 
 <script>
     var dataUrl = "https://data.coa.gov.tw/Service/OpenData/FromM/ADProData.aspx"
@@ -30,10 +39,27 @@
             newCard.className = "infoCard"
             document.querySelector("#contain").appendChild(newCard)
             let newCardInfo = `
-                <span>${index + 1}</span>
-                <p>${data.動物用藥品中文名稱}</p>
-                <p>${data.動物用藥品英文名稱}</p>
-                <p>${data.劑型}</p>
+                <!--<span>${index + 1}</span>-->
+                <div style="display: flex; justify-content: center;">
+                    <div style="width: 60%;">
+                        <table class="table bg-table rounded">
+                            <thead class="thead">
+                                <tr>
+                                    <th class="tb-text" style="width: 35%;">中文名稱</th>
+                                    <th class="tb-text" style="width: 35%;">英文名稱</th>
+                                    <th class="tb-text" style="width: 30%;">劑型</th>
+                                </tr>
+                            </thead>                            
+                            <tbody>
+                                <tr id="datatable">
+                                    <td class="tb-text" style="vertical-align: middle;">${data.動物用藥品中文名稱}</td>
+                                    <td class="tb-text" style="vertical-align: middle;">${data.動物用藥品英文名稱}</td>
+                                    <td class="tb-text" style="vertical-align: middle;">${data.劑型}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `
             newCard.innerHTML = newCardInfo
         })

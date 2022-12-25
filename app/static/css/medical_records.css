@@ -11,6 +11,10 @@
     background-color: #fef3ab;
 }
 
+.font-B{
+    font-weight: bold;
+}
+
 .rounded-table{
     border-radius: 30px; /*圓框*/
 }
@@ -99,7 +103,7 @@
 /*切版面位置*/
 
 .right{
-    width: 80%;
+    width: 60%;
     height:auto;
     text-align:center;
     line-height:auto;

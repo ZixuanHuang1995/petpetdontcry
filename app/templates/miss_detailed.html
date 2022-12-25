@@ -12,19 +12,20 @@
 
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
 
     <div>
 
     </div>
 
-    <div style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: center; margin-top: 6%;">
 
-        <div class="left" style="border: 1rem; margin-top: 5%;">
+        <div class="left" style="border: 1rem;">
 
             <div style="display: flex; justify-content: center; flex-direction: column; margin: 1rem; align-items: center;">
-                <div class="bg rounded" style="width:fit-content; display: flex; justify-content: center; flex-direction: column;" >
+                <div class="font-B" style="width:fit-content; display: flex; justify-content: center; flex-direction: column; font-size: 3rem;" >
                     <div id="newtime"></div>
+
                         <script>
                             var time= '{{published.time}}';
                             function date(time){                   
@@ -42,7 +43,7 @@
             </div>
     
             <div class="" style="display: flex; justify-content: center;">
-                <table class="table" style="border-spacing: 0.5rem; border-collapse:separate;">
+                <table class="table rounded" style="border-spacing: 0.5rem; border-collapse:separate; font-size: 2rem; background-color: white; padding: 1rem;">
                     <tbody class="thead">
                         <tr>
                             <td scope="row" class="tab-title1">種類</td>
@@ -90,11 +91,11 @@
                 </table>
             </div>
 
-            <div>刊登聯絡人</div>
+            <div class="font-B" style=" font-size: 3rem; color: brown;">刊登聯絡人</div>
 
             <div class="" style="display: flex; justify-content: center;">
                 
-                <table class="table" style="border-spacing: 0.5rem; border-collapse:separate;">
+                <table class="table" style="border-spacing: 0.5rem; border-collapse:separate; font-size: 2rem; background-color: white; padding: 1rem;">
                     <tbody class="thead">
                         <tr>
                             <td scope="row" class="tab-title2">姓名</td>
@@ -115,12 +116,12 @@
             
         </div>
 
-        <div class="right" style="display: flex; justify-content: center; height: fit-content; margin-top: 5%;">
+        <div class="right" style="display: flex; justify-content: center; margin-top: 5%;">
             
-            <div id="carousel-bs4" class="carousel slide" data-ride="carousel">
+            <div id="carousel-bs4" class="carousel slide" data-ride="carousel" style="display:flex; align-items: center;">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="/static/uploads/{{ published.picture }}" width="50%">
+                        <img src="/static/uploads/{{ published.picture }}" width="80%" style="border-radius:30px">
                     </div>
                 </div>
             </div>

@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/medical_records.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; background-attachment: fixed; background-position: center; font-size: 2rem;">
 
     <div>
 
     </div>
 
-    <div class="Title_img" style="padding: 1.5rem; justify-content: center; margin-top: 10%;">
+    <div class="Title_img" style="padding: 1.5rem; justify-content: center;">
         <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         <div style="font-weight: bold; color: #5a62a7; font-size: 3rem;"> 所有病歷 </div>
         <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
@@ -21,7 +21,7 @@
 
     <div style="display: flex; justify-content: center;">
 
-        <div class="left rounded-table" style="background: white; height: fit-content; margin-left: 1%; padding: 1rem;">
+        <div class="left rounded-table" style="background: white; height: fit-content; margin-left: 5%; padding: 1rem;">
             <form action="#" method="post">
                 <div style="display: flex; justify-content: center; align-content: center;">
                     <img src="{{ url_for('static', filename='img/filter-magnifier.png') }}" width="30" height="30">
@@ -57,7 +57,7 @@
             {% for medicalrecords in medicalrecords %}
             <div style="display: flex; justify-content: center; margin: 1rem;">
                 <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis" style="width: fit-content;">
-                    <table class="table mb-4">
+                    <table class="table mb-4" style="font-size: 2rem;">
                         <thead>
                             <tr class="thread">
                                 <th scope="col">ID</th>
@@ -74,9 +74,16 @@
                                 <td>{{medicalrecords.time}}</td>
                                 <td>{{medicalrecords.PetID}}</td>
                                 <td>{{medicalrecords.doctor}}</td>
-                                <td>{{medicalrecords.type}}</td>
+                                <td>
+                                    {% if medicalrecords.type == 1 %}
+                                    疫苗
+                                    {% elif medicalrecords.type == 2 %}
+                                    看病
+                                    {% else %}
+                                    檢查
+                                    {% endif %}
+                                </td>
                                 <td><a href="{{ url_for('clinic_views.pet_singlemedicalrecord' , MID = medicalrecords.MID) }}"><img src="{{ url_for('static', filename='img/magnifier.png') }}" width="30" height="30"></a></td>
-                                <!--沒有詳細資料的route (detailed_records.html)-->
                             </tr>
                         </tbody>
                     </table>
