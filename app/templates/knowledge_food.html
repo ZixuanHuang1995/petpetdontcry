@@ -42,11 +42,20 @@
                 <!--<span>${index + 1}</span>-->
                 <div style="display: flex; justify-content: center;">
                     <div style="width: 80%;">
-                        <table class="table bg-table rounded">                        
+                        <table class="table bg-table rounded">  
+                            <thead class="thead">
+                                <tr>
+                                    <th class="tb-text">食品名稱</th>
+                                    <th class="tb-text">適用寵物</th>
+                                    <th class="tb-text">食品種類</th>
+                                    <th class="tb-text">主要原料與添加物</th>
+                                    <th class="tb-text">主要營養成分及含量</th>
+                                </tr>
+                            </thead>                      
                             <tbody>
                                 <tr id="datatable">
-                                    <td class="tb-text" style="vertical-align: middle; width: 15%;">${data.fusage1}</td>
                                     <td class="tb-text" style="vertical-align: middle; width: 15%;">${data.fname}</td>
+                                    <td class="tb-text" style="vertical-align: middle; width: 15%;">${data.fusage1}</td>
                                     <td class="tb-text" style="vertical-align: middle; width: 10%;">${data.fitem}</td>
                                     <td class="tb-text" style="vertical-align: middle; width: 25%;">${data.fmat}</td>
                                     <td class="tb-text" style="vertical-align: middle; width: 35%;">${data.fnut}</td>

@@ -8,6 +8,7 @@
 
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
 
+    {% if type == 'add' %}
     <div class="Title_img mb-total" style="margin-top: 10%;">
         <div class="Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
@@ -15,8 +16,6 @@
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
         </div>
     </div>
-
-    {% if type == 'add' %}
     {{ form.csrf_token }}
     {{ wtf.quick_form(form, form_type="") }}
     <div>
@@ -24,6 +23,13 @@
     </div>
 
     {% elif type == 'edit' %}
+    <div class="Title_img mb-total" style="margin-top: 10%;">
+        <div class="Title_img">
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+            <div class="Title font-B">   刊登修改   </div>
+            <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
+        </div>
+    </div>
 
     <form method="post" action="/user/edit_published/{{PublishedID}}">
         {{form.csrf_token}}
@@ -48,12 +54,16 @@
                                 <div class="text-warn">必填</div>
                             </td>
                             <td id="table-dis">
-                                <!--{{form.variety(class='input-text')}} 輸入動物類型-->
-                                <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                                    <option value="貓">貓咪</option>
-                                    <option value="狗">狗狗</option>
-                                    <option value="other">其他</option>
-                                </select>
+                                {{form.species(class='input-text')}} <!--輸入動物類型-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="font-B table-title">
+                                <div class="mb-total">動物品種</div>
+                                <div class="text-warn">必填</div>
+                            </td>
+                            <td id="table-dis">
+                                {{form.variety(class='input-text')}} <!--輸入動物品種-->
                             </td>
                         </tr>
                         <tr>
@@ -81,17 +91,9 @@
                             </td>
                             <td id="table-dis">
                                 <div style="display: flex; flex-wrap:wrap; justify-content: center;">
-    
-                                    <div style="width:50%;">
-                                        {{form.area(class='input-text')}} <!--輸入縣市-->
-                                    </div>
-        
-                                    <div style="width:50%;">
-                                        {{form.species(class='input-text')}} <!--輸入地區-->
-                                    </div>
-    
+                                    {{form.area(class='input-text')}} <!--輸入縣市-->
                                 </div>
-                            </td>
+                            </td>   
                         </tr>
                         <tr>
                             <td scope="row" class="font-B table-title">
