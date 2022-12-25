@@ -70,7 +70,7 @@ class FormeditPublished(FlaskForm):
     #  使用下拉選單來選擇性別
     sex = SelectField('寵物性別', validators=[
         validators.DataRequired()
-     ], choices=[('1', '女'), ('0', '男'),('2','未知')])
+     ], choices=[('1', '母'), ('0', '公'),('2','未知')])
     
     depiction = TextAreaField('敘述', validators=[
         validators.Length(0, 300)
