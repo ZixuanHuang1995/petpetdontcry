@@ -63,3 +63,9 @@
 .thead{
     text-align: center;
 }
+
+.button-update{
+    background-color: #5a62a7;;
+    color: white;
+    text-align: center;
+}
