@@ -84,10 +84,9 @@ class published(db.Model):
     variety = db.Column('variety', db.String(10))
     type = db.Column('type',db.Integer, nullable=False)
     sex = db.Column('sex',db.Integer)
-    area = db.Column('area',db.String(20))
     county = db.Column('county', db.String(10), nullable=False)
     district = db.Column('district', db.String(10), nullable=False)
-    def __init__(self,UID,title,species,fur,picture,depiction,activate,type,variety,sex,area,county,district):  
+    def __init__(self,UID,title,species,fur,picture,depiction,activate,type,variety,sex,county,district):  
         self.UID = UID
         self.title = title
         self.species = species
@@ -98,7 +97,6 @@ class published(db.Model):
         self.type = type
         self.variety = variety
         self.sex = sex
-        self.area = area
         self.county = county
         self.district = district
 # 寵物
