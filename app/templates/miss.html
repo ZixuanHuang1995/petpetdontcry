@@ -46,16 +46,17 @@
 
                 <div>
                     <select name="pets_type" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                        <option value> 選擇寵物種類 </option>
-                        <option value="貓">貓咪</option>
-                        <option value="狗">狗狗</option>
+                        <option value> 選擇動物種類 </option>
+                        <option value="cat">貓咪</option>
+                        <option value="dog">狗狗</option>
                         <option value="other">其他</option>
                     </select>
                     
                     <select name="pet_sex" class="rounded-table input-select" style="width: 80%; margin: 0.5rem;">
-                        <option value> 選擇公or母 </option>
+                        <option value> 選擇動物性別 </option>
                         <option value=0>公</option>
                         <option value=1>母</option>
+                        <option value=2>未知</option>
                     </select>
                 </div>
 
@@ -66,7 +67,7 @@
         </div>
     
         <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">
-            {% for published in published %}
+            {% for published in publisheds %}
             
             <div style="display: flex; margin: 1rem; justify-content: center">
                 <div class="left-1" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; border: solid; width: 60%; padding: 1.5rem; background: white;">

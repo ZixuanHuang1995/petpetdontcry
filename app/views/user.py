@@ -363,78 +363,36 @@ def miss_data():
     :return:
     """
     from ..models.user import published
-    published = published.query.filter(
-        published.activate == 1,
-        published.type.in_([1, 2])
-        ).all()
-    if published is None:
+    publisheds = published.query.filter(published.activate == 1).filter(published.type.in_([1, 2]))
+    if publisheds is None:
         abort(404)
+
     # 依據使用者自訂條件篩選 published 資料
     if request.method == 'POST':
         county = request.form['county']
         district = request.form['district']
-        post_type = [request.form['post_type']]
-        pets_type = [request.form['pets_type']]
-        sex = [request.form['pet_sex']]
-
-        if post_type[0] == '':
-            post_type = ['1', '2']
-        if pets_type[0] == '':
-            pets_type = ['貓', '狗', 'other']
-        if sex[0] == '':
-            sex = ['0', '1']
+        post_type = request.form['post_type']
+        pets_type = request.form['pets_type']
+        sex = request.form['pet_sex']
         
-        if county == '':
-            if district == '':
-                from ..models.user import published
-                published = published.query.filter(
-                    published.activate == 1,
-                    published.type.in_(post_type),
-                    published.species.in_(pets_type),
-                    published.sex.in_(sex)
-                    ).all()
-                if published is None:
-                    published = []
-                return render_template('miss.html', published=published,action="miss")
+        publisheds = published.query.filter(published.activate == 1)
+        if county:
+            publisheds = publisheds.filter(published.county == county)
+        if district:
+            publisheds = publisheds.filter(published.district == district)
+        if pets_type:
+            publisheds = publisheds.filter(published.species == pets_type)    
+        if sex:
+            publisheds = publisheds.filter(published.sex == sex)
+        if post_type:
+            publisheds = publisheds.filter(published.type == post_type)  
+        else :
+            publisheds = publisheds.filter(published.type.in_([1, 2])) 
 
-            from ..models.user import published
-            published = published.query.filter(
-                published.activate == 1,
-                published.district == district,
-                published.type.in_(post_type),
-                published.species.in_(pets_type),
-                published.sex.in_(sex)
-                ).all()
-            if published is None:
-                published = []
-            return render_template('miss.html', published=published,action="miss")
+        if publisheds is None:
+            publisheds = []
 
-        if district == '':
-            from ..models.user import published
-            published = published.query.filter(
-                published.activate == 1,
-                published.county == county,
-                published.type.in_(post_type),
-                published.species.in_(pets_type),
-                published.sex.in_(sex)
-                ).all()
-            if published is None:
-                published = []
-            return render_template('miss.html', published=published,action="miss")
-
-        from ..models.user import published
-        published = published.query.filter(
-            published.activate == 1,
-            published.county == county,
-            published.district == district,
-            published.type.in_(post_type),
-            published.species.in_(pets_type),
-            published.sex.in_(sex)
-            ).all()
-        if published is None:
-            published = []
-
-    return render_template('miss.html', published=published,action="miss")
+    return render_template('miss.html', publisheds=publisheds,action="miss")
 
 @user_views.route('/adoption', methods=['GET', 'POST'])
 def adoption_data():
@@ -443,8 +401,8 @@ def adoption_data():
     :return:
     """
     from ..models.user import published
-    published = published.query.filter_by(type=3,activate=1).all()
-    if published is None:
+    publisheds = published.query.filter_by(type=3,activate=1).all()
+    if publisheds is None:
         abort(404)
     # 依據使用者自訂條件篩選 published 資料
     if request.method == 'POST':
@@ -453,16 +411,20 @@ def adoption_data():
         pets_type = request.form['pets_type']
         sex = request.form['pet_sex']
         from ..models.user import published
-        published = published.query.filter(
-            published.activate == 1,
-            published.county == county,
-            published.district == district,
-            published.species == pets_type,
-            published.sex == sex
-            ).all()
-        if published is None:
-            published = []
-    return render_template('miss.html', published=published)
+        publisheds = published.query.filter(published.activate == 1).filter(published.type == 3)
+        if county:
+            publisheds = publisheds.filter(published.county == county)
+        if district:
+            publisheds = publisheds.filter(published.district == district)
+        if pets_type:
+            publisheds = publisheds.filter(published.species == pets_type)    
+        if sex:
+            publisheds = publisheds.filter(published.sex == sex)    
+
+        if publisheds is None:
+            publisheds = []
+    return render_template('miss.html', publisheds=publisheds)
+
 
 @login_required
 def mypet_medicalrecord(MID):
