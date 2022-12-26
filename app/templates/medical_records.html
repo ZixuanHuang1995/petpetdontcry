@@ -49,11 +49,6 @@
         </div>
     
         <div class="right" style="display: flex; justify-content: center; height: fit-content; flex-direction: column;">
-            
-            <div style="margin: 1rem;">
-                <input type="button" value="由舊至新" onclick="location.href=''" class="button-update">
-                <input type="button" value="由新至舊" onclick="location.href=''" class="button-update">
-            </div>
             {% for medicalrecords in medicalrecords_data %}
             <div style="display: flex; justify-content: center; margin: 1rem;">
                 <div class="bg-table rounded-table h-100 p-4 mb-4 w-80 dis" style="width: fit-content;">
@@ -78,7 +73,7 @@
                                     {% if medicalrecords.type == 1 %}
                                     疫苗
                                     {% elif medicalrecords.type == 2 %}
-                                    看病
+                                    看診
                                     {% else %}
                                     檢查
                                     {% endif %}
