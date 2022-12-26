@@ -1,6 +1,6 @@
 import imp
 from flask import Blueprint, render_template,abort, jsonify, request, send_from_directory, flash, redirect, url_for
-import flask
+import os
 from ..config_other import photos
 from APP.models.user import account, published
 from .index import index_views
@@ -17,6 +17,7 @@ from ..controllers import (
 from ..form.userForm import FormRegister,FormUserInfo,FormAddUserInfo,FormChangePWD
 from ..form.publishedForm import FormPublished, FormeditPublished
 from ..database import db
+
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 @user_views.route('/knowledge/food')
@@ -183,38 +184,97 @@ def add_publshed():
     說明：刊登遺失寵物資訊
     :return:
     """
-    users = get_user_data(current_user.ID)
-    from ..models import published
-    form = FormPublished()
-    print( form.validate_on_submit())
-    print( form.validate())
-    print( form.is_submitted())
-    if form.validate_on_submit():
+    form_type = 'add'
+    wtf = False
 
-        file_name = photos.save(form.picture.data)
+    if request.method == 'POST':
+        form_type = 'add'
+        users = get_user_data(current_user.ID)
+        post_type = request.form['post_type']
+        title = request.form['title']
+        pets_type = request.form['pets_type']
+        fur = request.form['fur']
+        depiction = request.form['depiction']
+        sex = request.form['pet_sex']
+        county= request.form['county']
+        district= request.form['district']
+        photo = request.files['file']
+
+        # 照片上傳
+        filename = ''
+        UPLOAD_FOLDER = 'APP/static/uploads/'
+        ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+        def allowed_file(filename):
+            return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+        if photo.filename == '':
+            flash('No image selected for uploading')
+            return redirect(request.url)
+        if photo and allowed_file(photo.filename):
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(UPLOAD_FOLDER, filename))
+            flash('Image successfully uploaded')
+        else:
+            flash('Allowed image types are - png, jpg, jpeg, gif')
+            return redirect(request.url)
+
+        from ..models import published
+        form = FormPublished()
         Publishing = published(
-            title=form.title.data,
-            species=form.species.data,
-            fur=form.fur.data,
-            picture=file_name,
-            # picture=form.picture.data,
-            depiction=form.depiction.data,
-            sex = int(form.sex.data),
-            variety = form.variety.data,
-            type= int(form.type.data),
+            title=title,
+            species=pets_type,
+            fur=fur,
+            picture=filename,
+            depiction=depiction,
+            sex = int(sex),
+            variety = "#",
+            type= int(post_type),
             UID = int(users.UID),
             activate=True,
-            county=form.county.data,
-            district=form.district.data
+            area="#",
+            county=county,
+            district=district
         )
         db.session.add(Publishing)
         db.session.commit()
-        flash('Create New Blog Success') # this line could be removed!
-        if form.type.data == '3':
-            return redirect(url_for('user_views.adoption_data'))
-        else:
-            return redirect(url_for('user_views.miss_data'))
-    return render_template('user_postlist.html', form=form, type="add")
+
+    if wtf is True:
+        form_type = 'wtf_add'
+        users = get_user_data(current_user.ID)
+        from ..models import published
+        form = FormPublished()
+
+        if request.method == 'POST':
+            print("FORM OK")
+            image = form.photo.data
+            filename = secure_filename(image.filename)
+            UPLOAD_FOLDER = 'APP/static/uploads/'
+            image.save(os.path.join(UPLOAD_FOLDER, filename))
+            Publishing = published(
+                title=form.title.data,
+                species=form.species.data,
+                fur=form.fur.data,
+                picture=filename,
+                depiction=form.depiction.data,
+                sex = int(form.sex.data),
+                variety = form.variety.data,
+                type= int(form.type.data),
+                UID = int(users.UID),
+                activate=True,
+                county=form.county.data,
+                district=form.district.data
+            )
+            db.session.add(Publishing)
+            db.session.commit()
+            flash('Create New Blog Success') # this line could be removed!
+            
+            if post_type == '3':
+                return redirect(url_for('user_views.adoption_data'))
+            else:
+                return redirect(url_for('user_views.miss_data'))
+
+    return render_template('user_postlist.html', type=form_type)
 
 @user_views.route('/user/mypublished')
 @login_required
@@ -281,7 +341,7 @@ def pet_medicalrecords():
         # 回傳的形式為 json
         return {'message':"error!"}
     else:
-        return {'message':"success!",'pets_vaccinerecords':get_pet_all_medicalrecords(PetID)}
+        return {'message':"success!",'pets_medicalrecords':get_pet_all_medicalrecords(PetID)}
     
 @user_views.route('/user/petrrrr')
 @login_required
@@ -483,3 +543,4 @@ def edit_status(PublishedID):
     db.session.add(published)
     db.session.commit()
     return redirect(url_for('user_views.published_info'))
+

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 {% extends "clinic_base.html" %}
-<!--引入jQuery包用于使用ajax-->
-<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 {% block content %}
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic_records.css') }}">
@@ -29,15 +27,9 @@
                 </thead>
                 <tbody class="thead">
                     <tr>
-                        <td id="newtime"></td>
-                        <script>
-                            var time= '{{medicalrecords.time}}';
-                            function date(time){                   
-                                return new Date(time).toLocaleString('zh-TW', { hour12: false });
-                            }   
-                            document.getElementById("newtime").innerHTML = date(time);
-                        </script>
-                        
+                       
+                        <td> {{ moment(medicalrecords.time).format('YYYY / MM / DD') }}</td>
+
                         <td>{{medicalrecords.clinic.name}}</td>
                         <td>
                             {% if medicalrecords.type == 1 %}

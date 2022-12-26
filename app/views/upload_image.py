@@ -12,12 +12,10 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# @upload_image_views.route('/upload_image')
-# def home():
-#     # return render_template('upload_image.html')
-
-# @upload_image_views.route('/upload_image', methods=['POST'])
 def upload_image():
+
+    print("into upload")
+
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
@@ -30,7 +28,7 @@ def upload_image():
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         logging.warning('Image already saved')
         logging.warning('filename: ' + filename)
-        #print('upload_image filename: ' + filename)
+        print('upload_image filename: ' + filename)
         flash('Image successfully uploaded and displayed below')
         image_path = os.path.join("static/uploads/", filename)
         logging.warning('image_path: ' + image_path)
@@ -38,10 +36,3 @@ def upload_image():
     else:
         flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
-
-# @upload_image_views.route('/display/<filename>')
-# def display_image(filename):
-#     #print('display_image filename: ' + filename)
-#     logging.warning('Display_image')
-#     logging.warning('filename: ' + filename)
-#     return redirect(url_for('static', filename='uploads/' + filename), code=301)

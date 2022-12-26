@@ -24,16 +24,7 @@
 
             <div style="display: flex; justify-content: center; flex-direction: column; margin: 1rem; align-items: center;">
                 <div class="font-B" style="width:fit-content; display: flex; justify-content: center; flex-direction: column; font-size: 3rem;" >
-                    <div id="newtime"></div>
-
-                        <script>
-                            var time= '{{published.time}}';
-                            function date(time){                   
-                                return new Date(time).toLocaleString('zh-TW', { hour12: false });
-                            }   
-                            document.getElementById("newtime").innerHTML = date(time);
-                        </script>
-                        
+                    <div> {{ moment(published.time).format('YYYY / MM / DD') }}</div>
                     <div style="display: flex; justify-content: center;">
                         <div>{{published.title}}</div>
                         <div>|</div>
@@ -48,9 +39,9 @@
                         <tr>
                             <td scope="row" class="tab-title1">種類</td>
                             <td>
-                                {% if published.variety == cat %}
+                                {% if published.species == cat %}
                                 貓咪
-                                {% elif published.variety == dog %}
+                                {% elif published.species == dog %}
                                 狗
                                 {% else %}
                                 其他
@@ -59,7 +50,7 @@
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">品種</td>
-                            <td>{{published.species}}</td>
+                            <td>{{published.variety}}</td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">性別</td>
