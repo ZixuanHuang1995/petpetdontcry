@@ -92,7 +92,7 @@ def edit_pet(PetID):
     form.fur.data = pets.fur
     form.UID.data = str(pets.UID)
     form.name.data = pets.name
-    form.sex.data = pets.sex
+    form.sex.data = str(pets.sex)
     form.variety.data = pets.variety
     form.vaccine.data = pets.vaccine
     # 利用參數action來做條件，判斷目前是新增還是編輯
