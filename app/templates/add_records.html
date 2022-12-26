@@ -11,7 +11,7 @@
     {% if type == 'add' %}
     <form method="post" action="/clinic/add_medicalrecords/{{PetID}}">
         {{ form.csrf_token }}
-        <div class="Title_img mb-total" style="margin-top: 10%;">
+        <div class="Title_img mb-total" style="margin-top: 5%;">
             <div class="Title_img">
                 <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
                 <div class="Title"style="font-weight: bold;">   新增病歷   </div>
@@ -55,7 +55,7 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">用藥</td>
                             <td>
-                                {{form.medication(list="medicine-flavors") }}
+                                {{form.medication(list="medicine-flavors", class="input-text") }}
                                 <datalist id="medicine-flavors">
                                     {% for medicine in medicationList %}
                                     <option>{{medicine}}</option>
@@ -74,8 +74,9 @@
             </div>
         </div>
     
-        <div class="a mb-4">
+        <div class="a mb-4" style="flex-direction: unset;">
             {{form.submit(class='button-update')}}
+            <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
         </div>
     </form>
 
@@ -124,7 +125,7 @@
                         <tr>
                             <td scope="row" class="font-B" style="vertical-align: middle;">用藥</td>
                             <td>
-                                {{form.medication(list="medicine-flavors") }}
+                                {{form.medication(list="medicine-flavors", class="input-text") }}
                                 <datalist id="medicine-flavors">
                                     {% for medicine in medicationList %}
                                     <option>{{medicine}}</option>
@@ -143,8 +144,9 @@
             </div>
         </div>
     
-        <div class="a mb-4">
+        <div class="a mb-4" style="flex-direction: unset;">
             {{form.submit(value="修改", class='button-update')}}
+            <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
         </div>
     </form>
 

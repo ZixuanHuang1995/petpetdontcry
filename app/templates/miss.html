@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/miss.css') }}">
 </head>
 
-<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
+<body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; background-attachment: fixed; background-position: center; font-size: 2rem;">
 
     <div class="Title_img" style="padding: 1.5rem; justify-content: right;">
         <div><input type="button" class="button-update mb-total" value="我要刊登" onclick="location.href='{{ url_for('user_views.add_publshed') }}'"></div>
