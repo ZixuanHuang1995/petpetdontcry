@@ -70,9 +70,9 @@ def login():
                 elif accounts.role == 'user':
                     return redirect(next or url_for('user_views.home'))
             else:
-                flash('Wrong Email or Password')
+                flash('錯誤的 Email 或 Password')
         else:
-                flash('Wrong Email or Password')
+                flash('錯誤的 Email 或 Password')
     return render_template('login.html',form=form) 
 
 
@@ -98,7 +98,7 @@ def logout():
     :return:
     """
     logout_user()
-    flash('Logout See You')
+    flash('登出成功')
     return redirect(url_for('index_views.login'))
 
 @index_views.route('/knowledge_product')

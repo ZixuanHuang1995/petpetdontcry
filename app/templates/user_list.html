@@ -45,7 +45,15 @@
                             領養
                             {% endif %}
                         </td>
-                        <td style="vertical-align: middle;">{{published.species}}</td>
+                        <td style="vertical-align: middle;">
+                            {% if published.species == "dog" %}
+                            狗
+                            {% elif published.species == "cat" %}
+                            貓
+                            {% else %}
+                            其他
+                            {% endif %}
+                        </td>
                         <td style="vertical-align: middle;">{{published.title}}</td>
                         <td style="vertical-align: middle;">{{published.county}}{{published.district}}</td>
                         <td style="vertical-align: middle;">

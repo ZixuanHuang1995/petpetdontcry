@@ -39,9 +39,9 @@
                         <tr>
                             <td scope="row" class="tab-title1">種類</td>
                             <td>
-                                {% if published.species == cat %}
+                                {% if published.species == "cat" %}
                                 貓
-                                {% elif published.species == dog %}
+                                {% elif published.species == "dog" %}
                                 狗
                                 {% else %}
                                 其他
@@ -50,7 +50,9 @@
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">品種</td>
-                            <td>{{published.variety}}</td>
+                            <td>
+                                {{published.variety}}
+                            </td>
                         </tr>
                         <tr>
                             <td scope="row" class="tab-title1">性別</td>
