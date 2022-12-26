@@ -196,6 +196,7 @@ def add_publshed():
         fur = request.form['fur']
         depiction = request.form['depiction']
         sex = request.form['pet_sex']
+        variety = request.form['variety']
         county= request.form['county']
         district= request.form['district']
         photo = request.files['file']
@@ -228,11 +229,10 @@ def add_publshed():
             picture=filename,
             depiction=depiction,
             sex = int(sex),
-            variety = "#",
+            variety = variety,
             type= int(post_type),
             UID = int(users.UID),
             activate=True,
-            area="#",
             county=county,
             district=district
         )
