@@ -7,45 +7,7 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 @index_views.route('/', methods=['GET'])
 def index_page():
     return render_template('index.html')
-
-# @index_views.route('/login', methods=['GET', 'POST'])
-# def login(): 
-#     """
-#     說明：登入
-#     :return:
-#     """
-#     from ..models import clinic,user
-#     form = FormLogin()
-#     if form.validate_on_submit():
-#         if form.type.data == 'clinic':
-#             clinics = clinic.query.filter_by(account=form.account.data).first()
-#             if clinics:
-#                 if clinics.check_password(form.password.data):
-#                     login_user(clinics,form.remember_me.data)
-#                     next = request.args.get('next')
-#                     if not next_is_valid(next):
-#                         return 'ERRRRRRRR'
-#                     return redirect(next or url_for('clinic_views.home'))
-#                 else:
-#                     flash('Wrong Email or Password')
-#             else:
-#                 flash('Wrong Email or Password')
-#         elif form.type.data == 'user':
-#             users = user.query.filter_by(email=form.account.data).first()
-#             if users:
-#                 if users.check_password(form.password.data):
-#                     login_user(users,form.remember_me.data)
-#                     next = request.args.get('next')
-#                     if not next_is_valid(next):
-#                         return 'ERRRRRRRR'
-#                     # return 'Welcome:'+current_user.name
-#                     return redirect(next or url_for('user_views.home'))
-#                 else:
-#                     flash('Wrong Email or Password')
-#             else:
-#                 flash('Wrong Email or Password')
-#     return render_template('login.html',form=form) 
-
+    
 @index_views.route('/login', methods=['GET', 'POST'])
 def login(): 
     """
@@ -75,11 +37,6 @@ def login():
                 flash('錯誤的 Email 或 Password')
     return render_template('login.html',form=form) 
 
-
-
-
-
-
  #  加入function
 def next_is_valid(url):
     """
@@ -100,15 +57,3 @@ def logout():
     logout_user()
     flash('登出成功')
     return redirect(url_for('index_views.login'))
-
-@index_views.route('/knowledge_product')
-def knowledge_product():
-    return render_template('knowledge_product.html')
-
-@index_views.route('/knowledge_food')
-def knowledge_food():
-    return render_template('knowledge_food.html')
-
-@index_views.route('/knowledge_medicine')
-def knowledge_medicine():
-    return render_template('knowledge_medicine.html')
