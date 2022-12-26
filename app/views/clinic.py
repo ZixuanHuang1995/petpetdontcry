@@ -5,6 +5,7 @@ from ..form.clinicForm import FormPet,FormDoctor, FormMedicalRecords,FormFindPet
 from ..database import db
 from werkzeug.utils import secure_filename
 # from werkzeug import secure_filename, FileStorage
+import time
 from werkzeug.datastructures import FileStorage
 from ..controllers import (
     get_clinic_data
@@ -332,38 +333,29 @@ def medicalrecords(ID):
     CID=clinic.CID
     doctors = []
     from ..models.user import medicalrecords
-    medicalrecords = medicalrecords.query.filter_by(CID=CID).all()
+    medicalrecords_data = medicalrecords.query.filter_by(CID=CID).all()
 
-    if medicalrecords is None:
+    if medicalrecords_data is None:
         abort(404)
     # 依據使用者自訂條件篩選 medicalrecords 資料
     if request.method == 'POST':
         doctor_name = request.form['doctor_name']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
-        # if 使用者為輸入開始或結束日期，提供預設值
-        if start_date == '':
-            start_date= '0000-00-00'
-        if end_date == '':
-            end_date= '2024-06-10'
-        # 依據篩選條件獲取資料
-        from datetime import datetime, timedelta
-        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()+ \
-                        timedelta(days = 1)
-        end_date = str(end_date_datetime)
-        from ..models.user import medicalrecords
-        medicalrecords = medicalrecords.query.filter(
-            medicalrecords.CID == CID,
-            medicalrecords.doctor == doctor_name,
-            medicalrecords.time.between(start_date, end_date)
-            ).all()
-        if medicalrecords is None:
-            medicalrecords = []
+        print(start_date,end_date,doctor_name)
+        medicalrecords_data = medicalrecords.query.filter(medicalrecords.CID == CID)
+        if doctor_name:
+            medicalrecords_data = medicalrecords_data.filter(medicalrecords.doctor == doctor_name)
+        if start_date and end_date:
+            if start_date == end_date:
+                medicalrecords_data = medicalrecords_data.filter(medicalrecords.time.between(start_date,end_date))
+            elif start_date > end_date:
+                medicalrecords_data = medicalrecords_data.filter(medicalrecords.time.between(end_date,start_date))
+            else:
+                medicalrecords_data = medicalrecords_data.filter(medicalrecords.time.between(start_date,end_date))
+        if medicalrecords_data is None:
+            medicalrecords_data = []
 
     # 取得 doctors list
-    doctors = []
-    for medicalrecord in medicalrecords:
-        doctor = medicalrecord.doctor
-        if doctor not in doctors: 
-            doctors.append(doctor)
-    return render_template('medical_records.html', medicalrecords=medicalrecords , doctors = doctors, action="manage")
+    doctors = [doctor.doctor for doctor in medicalrecords.query.filter_by(CID=clinic.CID).all()]
+    return render_template('medical_records.html', medicalrecords_data=medicalrecords_data , doctors = doctors, action="manage")
