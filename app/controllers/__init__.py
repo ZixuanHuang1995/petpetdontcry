@@ -1,3 +1,3 @@
-from .user import *
-from .auth import *
-from .clinic import *
+from .userController import *
+from .authController import *
+from .clinicController import *
