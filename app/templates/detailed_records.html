@@ -8,7 +8,7 @@
 
 <body background="{{ url_for('static', filename='img/first-page.jpg') }}" style="background-size: cover; font-size: 2rem;">
 
-    <div class="Title_img" style="margin-top: 10%;">
+    <div class="Title_img" style="margin-top: 5%;">
         <div class="left Title_img">
             <img src="{{ url_for('static', filename='img/dog-footprints.png') }}" width="30" height="30">
             <div class="Title" style="display: flex; align-items: center; font-weight: bold;">   詳細病歷   </div>
@@ -63,6 +63,7 @@
                 </tbody>
             </table>
         </div>
+        <input type="button" class="button-update mb-total" value="返回" onclick="history.back()">
     </div>
 </body>
 

@@ -85,7 +85,7 @@ def user_register():
 
     if form.validate_on_submit():
         if account.query.filter_by(email=form.email.data).first():
-            flash('Email already register by somebody')
+            flash('Email已經被註冊過了')
             return render_template('test.html',form = form)
         accounts = account(
             email = form.email.data,
@@ -115,7 +115,7 @@ def add_userinfo(ID):
         db.session.add(user,account)
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
-        flash('You Have Already Edit Your Info')
+        flash('基本資料更新成功')
         return redirect(url_for('user_views.home'))
     return render_template('test_addinfo.html',form = form)
 
@@ -135,7 +135,7 @@ def edit_user_info(ID):
         db.session.add(users)
         db.session.commit()
         #  在編輯個人資料完成之後，將使用者引導到使用者資訊觀看結果
-        flash('You Have Already Edit Your Info')
+        flash('基本資料更新成功')
         return redirect(url_for('user_views.edit_user_info',ID=ID))
     if form1.validate_on_submit():
         #  透過current_user來使用密碼認證，確認是否與現在的密碼相同
@@ -143,10 +143,10 @@ def edit_user_info(ID):
             current_user.password = form1.password_new.data
             db.session.add(current_user)
             db.session.commit()
-            flash('You Have Already Change Your Password, Please Login Again.')
+            flash('你已經改密碼成功，請重新登入')
             return redirect(url_for('index_views.logout'))
         else:
-            flash('Wrong Password...')
+            flash('錯誤的密碼')
     #  預設表單欄位資料為current_user的目前值
     form.UID.data = users.UID
     form.identity.data = users.identity
@@ -196,6 +196,7 @@ def add_publshed():
         fur = request.form['fur']
         depiction = request.form['depiction']
         sex = request.form['pet_sex']
+        variety = request.form['variety']
         county= request.form['county']
         district= request.form['district']
         photo = request.files['file']
@@ -209,14 +210,13 @@ def add_publshed():
             return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
         if photo.filename == '':
-            flash('No image selected for uploading')
+            flash('尚未上傳照片')
             return redirect(request.url)
         if photo and allowed_file(photo.filename):
             filename = secure_filename(photo.filename)
             photo.save(os.path.join(UPLOAD_FOLDER, filename))
-            flash('Image successfully uploaded')
         else:
-            flash('Allowed image types are - png, jpg, jpeg, gif')
+            flash('請上傳照片格式')
             return redirect(request.url)
 
         from ..models import published
@@ -228,16 +228,16 @@ def add_publshed():
             picture=filename,
             depiction=depiction,
             sex = int(sex),
-            variety = "#",
+            variety = variety,
             type= int(post_type),
             UID = int(users.UID),
             activate=True,
-            area="#",
             county=county,
             district=district
         )
         db.session.add(Publishing)
         db.session.commit()
+        flash("刊登成功")
 
     if wtf is True:
         form_type = 'wtf_add'
@@ -267,7 +267,7 @@ def add_publshed():
             )
             db.session.add(Publishing)
             db.session.commit()
-            flash('Create New Blog Success') # this line could be removed!
+            flash('刊登成功') # this line could be removed!
             
             if post_type == '3':
                 return redirect(url_for('user_views.adoption_data'))
@@ -399,7 +399,7 @@ def edit_publshed(PublishedID):
         Publishing.district=form.district.data
         db.session.add(Publishing)
         db.session.commit()
-        flash('Edit Your Post Success')
+        flash('刊登資料更新成功')
         return redirect(url_for('user_views.published_info', UID=Publishing.UID))
         
     form.title.data = Publishing.title
