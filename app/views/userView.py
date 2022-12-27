@@ -3,7 +3,7 @@ from flask import Blueprint, render_template,abort, jsonify, request, send_from_
 import os
 from ..config_other import photos
 from APP.models.user import account, published
-from .index import index_views
+from .indexView import index_views
 from flask_login import login_user,current_user,login_required,logout_user
 from werkzeug.utils import secure_filename
 from ..controllers import (
@@ -156,27 +156,6 @@ def edit_user_info(ID):
     print("errr",users.name)
     return render_template('user_data.html', form=form,form1=form1)
 
-# @user_views.route('/changepassword', methods=['GET', 'POST'])
-# @login_required
-# def changepassword():
-#     form = FormUserInfo()
-#     form1 = FormChangePWD()
-#     if form.validate_on_submit():
-#         return render_template('user_data.html', form=form,form1=form1)
-#     return render_template('user_data.html', form=form,form1=form1)
-# @user_views.route('/user/userinfo/<ID>')
-# @login_required
-# def user_info(ID):
-#     """
-#     說明：使用者資訊呈現
-#     :param UID:使用者UID
-#     :return:
-#     """
-#     user = get_user_data(ID)
-#     if user is None:
-#         abort(404)
-#     return render_template('user_data.html', user=user)
-
 @user_views.route('/user/addpublished', methods=['GET', 'POST'])
 @login_required
 def add_publshed():
@@ -185,8 +164,6 @@ def add_publshed():
     :return:
     """
     form_type = 'add'
-    wtf = False
-
     if request.method == 'POST':
         form_type = 'add'
         users = get_user_data(current_user.ID)
@@ -238,42 +215,6 @@ def add_publshed():
         db.session.add(Publishing)
         db.session.commit()
         flash("刊登成功")
-
-    if wtf is True:
-        form_type = 'wtf_add'
-        users = get_user_data(current_user.ID)
-        from ..models import published
-        form = FormPublished()
-
-        if request.method == 'POST':
-            print("FORM OK")
-            image = form.photo.data
-            filename = secure_filename(image.filename)
-            UPLOAD_FOLDER = 'APP/static/uploads/'
-            image.save(os.path.join(UPLOAD_FOLDER, filename))
-            Publishing = published(
-                title=form.title.data,
-                species=form.species.data,
-                fur=form.fur.data,
-                picture=filename,
-                depiction=form.depiction.data,
-                sex = int(form.sex.data),
-                variety = form.variety.data,
-                type= int(form.type.data),
-                UID = int(users.UID),
-                activate=True,
-                county=form.county.data,
-                district=form.district.data
-            )
-            db.session.add(Publishing)
-            db.session.commit()
-            flash('刊登成功') # this line could be removed!
-            
-            if post_type == '3':
-                return redirect(url_for('user_views.adoption_data'))
-            else:
-                return redirect(url_for('user_views.miss_data'))
-
     return render_template('user_postlist.html', type=form_type)
 
 @user_views.route('/user/mypublished')
@@ -512,19 +453,6 @@ def miss_detailed(publishedID):
         abort(404)
     print(user)
     return render_template('miss_detailed.html', published=published,account=account,user=user)
-
-# @user_views.route('/adoption/<PID>')
-# @login_required
-# def miss_pet(PID):
-#     """
-#     說明：單一刊登資料
-#     :return:
-#     """
-#     from ..models.user import published
-#     published = published.query.filter(PID=PID).first()
-#     if published is None:
-#         abort(404)
-#     return render_template('xxxxxx.html', published=published)
 
 @user_views.route('/editstatus/<PublishedID>')
 @login_required
