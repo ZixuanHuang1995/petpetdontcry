@@ -215,7 +215,14 @@ def add_publshed():
         db.session.add(Publishing)
         db.session.commit()
         flash("刊登成功")
+
+        if Publishing.type == '3':
+            return redirect(url_for('user_views.adoption_data'))
+        else:
+            return redirect(url_for('user_views.miss_data'))
+            
     return render_template('user_postlist.html', type=form_type)
+    
 
 @user_views.route('/user/mypublished')
 @login_required
