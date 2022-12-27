@@ -19,8 +19,19 @@
             <div class="dis-f">
                 <table>
                     <tr>
+                        
                         <td><div class="font-s mb-total" style="text-align: center;">身分證字號</div></td>
-                        <td><div>{{form.identity(class="input-text font-s mb-total")}}</div></td>
+                        <td>
+                            <div>{{form.identity(class="input-text font-s mb-total")}}</div>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="align-items: center;">
+                            {% for error in form.identity.errors %} 
+                            <div style="color: red; font-size: 2rem;", class="dis">{{error}}</div>
+                            {% endfor %}
+                        </td>
                     </tr>
                     <tr>
                         <td><div class="font-s mb-total" style="text-align: center;">姓名</div></td>
@@ -28,7 +39,9 @@
                     </tr>
                     <tr>
                         <td><div class="font-s mb-total" style="text-align: center;">電話</div></td>
-                        <td><div>{{form.phone(class="input-text font-s mb-total")}}</div></td>
+                        <td>
+                            <div>{{form.phone(class="input-text font-s mb-total")}}</div>
+                        </td>
                     </tr>
                 </table>
             </div>

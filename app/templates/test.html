@@ -24,13 +24,18 @@
         
                 <div style="display: flex;">
                     <div class="font-s mb-total">輸入密碼</div>
-                    <div>{{form.password(class="input-text font-s mb-total")}}</div>         
+                    <div>{{form.password(class="input-text font-s mb-total")}}</div> 
+                        
                 </div>
-        
+
                 <div style="display: flex;">
                     <div class="font-s mb-total">確認密碼</div>
                     <div>{{form.password2(class="input-text font-s mb-total")}}</div>   
                 </div>
+
+                {% for error in form.password.errors %} 
+                    <div style="color: red; font-size: 2rem;", class="dis">{{error}}</div>
+                {% endfor %}
             </div>
         
             <div class="dis">

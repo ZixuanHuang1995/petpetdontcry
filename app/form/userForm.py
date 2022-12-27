@@ -3,6 +3,7 @@ import email
 from flask_wtf import FlaskForm
 from nbformat import ValidationError
 from wtforms import StringField,SubmitField,validators,PasswordField,BooleanField
+from wtforms.validators import InputRequired
 from wtforms.fields import EmailField
 from ..models import user,account
 class FormRegister(FlaskForm):
@@ -15,7 +16,7 @@ class FormRegister(FlaskForm):
     password = PasswordField('密碼',validators=[
         validators.DataRequired(),
         validators.Length(5,20),
-        validators.EqualTo('password2',message='PASSWORD NEED MATCH')
+        validators.EqualTo('password2',message='請確定兩次密碼輸入一致')
     ])
     # 驗證兩次輸入的密碼是否相同，避免使用者輸入錯誤
     password2 = PasswordField('確認密碼',validators=[
@@ -34,7 +35,7 @@ class FormUserInfo(FlaskForm):
     email = StringField('Email', render_kw={'readonly': True})
     identity = StringField('身分證字號', render_kw={'readonly': True})
     name = StringField('姓名',validators=[
-        validators.Length(3, 10),
+        validators.Length(2, 10),
         validators.DataRequired()
     ])
     phone = StringField('電話',validators=[
@@ -47,7 +48,7 @@ class FormUserInfo(FlaskForm):
 class FormAddUserInfo(FlaskForm):
     # email = StringField('Email', render_kw={'readonly': True})
     identity = StringField('身分證字號',validators=[
-        validators.Regexp('^[A-Z][0-9]{9}$',message="一個大寫跟數字呦"),
+        validators.Regexp('^[A-Z]\d{9}$',message="一個大寫跟數字呦"),
         validators.DataRequired(),
         validators.Length(10,10),
     ])
@@ -72,7 +73,7 @@ class FormChangePWD(FlaskForm):
     password_new = PasswordField('新密碼', validators=[
         validators.DataRequired(),
         validators.Length(5, 10),
-        validators.EqualTo('password_new_confirm', message='PASSWORD NEED MATCH')
+        validators.EqualTo('password_new_confirm', message='請確定兩次密碼輸入一致')
     ])
     #  新密碼確認
     password_new_confirm = PasswordField('確認新密碼', validators=[
